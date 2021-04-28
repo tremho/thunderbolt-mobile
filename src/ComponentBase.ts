@@ -1,22 +1,32 @@
-let nscore
-try {
-    nscore = require('@nativescript/core')
-} catch(e) {
-    nscore = {}
+import {StackLayout, View} from '@nativescript/core'
+// import {ComCommon, LocalBind} from "../app-core/ComCommon"
+class ComCommon {
+    constructor(a:any) {}
+    waitForModel():Promise<any> {return Promise.resolve()}
+    bindComponent() {}
+    setLocalBinds(lb: LocalBind[]|undefined) {}
+    componentIsReady() {}
 }
-const {StackLayout, View} = nscore
-import {ComCommon, LocalBind} from "../app-core/ComCommon"
-import {AppCore, EventData, getTheApp} from "../app-core/AppCore"
+class LocalBind {}
+class EventData {
+    app:any|undefined
+    sourceComponent:any|undefined
+    tag:string|undefined
+    eventType: string|undefined
+    platEvent: string|undefined
+}
+function getTheApp():any { return {} }
+// import {AppCore, EventData, getTheApp} from "../app-core/AppCore"
 
 export default class ComponentBase extends StackLayout {
-    private _isInit: boolean
+    private _isInit: boolean = false
     protected container: any
-    private common: ComCommon
-    private localBinds:LocalBind[];
+    private common: ComCommon | undefined
+    private localBinds:LocalBind[] | undefined
 
     constructor() {
+        super()
         try {
-            super()
             this.container = this
             this.on('layoutChanged', () => {
                 console.log('in layoutChanged')
@@ -31,9 +41,11 @@ export default class ComponentBase extends StackLayout {
                             this.localBinds = []
                             this.createControl()
                             console.log('localBinds', this.localBinds)
-                            this.common.bindComponent()
-                            this.common.setLocalBinds(this.localBinds)
-                            this.common.componentIsReady()
+                            if(this.common) {
+                                this.common.bindComponent()
+                                this.common.setLocalBinds(this.localBinds)
+                                this.common.componentIsReady()
+                            }
                         })
                     })
                 }
@@ -70,9 +82,9 @@ export default class ComponentBase extends StackLayout {
      * @param bindLocalName
      * @param viewProperty
      */
-    public addBinding(view:any, bindLocalName, viewProperty) {
+    public addBinding(view:any, bindLocalName:string, viewProperty:string) {
         let lb:LocalBind = [view, bindLocalName, viewProperty]
-        this.localBinds.push(lb)
+        if(this.localBinds) this.localBinds.push(lb)
     }
 
     /**
@@ -99,7 +111,7 @@ export default class ComponentBase extends StackLayout {
         ed.sourceComponent = view as any
         ed.eventType = eventName
         ed.tag = tag
-        view.on(eventName, ev => {
+        view.on(eventName, (ev:any) => {
             ed.platEvent = ev
             const activity = getTheApp().currentActivity
             // console.log('should call '+target)
