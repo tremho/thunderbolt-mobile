@@ -1,0 +1,35 @@
+{
+  "name": "thunderbolt-mobile",
+  "version": "0.5.0",
+  "description": "Mobile (Nativescript) component of Thunerbolt framework",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tremho/thunderbolt-mobile.git"
+  },
+  "keywords": [
+    "Thunderbolt",
+    "framework",
+    "desktop",
+    "mobile",
+    "electron",
+    "nativescript",
+    "windows",
+    "macintosh",
+    "linux",
+    "android",
+    "ios"
+  ],
+  "author": "tremho",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/tremho/thunderbolt-mobile/issues"
+  },
+  "homepage": "https://github.com/tremho/thunderbolt-mobile#readme",
+  "devDependencies": {
+    "@nativescript/core": "^8.0.3"
+  }
+}
