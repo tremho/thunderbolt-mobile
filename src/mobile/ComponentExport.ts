@@ -1,14 +1,16 @@
 
-const SimpleLabel = require('./basics/simple-label')
-const SimpleButton = require('./basics/simple-button')
-const SimpleSlot = require('./basics/simple-slot')
-const FillSpace = require('./layout/fill-space')
-const FlexLayout = require('./layout/flex-layout')
-const GridLayout = require('./layout/grid-layout')
-const GridSection = require('./layout/grid-section')
-const TBStackLayout = require('./layout/stack-layout')
+import {StackLayout, Label} from '@nativescript/core'
 
-const {StackLayout, Label} = require('@nativescript/core')
+import {TBPage,TBContent} from "./tb-page";
+import {SimpleLabel} from "./basics/simple-label";
+import {SimpleButton} from "./basics/simple-button";
+import {SimpleSlot} from "./basics/simple-slot";
+import {FillSpace} from "./layout/fill-space";
+import {FlexLayout} from "./layout/flex-layout";
+import {GridSection} from "./layout/grid-section";
+import {TBStackLayout} from "./layout/stack-layout";
+import {TBGridLayout} from "./layout/grid-layout";
+
 
 function makeDiv() {
     return new StackLayout()
@@ -24,12 +26,14 @@ function makeLabel(text:string) {
     return label
 }
 
+export {TBPage as TBPage}
+export {TBContent as TBContent}
 export {SimpleLabel as SimpleLabel}
 export {SimpleButton as SimpleButton}
 export {SimpleSlot as SimpleSlot}
 export {FillSpace as FillSpace}
 export {FlexLayout as FlexLayout}
-export {GridLayout as GridLayout}
+export {TBGridLayout as GridLayout}
 export {GridSection as GridSection}
 export {TBStackLayout as StackLayout}
 

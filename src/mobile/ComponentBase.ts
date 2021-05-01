@@ -15,14 +15,26 @@ class EventData {
     eventType: string|undefined
     platEvent: string|undefined
 }
-function getTheApp():any { return {} }
-// import {AppCore, EventData, getTheApp} from "../app-core/AppCore"
+
+export const appBridge = {
+}
+
+export function getTheApp() {
+    // @ts-ignore
+    return appBridge.getTheApp()
+}
 
 export default class ComponentBase extends StackLayout {
     private _isInit: boolean = false
     protected container: any
     private common: ComCommon | undefined
     private localBinds:LocalBind[] | undefined
+
+    public static bridgeAppGetter(getter:any) {
+        // @ts-ignore
+        appBridge.getTheApp = getter
+        console.log('appBridge', appBridge)
+    }
 
     constructor() {
         super()
@@ -112,9 +124,13 @@ export default class ComponentBase extends StackLayout {
         ed.eventType = eventName
         ed.tag = tag
         view.on(eventName, (ev:any) => {
+            console.log('Event occurs', eventName)
             ed.platEvent = ev
-            const activity = getTheApp().currentActivity
-            // console.log('should call '+target)
+            const app = getTheApp()
+            console.log('>>>>>>>>>>>> getting activity from app', app, ed.app)
+            const activity = app.currentActivity
+            console.log('activity found', activity)
+            console.log('should call '+target)
             if(activity && typeof activity[target] === 'function') {
                 activity[target](ed)
             }
