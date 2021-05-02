@@ -1,13 +1,5 @@
 import {StackLayout, View} from '@nativescript/core'
-// import {ComCommon, LocalBind} from "../app-core/ComCommon"
-class ComCommon {
-    constructor(a:any) {}
-    waitForModel():Promise<any> {return Promise.resolve()}
-    bindComponent() {}
-    setLocalBinds(lb: LocalBind[]|undefined) {}
-    componentIsReady() {}
-}
-class LocalBind {}
+
 class EventData {
     app:any|undefined
     sourceComponent:any|undefined
@@ -16,24 +8,26 @@ class EventData {
     platEvent: string|undefined
 }
 
-export const appBridge = {
+export const appBridge:any = {
 }
 
 export function getTheApp() {
     // @ts-ignore
     return appBridge.getTheApp()
 }
+let ComCommon:any, LocalBind:any
 
 export default class ComponentBase extends StackLayout {
     private _isInit: boolean = false
     protected container: any
-    private common: ComCommon | undefined
-    private localBinds:LocalBind[] | undefined
+    private com: any
+    private localBinds:any[] | undefined
 
-    public static bridgeAppGetter(getter:any) {
-        // @ts-ignore
+    public static bridgeAppGetter(getter:any, comCommon:any) {
         appBridge.getTheApp = getter
-        console.log('appBridge', appBridge)
+        appBridge.comCommon = comCommon
+        ComCommon = comCommon.ComCommon
+        LocalBind = comCommon.LocalBind
     }
 
     constructor() {
@@ -44,8 +38,8 @@ export default class ComponentBase extends StackLayout {
                 console.log('in layoutChanged')
                 if (!this._isInit) {
                     this._isInit = true
-                    this.common = new ComCommon(this)
-                    this.common.waitForModel().then(() => {
+                    this.com = new ComCommon(this)
+                    this.com.waitForModel().then(() => {
                         console.log('past waitReady')
                         // must occur on a nominal timeout to work across platforms
                         setTimeout(() => {
@@ -53,10 +47,16 @@ export default class ComponentBase extends StackLayout {
                             this.localBinds = []
                             this.createControl()
                             console.log('localBinds', this.localBinds)
-                            if(this.common) {
-                                this.common.bindComponent()
-                                this.common.setLocalBinds(this.localBinds)
-                                this.common.componentIsReady()
+                            if(this.com) {
+                                try {
+                                    // @ts-ignore
+                                    this.beforeLayout && this.beforeLayout()
+                                } catch(e) {
+                                    console.error('Error in  "'+'UNNAMED COMPONENT'+' beforeLayout"', e)
+                                }
+                                this.com.bindComponent()
+                                this.com.setLocalBinds(this.localBinds)
+                                this.com.componentIsReady()
                             }
                         })
                     })
@@ -95,7 +95,7 @@ export default class ComponentBase extends StackLayout {
      * @param viewProperty
      */
     public addBinding(view:any, bindLocalName:string, viewProperty:string) {
-        let lb:LocalBind = [view, bindLocalName, viewProperty]
+        let lb = [view, bindLocalName, viewProperty]
         if(this.localBinds) this.localBinds.push(lb)
     }
 
@@ -127,7 +127,7 @@ export default class ComponentBase extends StackLayout {
             console.log('Event occurs', eventName)
             ed.platEvent = ev
             const app = getTheApp()
-            console.log('>>>>>>>>>>>> getting activity from app', app, ed.app)
+            // console.log('>>>>>>>>>>>> getting activity from app', app, ed.app)
             const activity = app.currentActivity
             console.log('activity found', activity)
             console.log('should call '+target)
