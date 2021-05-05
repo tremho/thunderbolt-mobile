@@ -20,7 +20,7 @@ let ComCommon:any, LocalBind:any
 export default class ComponentBase extends StackLayout {
     private _isInit: boolean = false
     protected container: any
-    private com: any
+    public com: any
     private localBinds:any[] | undefined
 
     public static bridgeAppGetter(getter:any, comCommon:any) {
@@ -137,5 +137,29 @@ export default class ComponentBase extends StackLayout {
         })
     }
 
+    protected evalExpressionString(str:string, component:any) {
+        let pos = 0
+        while(pos < str.length) {
+            let xsn = str.indexOf('$', pos)
+            if (xsn !== -1) {
+                if (str.charAt(xsn - 1) !== '\\') {
+                    component.bound = component.bindingContext // just to make sure this is set
+                    const lit = str.substring(0, xsn++)
+                    let xnn = str.indexOf(' ', xsn)
+                    if (xnn == -1) xnn = str.indexOf(',', xsn) // todo: really should break on non-alphanum
+                    if (xnn == -1) xnn = str.length
+                    const expr = str.substring(xsn, xnn)
+                    const postLit = str.substring(xnn)
+                    str = lit + component.b(expr) + postLit
+                }
+                pos = xsn+1
+            } else {
+                break;
+            }
+        }
+        return str
+    }
 }
+
+
 

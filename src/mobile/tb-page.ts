@@ -304,6 +304,7 @@ export class TBContent extends StackLayout {
         super();
         this.row = 1
         this.column = 0
+        this.set('bind', 'page.navInfo')
     }
 }
 

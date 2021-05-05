@@ -10,6 +10,7 @@ import {FlexLayout} from "./layout/flex-layout";
 import {GridSection} from "./layout/grid-section";
 import {TBStackLayout} from "./layout/stack-layout";
 import {TBGridLayout} from "./layout/grid-layout";
+import {CondSect} from "./layout/cond-sect"
 
 
 function makeDiv() {
@@ -36,6 +37,8 @@ export {FlexLayout as FlexLayout}
 export {TBGridLayout as GridLayout}
 export {GridSection as GridSection}
 export {TBStackLayout as StackLayout}
+
+export {CondSect as CondSect}
 
 export {makeDiv as makeDiv}
 export {makeSpan as makeSpan}

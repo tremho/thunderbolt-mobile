@@ -1,7 +1,7 @@
 
 import ComponentBase from '../ComponentBase'
 
-import {Label} from '@nativescript/core'
+import {Label, Color} from '@nativescript/core'
 
 export class SimpleLabel extends ComponentBase {
     private label:Label = new Label()
@@ -10,11 +10,13 @@ export class SimpleLabel extends ComponentBase {
     public createControl() {
         // no need to call super, because it doesn't exist
         let text = this.get('text') || 'simple-label'
+        text = this.evalExpressionString(text, this)
         console.log('in simple-label with text', text)
-        // this.label =
-        this.label.set('text', text)
         this.container.addChild(this.label)
         this.addBinding(this.label, 'text', 'text')
+        setTimeout(() => {
+            this.label.set('text', text)
+        })
     }
 
 }
