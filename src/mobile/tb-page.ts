@@ -304,7 +304,10 @@ export class TBContent extends StackLayout {
         super();
         this.row = 1
         this.column = 0
-        this.set('bind', 'page.navInfo')
+        this.on('layoutChanged', ev => {
+            let id = this.parent && this.parent.get('id')
+            this.set('bind', `page.navInfo, page-data.${id} as data`)
+        })
     }
 }
 

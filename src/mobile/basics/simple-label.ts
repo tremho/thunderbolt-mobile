@@ -15,7 +15,8 @@ export class SimpleLabel extends ComponentBase {
         this.container.addChild(this.label)
         this.addBinding(this.label, 'text', 'text')
         setTimeout(() => {
-            this.label.set('text', text)
+            this.setDynamicExpressions(this.get('text') || 'simple-label', this.label, 'text')
+            // this.label.set('text', text)
         })
     }
 

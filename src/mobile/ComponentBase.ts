@@ -137,6 +137,17 @@ export default class ComponentBase extends StackLayout {
         })
     }
 
+    protected setDynamicExpressions(str:string, control:View, controlProp:string) {
+        let text = this.evalExpressionString(str, control.parent || control)
+        control.set(controlProp, text)
+        control.bindingContext.on('propertyChange', (ev:any) => {
+            let text = this.evalExpressionString(str, control.parent || control)
+            // console.log('on propertyChange', controlProp, text)
+            control.set(controlProp, text)
+        })
+
+    }
+
     protected evalExpressionString(str:string, component:any) {
         let pos = 0
         while(pos < str.length) {
@@ -148,7 +159,10 @@ export default class ComponentBase extends StackLayout {
                     let xnn = str.indexOf(' ', xsn)
                     if (xnn == -1) xnn = str.indexOf(',', xsn) // todo: really should break on non-alphanum
                     if (xnn == -1) xnn = str.length
-                    const expr = str.substring(xsn, xnn)
+                    let expr = str.substring(xsn, xnn)
+                    if(expr.charAt(0) === '$') {
+                        expr = 'data.'+expr.substring(1)
+                    }
                     const postLit = str.substring(xnn)
                     str = lit + component.b(expr) + postLit
                 }
