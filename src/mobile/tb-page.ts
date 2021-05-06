@@ -306,6 +306,7 @@ export class TBContent extends StackLayout {
         this.column = 0
         this.on('layoutChanged', ev => {
             let id = this.parent && this.parent.get('id')
+            this.id = `${id}-content`
             this.set('bind', `page.navInfo, page-data.${id} as data`)
         })
     }
