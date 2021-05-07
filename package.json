@@ -30,6 +30,12 @@
   },
   "homepage": "https://github.com/tremho/thunderbolt-mobile#readme",
   "devDependencies": {
-    "@nativescript/core": "^8.0.3"
+    "@nativescript/core": "^8.0.3",
+    "@nativescript/types": "^8.0.1",
+    "@types/base-64": "^1.0.0",
+    "@types/node": "^15.0.2"
+  },
+  "dependencies": {
+    "web-encoding": "^1.1.5"
   }
 }

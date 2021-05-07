@@ -35,18 +35,18 @@ export default class ComponentBase extends StackLayout {
         try {
             this.container = this
             this.on('layoutChanged', () => {
-                console.log('in layoutChanged')
+                // console.log('in layoutChanged')
                 if (!this._isInit) {
                     this._isInit = true
                     this.com = new ComCommon(this)
                     this.com.waitForModel().then(() => {
-                        console.log('past waitReady')
+                        // console.log('past waitReady')
                         // must occur on a nominal timeout to work across platforms
                         setTimeout(() => {
-                            console.log('executing timeout -- creating component')
+                            // console.log('executing timeout -- creating component')
                             this.localBinds = []
                             this.createControl()
-                            console.log('localBinds', this.localBinds)
+                            // console.log('localBinds', this.localBinds)
                             if(this.com) {
                                 try {
                                     // @ts-ignore

@@ -11,7 +11,7 @@ export class SimpleLabel extends ComponentBase {
         // no need to call super, because it doesn't exist
         let text = this.get('text') || 'simple-label'
         text = this.evalExpressionString(text, this)
-        console.log('in simple-label with text', text)
+        // console.log('in simple-label with text', text)
         this.container.addChild(this.label)
         this.addBinding(this.label, 'text', 'text')
         setTimeout(() => {
