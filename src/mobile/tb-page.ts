@@ -1,13 +1,10 @@
 // import {EventData, getTheApp} from "thunderbolt-common"
 import {
-    ActionBar,
-    NavigationButton,
     View,
     Label,
     Image,
     Color,
     FlexboxLayout,
-    RootLayout,
     AbsoluteLayout,
     StackLayout,
     GridLayout,
@@ -17,6 +14,7 @@ import {GridUnitType, ItemSpec} from "@nativescript/core/ui/layouts/grid-layout"
 import * as imageSourceModule from "@nativescript/core/image-source"
 
 import {getTheApp} from './ComponentBase'
+import {TBToolbar} from "./tb-toolbar";
 
 const ITEMBOXSIZE = 12; // TODO: Compute from screen height
 const TITLESIZE = 16; // TODO: Compute from screen height
@@ -45,12 +43,17 @@ export class TBPage extends GridLayout {
         this.back.fontSize = 8
         this.back.color = new Color('blue')
         this.back.paddingLeft = 4
-        this.back.paddingRight = 8
+        this.back.paddingRight = 4
         // this.back.marginTop = 7
         // this.back.marginLeft = 4
         menuBar.addChild(this.back)
+
+        const toolbar = new TBToolbar()
+        menuBar.addChild(toolbar)
+
         this.mbox = new Label()
         this.mbox.padding = 0;
+        this.mbox.marginLeft = 4;
         this.mbox.fontSize = ITEMBOXSIZE * 0.8
         // this.mbox.height = ITEMBOXSIZE
         this.mbox.borderColor = new Color('darkkhaki')
@@ -75,6 +78,8 @@ export class TBPage extends GridLayout {
                 const noBack = this.get('noBack') === 'true'
                 const title = this.get('title') || this.get('text') || 'Default title'
                 const menuId = this.get('menu-id')
+                const toolbarId = this.get('toolbar-id')
+                const indicatorsId = this.get('indicators-id')
 
                 const mbSize = menuBar.getActualSize()
                 this.pageWidth = mbSize.width
@@ -95,6 +100,9 @@ export class TBPage extends GridLayout {
                         else this.openMenu()
                     })
                 }
+                const model = getTheApp().model
+                let tools = toolbarId && model.getAtPath('toolbar.'+toolbarId)
+                if(tools) toolbar.setTools(tools)
             }
         })
     }
@@ -323,5 +331,4 @@ class MenuListContainer extends StackLayout {
         this.padding = 4
         this.minWidth = 100
     }
-
 }

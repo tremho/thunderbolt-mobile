@@ -15,13 +15,15 @@ export class Observable extends TNSObservable {
       if (typeof source[p] !== 'object') {
         //@ts-ignore
         props.set(p, source[p])
-      } else if(recurse) {
-        //@ts-ignore
-        if(Array.isArray(source[p])) {
-          throw Error('No support for ObservableArray yet')
+      } else { // @ts-ignore
+        if(recurse && source[p]) {
+          //@ts-ignore
+          if(Array.isArray(source[p])) {
+            throw Error('No support for ObservableArray yet')
+          }
+          //@ts-ignore
+          props.set(p, Observable.fromObject(source[p], recurse)) // todo: recurse could be a depth
         }
-        //@ts-ignore
-        props.set(p, Observable.fromObject(source[p], recurse)) // todo: recurse could be a depth
       }
     }
     return props
