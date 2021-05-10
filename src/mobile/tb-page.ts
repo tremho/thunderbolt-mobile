@@ -117,7 +117,7 @@ export class TBPage extends GridLayout {
         } catch(e) {
             console.error(e)
         }
-        let items = menu.children
+        let items = menu.children || []
         this.menuDrop = new MenuDrop(this.pageWidth)
         const menuDropView = new MenuListContainer()
         items.forEach((item:MenuItemInfo) => {
