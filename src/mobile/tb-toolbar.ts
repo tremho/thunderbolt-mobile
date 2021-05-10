@@ -28,23 +28,22 @@ class ToolInfo {
 
 }
 
+const boxSize = 25
+
 export class TBToolbar extends FlexboxLayout {
 
     constructor() {
         super()
-        this.height = 25
-        // this.set('width', '25%')
+        this.height = boxSize;
         this.flexDirection = "row"
-        // this.orientation = 'horizontal'
-        // this.justifyContent = "space-around" // space-evenly is not supported
         this.backgroundColor = new Color('aliceblue')
     }
     setTools(tools:ToolInfo[]) {
-        const barSize = this.getActualSize()
+        this.width = (tools && tools.length * boxSize) || 0
         tools.forEach(tool => {
             const toolButton = new StackLayout()
             toolButton.className = tool.className
-            toolButton.width = barSize.height
+            toolButton.width = boxSize
 
             /* TODO: default class instead of literals */
             toolButton.borderColor = new Color('blue')

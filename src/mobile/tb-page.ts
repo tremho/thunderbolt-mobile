@@ -34,6 +34,7 @@ export class TBPage extends GridLayout {
         this.addRow(new ItemSpec(1, GridUnitType.AUTO))
 
 
+        // console.log("%%%%%%%%%%%%%%%%%%%% Constructing MenuBar")
         const menuBar = new FlexboxLayout()
         menuBar.width = PercentLength.parse('100%')
         menuBar.marginTop = 24
@@ -61,12 +62,14 @@ export class TBPage extends GridLayout {
         this.mbox.color = new Color('black')
         this.mbox.text = '\u2630'
         this.mbox.paddingLeft = this.mbox.paddingRight = 4;
+        // console.log('----- created and adding mbox')
         menuBar.addChild(this.mbox)
         this._title = new Label()
         this._title.color = new Color('black')
         this._title.fontSize = 14
         this._title.paddingLeft = this._title.paddingRight = 4
         this._title.paddingTop = this._title.paddingBottom = 2
+        // console.log('----- created and adding title')
         menuBar.addChild(this._title)
         this.addChildAtCell(menuBar,0,0)
         this.on('layoutChanged', () => {
@@ -76,6 +79,7 @@ export class TBPage extends GridLayout {
                 let nbText = this.get('noBack')
                 // console.log('>>>>>>>>>>>>  TBPage noBack ', nbText)
                 const noBack = this.get('noBack') === 'true'
+                // console.log('noBack boolean ', noBack)
                 const title = this.get('title') || this.get('text') || 'Default title'
                 const menuId = this.get('menu-id')
                 const toolbarId = this.get('toolbar-id')
@@ -85,14 +89,19 @@ export class TBPage extends GridLayout {
                 this.pageWidth = mbSize.width
 
                 if(!noBack) {
+                    // console.log('--- applying tap handler to back button')
                     this.back.on('tap', (ev)=> {
-                        console.log('go back')
+                        // console.log('go back')
                         getTheApp().navigateBack()
                     })
                 }
 
-                this.back.text = noBack ? " " : "Back"
-                this._title.text = title
+                // text must be applied behind a timeout
+                setTimeout(() => {
+                    // console.log('----- applying text')
+                    this.back.text = noBack ? " " : "Back"
+                    this._title.text = title
+                })
                 if (!menuId) this.mbox.visibility = 'hidden'
                 else {
                     this.mbox.on('tap', (ev)=> {
@@ -107,7 +116,7 @@ export class TBPage extends GridLayout {
         })
     }
     openMenu() {
-        console.log('open menu')
+        // console.log('open menu')
         const menuId = this.get('menu-id')
         const model = getTheApp().model
         let menu
@@ -233,7 +242,7 @@ class MenuItem extends StackLayout {
             } else if(us.info.role !== 'separator') {
                 const md = us.tbPage.getMenuDrop()
                 if (md) md.removeMenu()
-                console.log("clicked on ",us.info)
+                // console.log("clicked on ",us.info)
                 getTheApp().onMenuAction(us.info)
             }
         })
