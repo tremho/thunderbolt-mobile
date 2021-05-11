@@ -1,6 +1,6 @@
 import {StackLayout, View} from '@nativescript/core'
 
-class EventData {
+export class EventData {
     app:any|undefined
     sourceComponent:any|undefined
     tag:string|undefined
