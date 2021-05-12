@@ -6,7 +6,7 @@ import {
     Color,
     Image,
     Label,
-    Screen
+    Screen, GestureTypes
 } from '@nativescript/core'
 import {getTheApp, EventData} from "./ComponentBase";
 
@@ -14,6 +14,7 @@ class IndicatorInfo {
     id:string = ''
     label:string = ''
     state:string = ''
+    type:string = ''
     className:string = ''
     // tooltip:string = ''
     icons: any
@@ -28,26 +29,11 @@ export class TBIndicators extends FlexboxLayout {
     constructor() {
         super()
         this.height = boxSize;
-        // this.set('width', '100%')
         this.horizontalAlignment = 'right'
         this.flexDirection = "row-reverse"
         this.justifyContent = 'space-around'
         this.alignContent = 'flex-start'
         this.backgroundColor = new Color('aliceblue')
-        // this.on('layoutChanged', () => {
-        //     // if(!this._init) {
-        //     //     this._init = true;
-        //         const mbWidth = Screen.mainScreen.widthDIPs
-        //         let d = 5;
-        //         if(mbWidth > Screen.mainScreen.heightDIPs) {
-        //             d = 3;
-        //         }
-        //         const size = this.getActualSize()
-        //         let remain = (mbWidth - size.width) / d
-        //         console.log('computing spread ', mbWidth, size.width, remain)
-        //         this.marginLeft = remain;
-        //     // }
-        // })
     }
     setIndicators(indicators:IndicatorInfo[]) {
         this.width = (indicators && indicators.length * boxSize) || 0
@@ -56,6 +42,12 @@ export class TBIndicators extends FlexboxLayout {
             const indicator = new StackLayout()
             indicator.className = 'tb-indicator ' + indInfo.className || ''
             indicator.id = indInfo.id
+
+            let extension:any
+            const extType = indInfo.type
+            if(extType) {
+                extension = getTheApp().createExtensionType(extType)
+            }
 
             /* TODO: default class instead of literals */
             indicator.borderColor = new Color('darkblue')
@@ -68,6 +60,16 @@ export class TBIndicators extends FlexboxLayout {
             in1.horizontalAlignment = 'stretch'
             const in2 = new AbsoluteLayout()
             in2.id = indInfo.id // give this control the same id, so it is reflected in the ev.object (todo: no, create our own event)
+            let propStopped = false
+            in2.on(GestureTypes.touch, (ev:any) => {
+                if(ev.action === 'up') {
+                    propStopped = extension && extension.onRelease && extension.onRelease({component:indicator, info:indInfo})
+                }
+                if(ev.action === 'down') {
+                    propStopped = extension && extension.onPress && extension.onPress({component:indicator, info:indInfo})
+                }
+            })
+
             const indIcon = new Image()
             indIcon.width = boxSize / 2;
             indIcon.height = boxSize / 2;
@@ -92,6 +94,7 @@ export class TBIndicators extends FlexboxLayout {
             indicator.set('text', indInfo.label) // sets initial text
 
             const update = () => {
+                propStopped = false
                 indLabel.text = indicator.get('text') || ''
                 let state = indicator.get('state') || 'default'
 
@@ -112,10 +115,13 @@ export class TBIndicators extends FlexboxLayout {
                 indIcon.src = icon
             }
             update() // initial setting
+            if(extension && extension.onSetToPage) extension.onSetToPage({component: indicator, info:indInfo})
 
             app.model.bind(indicator, 'indicator-'+indInfo.id, 'state', (comp:any, prop:string, value:any, oldValue:any) => {
                 comp.set(prop, value) // echo state to indicator property
                 update() // then update based on that
+                if(extension && extension.onStateChange) extension.onStateChange({component:indicator, info:indInfo}, value)
+
             })
         })
     }
