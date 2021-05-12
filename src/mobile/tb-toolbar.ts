@@ -9,15 +9,6 @@ import {
 } from '@nativescript/core'
 import {getTheApp, EventData} from "./ComponentBase";
 
-/*
-                            label="{item.label}"
-                            id="{item.id}"
-                            state="{item.state}"
-                            className="{item.className}"
-                            type="{item.type}"
-                            tooltip="{item.tooltip}"
-                            icons="{item.icons}"
- */
 class ToolInfo {
     id:string = ''
     label:string = ''

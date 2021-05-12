@@ -15,6 +15,7 @@ import * as imageSourceModule from "@nativescript/core/image-source"
 
 import {getTheApp} from './ComponentBase'
 import {TBToolbar} from "./tb-toolbar";
+import {TBIndicators} from "./tb-indicators";
 
 const ITEMBOXSIZE = 12; // TODO: Compute from screen height
 const TITLESIZE = 16; // TODO: Compute from screen height
@@ -35,24 +36,38 @@ export class TBPage extends GridLayout {
 
 
         // console.log("%%%%%%%%%%%%%%%%%%%% Constructing MenuBar")
-        const menuBar = new FlexboxLayout()
+        const menuBar = new GridLayout()
+        // back, toolbar, menu, title, indicators
+        menuBar.addRow(new ItemSpec(5, GridUnitType.AUTO))
+        //2rem 1fr 2rem 2fr auto;
+        menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
+        menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
+        menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
+        menuBar.addColumn(new ItemSpec(2, GridUnitType.STAR))
+        menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
+
         menuBar.width = PercentLength.parse('100%')
         menuBar.marginTop = 24
-        menuBar.alignItems = 'center' // note may not work for ios
-        menuBar.justifyContent = 'flex-start'
+        // menuBar.alignItems = 'center' // note may not work for ios
+        // menuBar.justifyContent = 'flex-start'
         this.back = new Label()
+        this.back.verticalAlignment = 'middle'
         this.back.fontSize = 8
         this.back.color = new Color('blue')
         this.back.paddingLeft = 4
         this.back.paddingRight = 4
         // this.back.marginTop = 7
         // this.back.marginLeft = 4
-        menuBar.addChild(this.back)
+        menuBar.addChildAtCell(this.back, 0,0)
 
         const toolbar = new TBToolbar()
-        menuBar.addChild(toolbar)
+        toolbar.verticalAlignment = 'middle'
+        toolbar.horizontalAlignment = 'left'
+        menuBar.addChildAtCell(toolbar, 0, 1)
 
         this.mbox = new Label()
+        this.mbox.verticalAlignment = 'middle'
+        toolbar.horizontalAlignment = 'left'
         this.mbox.padding = 0;
         this.mbox.marginLeft = 4;
         this.mbox.fontSize = ITEMBOXSIZE * 0.8
@@ -63,14 +78,17 @@ export class TBPage extends GridLayout {
         this.mbox.text = '\u2630'
         this.mbox.paddingLeft = this.mbox.paddingRight = 4;
         // console.log('----- created and adding mbox')
-        menuBar.addChild(this.mbox)
+        menuBar.addChildAtCell(this.mbox, 0,2)
         this._title = new Label()
+        this._title.verticalAlignment = 'middle'
         this._title.color = new Color('black')
         this._title.fontSize = 14
         this._title.paddingLeft = this._title.paddingRight = 4
         this._title.paddingTop = this._title.paddingBottom = 2
         // console.log('----- created and adding title')
-        menuBar.addChild(this._title)
+        menuBar.addChildAtCell(this._title, 0,3)
+
+
         this.addChildAtCell(menuBar,0,0)
         this.on('layoutChanged', () => {
             // console.log('in layoutChanged')
@@ -87,6 +105,7 @@ export class TBPage extends GridLayout {
 
                 const mbSize = menuBar.getActualSize()
                 this.pageWidth = mbSize.width
+                // console.log('Page Width computed as ', this.pageWidth)
 
                 if(!noBack) {
                     // console.log('--- applying tap handler to back button')
@@ -109,9 +128,16 @@ export class TBPage extends GridLayout {
                         else this.openMenu()
                     })
                 }
+                const indicators = new TBIndicators()
+                indicators.verticalAlignment = 'middle'
+                indicators.horizontalAlignment = 'right'
+                menuBar.addChildAtCell(indicators, 0, 4)
+
                 const model = getTheApp().model
                 let tools = toolbarId && model.getAtPath('toolbar.'+toolbarId)
                 if(tools) toolbar.setTools(tools)
+                let indicatorItems = indicatorsId && model.getAtPath('indicators.'+indicatorsId)
+                if(indicatorItems) indicators.setIndicators(indicatorItems)
             }
         })
     }
