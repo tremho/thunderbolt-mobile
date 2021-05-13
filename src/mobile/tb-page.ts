@@ -39,52 +39,34 @@ export class TBPage extends GridLayout {
         const menuBar = new GridLayout()
         // back, toolbar, menu, title, indicators
         menuBar.addRow(new ItemSpec(5, GridUnitType.AUTO))
-        //2rem 1fr 2rem 2fr auto;
         menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
         menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
         menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
         menuBar.addColumn(new ItemSpec(2, GridUnitType.STAR))
         menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
 
+        menuBar.className = 'title-bar'
+
         menuBar.width = PercentLength.parse('100%')
         menuBar.marginTop = 24
         // menuBar.alignItems = 'center' // note may not work for ios
         // menuBar.justifyContent = 'flex-start'
         this.back = new Label()
-        this.back.verticalAlignment = 'middle'
-        this.back.fontSize = 8
-        this.back.color = new Color('blue')
-        this.back.paddingLeft = 4
-        this.back.paddingRight = 4
+        this.back.className = 'back-button'
         // this.back.marginTop = 7
         // this.back.marginLeft = 4
         menuBar.addChildAtCell(this.back, 0,0)
 
         const toolbar = new TBToolbar()
-        toolbar.verticalAlignment = 'middle'
-        toolbar.horizontalAlignment = 'left'
         menuBar.addChildAtCell(toolbar, 0, 1)
 
         this.mbox = new Label()
-        this.mbox.verticalAlignment = 'middle'
-        toolbar.horizontalAlignment = 'left'
-        this.mbox.padding = 0;
-        this.mbox.marginLeft = 4;
-        this.mbox.fontSize = ITEMBOXSIZE * 0.8
-        // this.mbox.height = ITEMBOXSIZE
-        this.mbox.borderColor = new Color('darkkhaki')
-        this.mbox.borderWidth = 1
-        this.mbox.color = new Color('black')
+        this.mbox.className = 'menu-box'
         this.mbox.text = '\u2630'
-        this.mbox.paddingLeft = this.mbox.paddingRight = 4;
         // console.log('----- created and adding mbox')
         menuBar.addChildAtCell(this.mbox, 0,2)
         this._title = new Label()
-        this._title.verticalAlignment = 'middle'
-        this._title.color = new Color('black')
-        this._title.fontSize = 14
-        this._title.paddingLeft = this._title.paddingRight = 4
-        this._title.paddingTop = this._title.paddingBottom = 2
+        this._title.className = 'title'
         // console.log('----- created and adding title')
         menuBar.addChildAtCell(this._title, 0,3)
 
@@ -102,10 +84,6 @@ export class TBPage extends GridLayout {
                 const menuId = this.get('menu-id')
                 const toolbarId = this.get('toolbar-id')
                 const indicatorsId = this.get('indicators-id')
-
-                const mbSize = menuBar.getActualSize()
-                this.pageWidth = mbSize.width
-                // console.log('Page Width computed as ', this.pageWidth)
 
                 if(!noBack) {
                     // console.log('--- applying tap handler to back button')

@@ -14,10 +14,10 @@ export class SimpleLabel extends ComponentBase {
         // console.log('in simple-label with text', text)
         this.container.addChild(this.label)
         this.addBinding(this.label, 'text', 'text')
-        setTimeout(() => {
-            this.setDynamicExpressions(this.get('text') || 'simple-label', this.label, 'text')
-            // this.label.set('text', text)
-        })
+    }
+
+    protected setProperties() {
+        this.setDynamicExpressions(this.get('text') || 'simple-label', this.label, 'text')
     }
 
 }

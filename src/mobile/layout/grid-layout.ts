@@ -17,6 +17,8 @@ export class TBGridLayout extends ComponentBase {
         // cm.parseFits(props)
         this.container.addChild(this.grid)
     }
+    protected setProperties() {
+    }
 
 }
 

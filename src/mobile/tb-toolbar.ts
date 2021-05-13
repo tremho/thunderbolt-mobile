@@ -1,4 +1,5 @@
 import {AbsoluteLayout, Color, FlexboxLayout, GestureTypes, Image, Label, StackLayout} from '@nativescript/core'
+import { isAndroid, isIOS } from "@nativescript/core/platform";
 import {EventData, getTheApp} from "./ComponentBase";
 
 class ToolInfo {
@@ -12,36 +13,41 @@ class ToolInfo {
 
 }
 
-const boxSize = 25
-
 export class TBToolbar extends FlexboxLayout {
+    boxSize: number = 10; // a bogus number that will get replaced
 
     constructor() {
         super()
-        this.height = boxSize;
+        if(isIOS) {
+            console.log('##################### IOS IS DETECTED, DAMMIT!')
+            this.boxSize = 50;
+        }
+        if(isAndroid) {
+            console.log('##################### ANDROID IS DETECTED, DAMMIT!')
+            this.boxSize = 25;
+        }
+        this.className = 'tool-bar'
         this.flexDirection = "row"
         this.backgroundColor = new Color('aliceblue')
-
+        console.log('@@@@@@@@@@@@@@@@@@ TBToolbar constructor, boxSize =', this.boxSize)
     }
     setTools(tools:ToolInfo[]) {
-        this.width = (tools && tools.length * boxSize) || 0
+        this.width = (tools && tools.length * this.boxSize) || 0
+        console.log('@@@@@@@@@@@@@@@@@@ TBToolbar setTools', this.width)
         const app = getTheApp()
         tools.forEach(tool => {
             const toolButton = new StackLayout()
             toolButton.className = 'tb-toolbutton ' + tool.className || ''
             toolButton.id = tool.id
-            toolButton.width = boxSize
+            toolButton.width = this.boxSize
+            console.log('@@@@@@@@@@@@@@@@@@ toolbutton ', tool.id)
+
 
             let extension:any
             const extType = tool.type
             if(extType) {
                 extension = getTheApp().createExtensionType(extType)
             }
-
-            /* TODO: default class instead of literals */
-            toolButton.borderColor = new Color('blue')
-            toolButton.borderWidth = 1
-            toolButton.paddingLeft = 4;
 
             const in1 = new StackLayout()
             in1.verticalAlignment = 'middle'
@@ -71,20 +77,18 @@ export class TBToolbar extends FlexboxLayout {
                 }
             })
             const tbIcon = new Image()
-            tbIcon.width = 20
-            tbIcon.height = 20
+            tbIcon.className = 'tbIcon'
             in2.addChild(tbIcon)
 
             const tbLabel = new Label()
             tbLabel.text = tool.label || ''
-            tbLabel.fontSize = 8
             const labelWrapper = new StackLayout()
-
             labelWrapper.orientation = 'horizontal'
-            labelWrapper.height = labelWrapper.width = toolButton.width
-            tbLabel.horizontalAlignment = 'center'
-            tbLabel.verticalAlignment = 'middle'
-            tbLabel.marginLeft = 5 // a tweak that shouldn't need to be, but is
+            labelWrapper.className = 'tbLabel'
+            // labelWrapper.height = labelWrapper.width = toolButton.width
+            // tbLabel.horizontalAlignment = 'center'
+            // tbLabel.verticalAlignment = 'middle'
+            // tbLabel.marginLeft = 5 // a tweak that shouldn't need to be, but is
             labelWrapper.addChild(tbLabel)
             in2.addChild(labelWrapper)
             in1.addChild(in2)

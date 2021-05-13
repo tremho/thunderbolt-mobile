@@ -22,6 +22,9 @@ export class CondSect extends ComponentBase {
         }
     }
 
+    protected setProperties() {
+    }
+
 }
 
 

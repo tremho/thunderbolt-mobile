@@ -11,6 +11,8 @@ export class TBStackLayout extends ComponentBase {
         this.stack.orientation = this.get('orientation')
         this.container.addChild(this.stack)
     }
+    protected setProperties() {
+    }
 
 }
 

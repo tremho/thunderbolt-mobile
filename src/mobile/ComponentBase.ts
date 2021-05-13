@@ -44,6 +44,7 @@ export default class ComponentBase extends StackLayout {
                         // must occur on a nominal timeout to work across platforms
                         setTimeout(() => {
                             // console.log('executing timeout -- creating component')
+                            this.className = this.constructor.name
                             this.localBinds = []
                             this.createControl()
                             // console.log('localBinds', this.localBinds)
@@ -54,9 +55,12 @@ export default class ComponentBase extends StackLayout {
                                 } catch(e) {
                                     console.error('Error in  "'+'UNNAMED COMPONENT'+' beforeLayout"', e)
                                 }
-                                this.com.bindComponent()
-                                this.com.setLocalBinds(this.localBinds)
-                                this.com.componentIsReady()
+                                setTimeout(() => {
+                                    this.setProperties()
+                                    this.com.bindComponent()
+                                    this.com.setLocalBinds(this.localBinds)
+                                    this.com.componentIsReady()
+                                })
                             }
                         })
                     })
@@ -78,6 +82,17 @@ export default class ComponentBase extends StackLayout {
      */
     protected createControl() {
         throw Error('createControl must be implemented in the component!')
+    }
+
+    /**
+     * This is called after creation and after beforeLayout (if defined)
+     * but before any bindings are made.
+     * Set any text or other properties here.  This occurs after a timeout after layout.
+     * Note: this is a good place to call setDynamicExpressions at.
+     * @protected
+     */
+    protected setProperties() {
+        throw Error('setProperties must be implemented in the component!')
     }
 
     /**

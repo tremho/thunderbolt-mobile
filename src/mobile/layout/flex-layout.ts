@@ -15,6 +15,8 @@ export class FlexLayout extends ComponentBase {
         this.container.addChild(this.flex)
     }
 
+    protected setProperties() {
+    }
 }
 
 

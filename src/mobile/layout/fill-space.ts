@@ -16,6 +16,8 @@ export class FillSpace extends ComponentBase {
         // this.addBinding(this.fill, 'height', 'height')
     }
 
+    protected setProperties() {
+    }
 }
 
 
