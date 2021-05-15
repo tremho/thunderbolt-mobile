@@ -92,7 +92,7 @@ export default class ComponentBase extends StackLayout {
      * @protected
      */
     protected setProperties() {
-        throw Error('setProperties must be implemented in the component!')
+        console.warn('control '+this.constructor.name+' should implement a setProperties method')
     }
 
     /**
