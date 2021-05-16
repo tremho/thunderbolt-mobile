@@ -19,28 +19,23 @@ export class TBToolbar extends FlexboxLayout {
     constructor() {
         super()
         if(isIOS) {
-            console.log('##################### IOS IS DETECTED, DAMMIT!')
             this.boxSize = 50;
         }
         if(isAndroid) {
-            console.log('##################### ANDROID IS DETECTED, DAMMIT!')
             this.boxSize = 25;
         }
         this.className = 'tool-bar'
         this.flexDirection = "row"
         this.backgroundColor = new Color('aliceblue')
-        console.log('@@@@@@@@@@@@@@@@@@ TBToolbar constructor, boxSize =', this.boxSize)
     }
     setTools(tools:ToolInfo[]) {
         this.width = (tools && tools.length * this.boxSize) || 0
-        console.log('@@@@@@@@@@@@@@@@@@ TBToolbar setTools', this.width)
         const app = getTheApp()
         tools.forEach(tool => {
             const toolButton = new StackLayout()
             toolButton.className = 'tb-toolbutton ' + tool.className || ''
             toolButton.id = tool.id
             toolButton.width = this.boxSize
-            console.log('@@@@@@@@@@@@@@@@@@ toolbutton ', tool.id)
 
 
             let extension:any

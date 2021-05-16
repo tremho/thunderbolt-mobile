@@ -38,7 +38,7 @@ export class TBPage extends GridLayout {
         // console.log("%%%%%%%%%%%%%%%%%%%% Constructing MenuBar")
         const menuBar = new GridLayout()
         // back, toolbar, menu, title, indicators
-        menuBar.addRow(new ItemSpec(5, GridUnitType.AUTO))
+        menuBar.addRow(new ItemSpec(1, GridUnitType.AUTO)) // actually doesn't matter what we set this to
         menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
         menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
         menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
@@ -47,8 +47,8 @@ export class TBPage extends GridLayout {
 
         menuBar.className = 'title-bar'
 
-        menuBar.width = PercentLength.parse('100%')
-        menuBar.marginTop = 24
+        // menuBar.width = PercentLength.parse('100%')
+        // menuBar.marginTop = 24
         // menuBar.alignItems = 'center' // note may not work for ios
         // menuBar.justifyContent = 'flex-start'
         this.back = new Label()
@@ -117,6 +117,19 @@ export class TBPage extends GridLayout {
                 let indicatorItems = indicatorsId && model.getAtPath('indicators.'+indicatorsId)
                 if(indicatorItems) indicators.setIndicators(indicatorItems)
             }
+
+            // each time layout changes, check to see if we need to change to constrained mode
+            console.log('testing for constraint change at ', this.getActualSize().width)
+            // note N.B.: we don't have any other classnames at Page level. System classes are above this.
+            // and I had a weird problem with multiple names that makes it easier to just assume this case.
+            if(this.getActualSize().width < 380) {
+                console.log('yep, constrained it is')
+                this.page.className = 'constrained'
+            } else {
+                this.page.className = ''
+                console.log('not constrained')
+            }
+            console.log(this.page.className)
         })
     }
     openMenu() {
