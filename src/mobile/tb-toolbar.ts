@@ -14,28 +14,32 @@ class ToolInfo {
 }
 
 export class TBToolbar extends FlexboxLayout {
-    boxSize: number = 10; // a bogus number that will get replaced
 
     constructor() {
         super()
-        if(isIOS) {
-            this.boxSize = 50;
-        }
-        if(isAndroid) {
-            this.boxSize = 25;
-        }
         this.className = 'tool-bar'
-        this.flexDirection = "row"
-        this.backgroundColor = new Color('aliceblue')
+        // this.flexDirection = "row" //>
+        // this.backgroundColor = new Color('aliceblue') //>
     }
     setTools(tools:ToolInfo[]) {
-        this.width = (tools && tools.length * this.boxSize) || 0
+        // IOS must set the width, although it will honor this for flex wrapping as a happy hack.
+        // for Android, we use a wrapper container to do that for us, since the ios hack doesn't work on android.
+        if(isIOS) {
+            let boxSize = 50;
+            if (this.page.className && this.page.className.indexOf('constrained') !== -1) {
+                boxSize /= 3;
+            }
+            let tbWidth = (tools && tools.length || 0) * boxSize
+            let pageWidth = this.page.getActualSize().width
+            if(tbWidth > pageWidth / 3) tbWidth = pageWidth / 3
+            this.width = tbWidth
+        }
         const app = getTheApp()
         tools.forEach(tool => {
             const toolButton = new StackLayout()
             toolButton.className = 'tb-toolbutton ' + tool.className || ''
             toolButton.id = tool.id
-            toolButton.width = this.boxSize
+            // toolButton.width = this.boxSize // !! // >
 
 
             let extension:any
@@ -45,8 +49,8 @@ export class TBToolbar extends FlexboxLayout {
             }
 
             const in1 = new StackLayout()
-            in1.verticalAlignment = 'middle'
-            in1.horizontalAlignment = 'center'
+            in1.verticalAlignment = 'middle' //>
+            in1.horizontalAlignment = 'center' //>
             const in2 = new AbsoluteLayout()
             in2.id = tool.id // give this control the same id, so it is reflected in the ev.object (todo: no, create our own event)
             let propStopped = false
@@ -80,14 +84,17 @@ export class TBToolbar extends FlexboxLayout {
             const labelWrapper = new StackLayout()
             labelWrapper.orientation = 'horizontal'
             labelWrapper.className = 'tbLabel'
+            // -->
             // labelWrapper.height = labelWrapper.width = toolButton.width
             // tbLabel.horizontalAlignment = 'center'
             // tbLabel.verticalAlignment = 'middle'
             // tbLabel.marginLeft = 5 // a tweak that shouldn't need to be, but is
+            // <--
             labelWrapper.addChild(tbLabel)
             in2.addChild(labelWrapper)
             in1.addChild(in2)
             toolButton.addChild(in1)
+            console.log('adding '+toolButton.id+ ' to toolbar')
             this.addChild(toolButton)
 
             toolButton.set('state', tool.state) // sets initial state

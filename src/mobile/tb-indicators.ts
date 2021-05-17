@@ -28,12 +28,13 @@ export class TBIndicators extends FlexboxLayout {
 
     constructor() {
         super()
-        this.height = boxSize;
-        this.horizontalAlignment = 'right'
-        this.flexDirection = "row-reverse"
-        this.justifyContent = 'space-around'
-        this.alignContent = 'flex-start'
-        this.backgroundColor = new Color('aliceblue')
+        this.className = 'indicator-bar'
+        // this.height = boxSize;
+        // this.horizontalAlignment = 'right'
+        // this.flexDirection = "row-reverse"
+        // this.justifyContent = 'space-around'
+        // this.alignContent = 'flex-start'
+        // this.backgroundColor = new Color('aliceblue')
     }
     setIndicators(indicators:IndicatorInfo[]) {
         this.width = (indicators && indicators.length * boxSize) || 0
@@ -50,14 +51,14 @@ export class TBIndicators extends FlexboxLayout {
             }
 
             /* TODO: default class instead of literals */
-            indicator.borderColor = new Color('darkblue')
-            indicator.borderWidth = 1
-            indicator.width = indicator.height = indicator.borderRadius = boxSize
-            indicator.margin = boxSize * 0.25;
+            // indicator.borderColor = new Color('darkblue')
+            // indicator.borderWidth = 1
+            // indicator.width = indicator.height = indicator.borderRadius = boxSize
+            // indicator.margin = boxSize * 0.25;
 
             const in1 = new StackLayout()
-            in1.verticalAlignment = 'middle'
-            in1.horizontalAlignment = 'stretch'
+            // in1.verticalAlignment = 'middle'
+            // in1.horizontalAlignment = 'stretch'
             const in2 = new AbsoluteLayout()
             in2.id = indInfo.id // give this control the same id, so it is reflected in the ev.object (todo: no, create our own event)
             let propStopped = false
@@ -71,19 +72,19 @@ export class TBIndicators extends FlexboxLayout {
             })
 
             const indIcon = new Image()
-            indIcon.width = boxSize / 2;
-            indIcon.height = boxSize / 2;
+            // indIcon.width = boxSize / 2;
+            // indIcon.height = boxSize / 2;
             in2.addChild(indIcon)
 
             const indLabel = new Label()
-            indLabel.fontSize = 8
+            // indLabel.fontSize = 8
             const labelWrapper = new StackLayout()
 
-            labelWrapper.orientation = 'horizontal'
-            labelWrapper.height = labelWrapper.width = indicator.width
-            indLabel.horizontalAlignment = 'center'
-            indLabel.verticalAlignment = 'middle'
-            // indLabel.marginLeft = 8 // a tweak that shouldn't need to be, but is
+            // labelWrapper.orientation = 'horizontal'
+            // labelWrapper.height = labelWrapper.width = indicator.width
+            // indLabel.horizontalAlignment = 'center'
+            // indLabel.verticalAlignment = 'middle'
+            // // indLabel.marginLeft = 8 // a tweak that shouldn't need to be, but is
             labelWrapper.addChild(indLabel)
             in2.addChild(labelWrapper)
             in1.addChild(in2)

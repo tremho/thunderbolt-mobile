@@ -4,21 +4,17 @@ import {
     Label,
     Image,
     Color,
-    FlexboxLayout,
     AbsoluteLayout,
     StackLayout,
     GridLayout,
-    PercentLength, CoreTypes
+    CoreTypes
 } from '@nativescript/core'
 import {GridUnitType, ItemSpec} from "@nativescript/core/ui/layouts/grid-layout"
-import * as imageSourceModule from "@nativescript/core/image-source"
+import {isAndroid} from "@nativescript/core/platform";
 
 import {getTheApp} from './ComponentBase'
 import {TBToolbar} from "./tb-toolbar";
 import {TBIndicators} from "./tb-indicators";
-
-const ITEMBOXSIZE = 12; // TODO: Compute from screen height
-const TITLESIZE = 16; // TODO: Compute from screen height
 
 export class TBPage extends GridLayout {
     private _isInit: boolean = false
@@ -32,25 +28,24 @@ export class TBPage extends GridLayout {
         super();
         this.addColumn(new ItemSpec(1, GridUnitType.AUTO))
         this.addRow(new ItemSpec(1, GridUnitType.AUTO))
-        this.addRow(new ItemSpec(1, GridUnitType.AUTO))
+        this.addRow(new ItemSpec(1, GridUnitType.STAR))
 
 
         // console.log("%%%%%%%%%%%%%%%%%%%% Constructing MenuBar")
         const menuBar = new GridLayout()
         // back, toolbar, menu, title, indicators
-        menuBar.addRow(new ItemSpec(1, GridUnitType.AUTO)) // actually doesn't matter what we set this to
+        menuBar.addRow(new ItemSpec(1, GridUnitType.AUTO))
         menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
         menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
         menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
         menuBar.addColumn(new ItemSpec(2, GridUnitType.STAR))
         menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
 
-        menuBar.className = 'title-bar'
+        menuBar.className = 'tb-title-bar' // I think 'title-bar' must be used by {N} because I get weird results using that name
 
         // menuBar.width = PercentLength.parse('100%')
         // menuBar.marginTop = 24
-        // menuBar.alignItems = 'center' // note may not work for ios
-        // menuBar.justifyContent = 'flex-start'
+
         this.back = new Label()
         this.back.className = 'back-button'
         // this.back.marginTop = 7
@@ -58,33 +53,57 @@ export class TBPage extends GridLayout {
         menuBar.addChildAtCell(this.back, 0,0)
 
         const toolbar = new TBToolbar()
-        menuBar.addChildAtCell(toolbar, 0, 1)
+
+        // the behavior here between iOS and Android is seriously different.
+        // we can't dynamically change the grid cell target this goes to, so
+        // for Android we wrap the target where we can control this via CSS
+        // IOS insists on being hard-set (see TBToolbar) and will be invisible if we try do wrap it like Android.
+        // but IOS will treat the flexbox width as the wrap boundary, so we can work with that.
+        // Conversely, Android does not honor that for wrap purposes; it needs the wrapper to limit its flow
+        // so we do it two different ways depending on platform
+        let gridcomp:View = toolbar
+        if(isAndroid) {
+            const toolBarContainer = new StackLayout()
+            toolBarContainer.className = 'tool-bar-container'
+            toolBarContainer.orientation = 'horizontal'
+            gridcomp = toolBarContainer
+            toolBarContainer.addChild(toolbar)
+        }
+        menuBar.addChildAtCell(gridcomp, 0, 1)
 
         this.mbox = new Label()
         this.mbox.className = 'menu-box'
         this.mbox.text = '\u2630'
-        // console.log('----- created and adding mbox')
         menuBar.addChildAtCell(this.mbox, 0,2)
         this._title = new Label()
         this._title.className = 'title'
-        // console.log('----- created and adding title')
         menuBar.addChildAtCell(this._title, 0,3)
 
 
         this.addChildAtCell(menuBar,0,0)
         this.on('layoutChanged', () => {
             // console.log('in layoutChanged')
+            // each time layout changes, check to see if we need to change to constrained mode
+            console.log('testing for constraint change at ', this.getActualSize().width)
+            // note N.B.: we don't have any other classnames at Page level. System classes are above this.
+            // and I had a weird problem with multiple names that makes it easier to just assume this case.
+            if(this.getActualSize().width < 380) {
+                console.log('yep, constrained it is')
+                this.page.className = 'constrained'
+            } else {
+                this.page.className = ''
+                console.log('not constrained')
+            }
+            console.log(this.page.className)
+
             if (!this._isInit) {
                 this._isInit = true
                 let nbText = this.get('noBack')
-                // console.log('>>>>>>>>>>>>  TBPage noBack ', nbText)
                 const noBack = this.get('noBack') === 'true'
-                // console.log('noBack boolean ', noBack)
                 const title = this.get('title') || this.get('text') || 'Default title'
                 const menuId = this.get('menu-id')
                 const toolbarId = this.get('toolbar-id')
                 const indicatorsId = this.get('indicators-id')
-
                 if(!noBack) {
                     // console.log('--- applying tap handler to back button')
                     this.back.on('tap', (ev)=> {
@@ -99,7 +118,7 @@ export class TBPage extends GridLayout {
                     this.back.text = noBack ? " " : "Back"
                     this._title.text = title
                 })
-                if (!menuId) this.mbox.visibility = 'hidden'
+                if (!menuId) this.mbox.visibility = 'hidden' // or this.mbox.hidden = true
                 else {
                     this.mbox.on('tap', (ev)=> {
                         if(this.isMenuOpen()) this.closeMenu()
@@ -107,8 +126,8 @@ export class TBPage extends GridLayout {
                     })
                 }
                 const indicators = new TBIndicators()
-                indicators.verticalAlignment = 'middle'
-                indicators.horizontalAlignment = 'right'
+                // indicators.verticalAlignment = 'middle'
+                // indicators.horizontalAlignment = 'right'
                 menuBar.addChildAtCell(indicators, 0, 4)
 
                 const model = getTheApp().model
@@ -118,18 +137,6 @@ export class TBPage extends GridLayout {
                 if(indicatorItems) indicators.setIndicators(indicatorItems)
             }
 
-            // each time layout changes, check to see if we need to change to constrained mode
-            console.log('testing for constraint change at ', this.getActualSize().width)
-            // note N.B.: we don't have any other classnames at Page level. System classes are above this.
-            // and I had a weird problem with multiple names that makes it easier to just assume this case.
-            if(this.getActualSize().width < 380) {
-                console.log('yep, constrained it is')
-                this.page.className = 'constrained'
-            } else {
-                this.page.className = ''
-                console.log('not constrained')
-            }
-            console.log(this.page.className)
         })
     }
     openMenu() {
