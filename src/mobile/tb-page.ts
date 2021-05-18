@@ -18,89 +18,95 @@ import {TBIndicators} from "./tb-indicators";
 
 export class TBPage extends GridLayout {
     private _isInit: string = ''
-    private back:Label
-    private mbox:Label
-    private _title:Label
+    private back:Label|undefined
+    private mbox:Label|undefined
+    private _title:Label|undefined
     private menuDrop:MenuDrop|undefined
     private pageWidth:number = 0
 
     constructor() {
         super();
-        this.removeColumns()
-        this.removeRows()
-        this.removeChildren()
         this.addColumn(new ItemSpec(1, GridUnitType.AUTO))
         this.addRow(new ItemSpec(1, GridUnitType.AUTO))
         this.addRow(new ItemSpec(1, GridUnitType.STAR))
 
-
-        // console.log("%%%%%%%%%%%%%%%%%%%% Constructing MenuBar")
-        const menuBar = new GridLayout()
-        // back, toolbar, menu, title, indicators
-        menuBar.addRow(new ItemSpec(1, GridUnitType.AUTO))
-        menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
-        menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
-        menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
-        menuBar.addColumn(new ItemSpec(2, GridUnitType.STAR))
-        menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
-
-        menuBar.className = 'tb-title-bar' // I think 'title-bar' must be used by {N} because I get weird results using that name
-
-        // menuBar.width = PercentLength.parse('100%')
-        // menuBar.marginTop = 24
-
-        this.back = new Label()
-        this.back.className = 'back-button'
-        // this.back.marginTop = 7
-        // this.back.marginLeft = 4
-        menuBar.addChildAtCell(this.back, 0,0)
-
-        const toolbar = new TBToolbar()
-
-        // the behavior here between iOS and Android is seriously different.
-        // we can't dynamically change the grid cell target this goes to, so
-        // for Android we wrap the target where we can control this via CSS
-        // IOS insists on being hard-set (see TBToolbar) and will be invisible if we try do wrap it like Android.
-        // but IOS will treat the flexbox width as the wrap boundary, so we can work with that.
-        // Conversely, Android does not honor that for wrap purposes; it needs the wrapper to limit its flow
-        // so we do it two different ways depending on platform
-        let gridcomp:View = toolbar
-        if(isAndroid) {
-            const toolBarContainer = new StackLayout()
-            toolBarContainer.className = 'tool-bar-container'
-            toolBarContainer.orientation = 'horizontal'
-            gridcomp = toolBarContainer
-            toolBarContainer.addChild(toolbar)
-        }
-        menuBar.addChildAtCell(gridcomp, 0, 1)
-
-        this.mbox = new Label()
-        this.mbox.className = 'menu-box'
-        this.mbox.text = '\u2630'
-        menuBar.addChildAtCell(this.mbox, 0,2)
-        this._title = new Label()
-        this._title.className = 'title'
-        menuBar.addChildAtCell(this._title, 0,3)
-
-
-        this.addChildAtCell(menuBar,0,0)
         this.on('layoutChanged', () => {
             // console.log('in layoutChanged')
-            // each time layout changes, check to see if we need to change to constrained mode
-            console.log('testing for constraint change at ', this.getActualSize().width)
-            // note N.B.: we don't have any other classnames at Page level. System classes are above this.
-            // and I had a weird problem with multiple names that makes it easier to just assume this case of class name set or empty
-            if(this.getActualSize().width < 380) {
-                console.log('yep, constrained it is')
-                this.page.className = 'constrained'
-            } else {
-                this.page.className = ''
-                console.log('not constrained')
-            }
-            console.log(this.page.className)
-
-            if (!this._isInit || this._isInit !== this.page.className) {
+            if(!this._isInit || this._isInit !== this.page.className) {
                 this._isInit = this.page.className
+            // We are now rebuilding enitirely on a layout change
+            this.removeChildren()
+
+            // console.log("%%%%%%%%%%%%%%%%%%%% Constructing MenuBar")
+            const menuBar = new GridLayout()
+            menuBar.removeColumns();
+            menuBar.removeRows()
+            menuBar.removeChildren();
+
+            // back, toolbar, menu, title, indicators
+            menuBar.addRow(new ItemSpec(1, GridUnitType.AUTO))
+            menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
+            menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
+            menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
+            menuBar.addColumn(new ItemSpec(2, GridUnitType.STAR))
+            menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
+
+            menuBar.className = 'tb-title-bar' // I think 'title-bar' must be used by {N} because I get weird results using that name
+
+            // menuBar.width = PercentLength.parse('100%')
+            // menuBar.marginTop = 24
+
+            this.back = new Label()
+            this.back.className = 'back-button'
+            // this.back.marginTop = 7
+            // this.back.marginLeft = 4
+            menuBar.addChildAtCell(this.back, 0,0)
+
+            const toolbar = new TBToolbar()
+
+            // the behavior here between iOS and Android is seriously different.
+            // we can't dynamically change the grid cell target this goes to, so
+            // for Android we wrap the target where we can control this via CSS
+            // IOS insists on being hard-set (see TBToolbar) and will be invisible if we try do wrap it like Android.
+            // but IOS will treat the flexbox width as the wrap boundary, so we can work with that.
+            // Conversely, Android does not honor that for wrap purposes; it needs the wrapper to limit its flow
+            // so we do it two different ways depending on platform
+            let gridcomp:View = toolbar
+            if(isAndroid) {
+                const toolBarContainer = new StackLayout()
+                toolBarContainer.className = 'tool-bar-container'
+                toolBarContainer.orientation = 'horizontal'
+                gridcomp = toolBarContainer
+                toolBarContainer.addChild(toolbar)
+            }
+            menuBar.addChildAtCell(gridcomp, 0, 1)
+
+            this.mbox = new Label()
+            this.mbox.className = 'menu-box'
+            this.mbox.text = '\u2630'
+            menuBar.addChildAtCell(this.mbox, 0,2)
+            this._title = new Label()
+            this._title.className = 'title'
+            menuBar.addChildAtCell(this._title, 0,3)
+
+
+            this.addChildAtCell(menuBar,0,0)
+
+                // each time layout changes, check to see if we need to change to constrained mode
+                console.log('testing for constraint change at ', this.getActualSize().width)
+                // note N.B.: we don't have any other classnames at Page level. System classes are above this.
+                // and I had a weird problem with multiple names that makes it easier to just assume this case of class name set or empty
+                let pageWidth = this.getActualSize().width
+                if(pageWidth < 380) {
+                    console.log('yep, constrained it is')
+                    this.page.className = pageWidth <= 320 ? 'constrained tiny' : 'constrained'
+                } else {
+                    this.page.className = ''
+                    console.log('not constrained')
+                }
+                console.log(this.page.className)
+
+                //// ----->>>>
                 let nbText = this.get('noBack')
                 const noBack = this.get('noBack') === 'true'
                 const title = this.get('title') || this.get('text') || 'Default title'
@@ -118,8 +124,8 @@ export class TBPage extends GridLayout {
                 // text must be applied behind a timeout
                 setTimeout(() => {
                     // console.log('----- applying text')
-                    this.back.text = noBack ? " " : "Back"
-                    this._title.text = title
+                    if(this.back) this.back.text = noBack ? " " : "Back"
+                    if(this._title) this._title.text = title
                 })
                 if (!menuId) this.mbox.visibility = 'hidden' // or this.mbox.hidden = true, although that would alter layout.
                 else {
@@ -153,22 +159,24 @@ export class TBPage extends GridLayout {
         } catch(e) {
             console.error(e)
         }
-        let items = menu.children || []
-        this.menuDrop = new MenuDrop(this.pageWidth)
-        const menuDropView = new MenuListContainer()
-        items.forEach((item:MenuItemInfo) => {
-            // TODO: create a response object here extend Label
-            const mi = new MenuItem(this, item, 0)
-            menuDropView.addChild(mi)
-        })
-        this.menuDrop.marginTop = -24
-        const loc = this.mbox.getLocationRelativeTo(this)
-        const size = this.mbox.getActualSize()
-        menuDropView.marginLeft = loc.x + size.width
-        menuDropView.marginTop =  4
-        this.menuDrop.setMenu(menuDropView)
-        this.addChildAtCell(this.menuDrop, 1, 0)
+        if(this.mbox) {
+            let items = menu.children || []
+            this.menuDrop = new MenuDrop(this.pageWidth)
+            const menuDropView = new MenuListContainer()
+            items.forEach((item: MenuItemInfo) => {
+                // TODO: create a response object here extend Label
+                const mi = new MenuItem(this, item, 0)
+                menuDropView.addChild(mi)
+            })
+            this.menuDrop.marginTop = -24
 
+            const loc = this.mbox.getLocationRelativeTo(this)
+            const size = this.mbox.getActualSize()
+            menuDropView.marginLeft = loc.x + size.width
+            menuDropView.marginTop = 4
+            this.menuDrop.setMenu(menuDropView)
+            this.addChildAtCell(this.menuDrop, 1, 0)
+        }
     }
     closeMenu() {
         if(this.menuDrop) {

@@ -17,7 +17,6 @@ export class TBToolbar extends FlexboxLayout {
 
     constructor() {
         super()
-        this.removeChildren()
         this.className = 'tool-bar'
         // this.flexDirection = "row" //>
         // this.backgroundColor = new Color('aliceblue') //>

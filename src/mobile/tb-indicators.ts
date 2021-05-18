@@ -27,7 +27,6 @@ export class TBIndicators extends FlexboxLayout {
 
     constructor() {
         super()
-        this.removeChildren()
         this.className = 'indicator-bar'
         // this.height = boxSize;
         // this.horizontalAlignment = 'right'
@@ -37,6 +36,7 @@ export class TBIndicators extends FlexboxLayout {
         // this.backgroundColor = new Color('aliceblue')
     }
     setIndicators(indicators:IndicatorInfo[]) {
+        this.removeChildren()
         this.width = (indicators && indicators.length * boxSize) || 0
         const app = getTheApp()
         indicators.forEach(indInfo => {
