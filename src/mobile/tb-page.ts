@@ -17,7 +17,7 @@ import {TBToolbar} from "./tb-toolbar";
 import {TBIndicators} from "./tb-indicators";
 
 export class TBPage extends GridLayout {
-    private _isInit: boolean = false
+    private _isInit: string = ''
     private back:Label
     private mbox:Label
     private _title:Label
@@ -26,6 +26,9 @@ export class TBPage extends GridLayout {
 
     constructor() {
         super();
+        this.removeColumns()
+        this.removeRows()
+        this.removeChildren()
         this.addColumn(new ItemSpec(1, GridUnitType.AUTO))
         this.addRow(new ItemSpec(1, GridUnitType.AUTO))
         this.addRow(new ItemSpec(1, GridUnitType.STAR))
@@ -86,7 +89,7 @@ export class TBPage extends GridLayout {
             // each time layout changes, check to see if we need to change to constrained mode
             console.log('testing for constraint change at ', this.getActualSize().width)
             // note N.B.: we don't have any other classnames at Page level. System classes are above this.
-            // and I had a weird problem with multiple names that makes it easier to just assume this case.
+            // and I had a weird problem with multiple names that makes it easier to just assume this case of class name set or empty
             if(this.getActualSize().width < 380) {
                 console.log('yep, constrained it is')
                 this.page.className = 'constrained'
@@ -96,8 +99,8 @@ export class TBPage extends GridLayout {
             }
             console.log(this.page.className)
 
-            if (!this._isInit) {
-                this._isInit = true
+            if (!this._isInit || this._isInit !== this.page.className) {
+                this._isInit = this.page.className
                 let nbText = this.get('noBack')
                 const noBack = this.get('noBack') === 'true'
                 const title = this.get('title') || this.get('text') || 'Default title'
@@ -118,7 +121,7 @@ export class TBPage extends GridLayout {
                     this.back.text = noBack ? " " : "Back"
                     this._title.text = title
                 })
-                if (!menuId) this.mbox.visibility = 'hidden' // or this.mbox.hidden = true
+                if (!menuId) this.mbox.visibility = 'hidden' // or this.mbox.hidden = true, although that would alter layout.
                 else {
                     this.mbox.on('tap', (ev)=> {
                         if(this.isMenuOpen()) this.closeMenu()
@@ -198,7 +201,7 @@ class MenuItemInfo {
 }
 
 class MenuItem extends StackLayout {
-    _isInit:boolean = false
+    // _isInit:boolean = false
     tbPage:TBPage
     info:MenuItemInfo
     level: number = 0

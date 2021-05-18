@@ -24,10 +24,10 @@ class IndicatorInfo {
 const boxSize = 25
 
 export class TBIndicators extends FlexboxLayout {
-    _init:boolean = false;
 
     constructor() {
         super()
+        this.removeChildren()
         this.className = 'indicator-bar'
         // this.height = boxSize;
         // this.horizontalAlignment = 'right'

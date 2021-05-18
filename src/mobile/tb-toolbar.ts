@@ -17,11 +17,13 @@ export class TBToolbar extends FlexboxLayout {
 
     constructor() {
         super()
+        this.removeChildren()
         this.className = 'tool-bar'
         // this.flexDirection = "row" //>
         // this.backgroundColor = new Color('aliceblue') //>
     }
     setTools(tools:ToolInfo[]) {
+        this.removeChildren()
         // IOS must set the width, although it will honor this for flex wrapping as a happy hack.
         // for Android, we use a wrapper container to do that for us, since the ios hack doesn't work on android.
         if(isIOS) {
