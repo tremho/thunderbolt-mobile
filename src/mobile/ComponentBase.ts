@@ -152,15 +152,19 @@ export default class ComponentBase extends StackLayout {
         })
     }
 
-    protected setDynamicExpressions(str:string, control:View, controlProp:string) {
+    protected setDynamicExpressions(str:string, control:View, controlProp:string, bindName?:string) {
         let text = this.evalExpressionString(str, control.parent || control)
+        // console.log('setting initial text for ', control, text)
         control.set(controlProp, text)
-        control.bindingContext.on('propertyChange', (ev:any) => {
-            let text = this.evalExpressionString(str, control.parent || control)
-            // console.log('on propertyChange', controlProp, text)
-            control.set(controlProp, text)
-        })
-
+        console.log('setDynamicExpressions with bindName', bindName)
+        if(bindName && this.get('bind')) {
+            this.addBinding(control, bindName, controlProp)
+            control.bindingContext.on('propertyChange', (ev: any) => {
+                let text = this.evalExpressionString(str, control.parent || control)
+                // console.log('on propertyChange', control, controlProp, text)
+                control.set(controlProp, text)
+            })
+        }
     }
 
     protected evalExpressionString(str:string, component:any) {

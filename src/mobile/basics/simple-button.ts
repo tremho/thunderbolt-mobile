@@ -9,13 +9,12 @@ export class SimpleButton extends ComponentBase {
 
     // Override to create our button
     public createControl() {
-        this.setActionResponder(this.button, 'tap', 'action')
         this.container.addChild(this.button)
-        // this.addBinding(this.button, 'btnName', 'text')
+        this.setActionResponder(this.button, 'tap', 'action')
     }
 
     protected setProperties() {
-        this.button.text = this.get('text') || 'simple-button'
+        this.setDynamicExpressions(this.get('text') || 'simple-button', this.button, 'text')
     }
 
 }

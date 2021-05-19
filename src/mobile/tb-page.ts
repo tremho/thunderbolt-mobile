@@ -1,4 +1,3 @@
-// import {EventData, getTheApp} from "thunderbolt-common"
 import {
     View,
     Label,
@@ -7,17 +6,18 @@ import {
     AbsoluteLayout,
     StackLayout,
     GridLayout,
+    Screen,
     CoreTypes
 } from '@nativescript/core'
 import {GridUnitType, ItemSpec} from "@nativescript/core/ui/layouts/grid-layout"
-import {isAndroid} from "@nativescript/core/platform";
+import {isAndroid, device} from "@nativescript/core/platform";
 
 import {getTheApp} from './ComponentBase'
 import {TBToolbar} from "./tb-toolbar";
 import {TBIndicators} from "./tb-indicators";
 
 export class TBPage extends GridLayout {
-    private _isInit: string = ''
+    private _isInit: number|undefined = 0
     private back:Label|undefined
     private mbox:Label|undefined
     private _title:Label|undefined
@@ -26,85 +26,109 @@ export class TBPage extends GridLayout {
 
     constructor() {
         super();
-        this.addColumn(new ItemSpec(1, GridUnitType.AUTO))
-        this.addRow(new ItemSpec(1, GridUnitType.AUTO))
-        this.addRow(new ItemSpec(1, GridUnitType.STAR))
 
         this.on('layoutChanged', () => {
             // console.log('in layoutChanged')
-            if(!this._isInit || this._isInit !== this.page.className) {
-                this._isInit = this.page.className
-            // We are now rebuilding enitirely on a layout change
-            this.removeChildren()
+            let pageWidth:number|undefined = this.page.getActualSize().width
+            if(!this._isInit || this._isInit !== pageWidth) {
+                this._isInit = pageWidth
+                // We are now rebuilding enitirely on a layout change
+                this.removeColumns()
+                this.removeRows()
+                let c;
+                let i = 0;
+                while((c = this.getChildAt(i++))) {
+                    if(c instanceof TBContent) continue;
+                    this.removeChild(c)
+                }
 
-            // console.log("%%%%%%%%%%%%%%%%%%%% Constructing MenuBar")
-            const menuBar = new GridLayout()
-            menuBar.removeColumns();
-            menuBar.removeRows()
-            menuBar.removeChildren();
+                this.addColumn(new ItemSpec(1, GridUnitType.AUTO))
+                this.addRow(new ItemSpec(1, GridUnitType.AUTO))
+                this.addRow(new ItemSpec(1, GridUnitType.STAR))
 
-            // back, toolbar, menu, title, indicators
-            menuBar.addRow(new ItemSpec(1, GridUnitType.AUTO))
-            menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
-            menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
-            menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
-            menuBar.addColumn(new ItemSpec(2, GridUnitType.STAR))
-            menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
+                // console.log("%%%%%%%%%%%%%%%%%%%% Constructing MenuBar")
+                const menuBar = new GridLayout()
+                menuBar.removeColumns();
+                menuBar.removeRows()
+                menuBar.removeChildren();
 
-            menuBar.className = 'tb-title-bar' // I think 'title-bar' must be used by {N} because I get weird results using that name
+                // back, toolbar, menu, title, indicators
+                menuBar.addRow(new ItemSpec(1, GridUnitType.AUTO))
+                menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
+                menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
+                menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
+                menuBar.addColumn(new ItemSpec(2, GridUnitType.STAR))
+                menuBar.addColumn(new ItemSpec(1, GridUnitType.AUTO))
 
-            // menuBar.width = PercentLength.parse('100%')
-            // menuBar.marginTop = 24
+                menuBar.className = 'tb-title-bar' // I think 'title-bar' must be used by {N} because I get weird results using that name
 
-            this.back = new Label()
-            this.back.className = 'back-button'
-            // this.back.marginTop = 7
-            // this.back.marginLeft = 4
-            menuBar.addChildAtCell(this.back, 0,0)
+                // menuBar.width = PercentLength.parse('100%')
+                // menuBar.marginTop = 24
 
-            const toolbar = new TBToolbar()
+                this.back = new Label()
+                this.back.className = 'back-button'
+                // this.back.marginTop = 7
+                // this.back.marginLeft = 4
+                menuBar.addChildAtCell(this.back, 0,0)
 
-            // the behavior here between iOS and Android is seriously different.
-            // we can't dynamically change the grid cell target this goes to, so
-            // for Android we wrap the target where we can control this via CSS
-            // IOS insists on being hard-set (see TBToolbar) and will be invisible if we try do wrap it like Android.
-            // but IOS will treat the flexbox width as the wrap boundary, so we can work with that.
-            // Conversely, Android does not honor that for wrap purposes; it needs the wrapper to limit its flow
-            // so we do it two different ways depending on platform
-            let gridcomp:View = toolbar
-            if(isAndroid) {
-                const toolBarContainer = new StackLayout()
-                toolBarContainer.className = 'tool-bar-container'
-                toolBarContainer.orientation = 'horizontal'
-                gridcomp = toolBarContainer
-                toolBarContainer.addChild(toolbar)
-            }
-            menuBar.addChildAtCell(gridcomp, 0, 1)
+                const toolbar = new TBToolbar()
 
-            this.mbox = new Label()
-            this.mbox.className = 'menu-box'
-            this.mbox.text = '\u2630'
-            menuBar.addChildAtCell(this.mbox, 0,2)
-            this._title = new Label()
-            this._title.className = 'title'
-            menuBar.addChildAtCell(this._title, 0,3)
+                // the behavior here between iOS and Android is seriously different.
+                // we can't dynamically change the grid cell target this goes to, so
+                // for Android we wrap the target where we can control this via CSS
+                // IOS insists on being hard-set (see TBToolbar) and will be invisible if we try do wrap it like Android.
+                // but IOS will treat the flexbox width as the wrap boundary, so we can work with that.
+                // Conversely, Android does not honor that for wrap purposes; it needs the wrapper to limit its flow
+                // so we do it two different ways depending on platform
+                let gridcomp:View = toolbar
+                if(isAndroid) {
+                    const toolBarContainer = new StackLayout()
+                    toolBarContainer.className = 'tool-bar-container'
+                    toolBarContainer.orientation = 'horizontal'
+                    gridcomp = toolBarContainer
+                    toolBarContainer.addChild(toolbar)
+                }
+                menuBar.addChildAtCell(gridcomp, 0, 1)
+
+                this.mbox = new Label()
+                this.mbox.className = 'menu-box'
+                this.mbox.text = '\u2630'
+                menuBar.addChildAtCell(this.mbox, 0,2)
+                this._title = new Label()
+                this._title.className = 'title'
+                menuBar.addChildAtCell(this._title, 0,3)
 
 
-            this.addChildAtCell(menuBar,0,0)
+                this.addChildAtCell(menuBar,0,0)
 
                 // each time layout changes, check to see if we need to change to constrained mode
                 console.log('testing for constraint change at ', this.getActualSize().width)
                 // note N.B.: we don't have any other classnames at Page level. System classes are above this.
                 // and I had a weird problem with multiple names that makes it easier to just assume this case of class name set or empty
-                let pageWidth = this.getActualSize().width
+                let isTiny = pageWidth <=320
                 if(pageWidth < 380) {
-                    console.log('yep, constrained it is')
-                    this.page.className = pageWidth <= 320 ? 'constrained tiny' : 'constrained'
+                    // console.log('yep, constrained it is')
+                    this.page.className = 'constrained'
+
+                    // console.log(JSON.stringify(device, null, 2))
+                    // console.log('Scale: ',Screen.mainScreen.scale)
+
+                    console.log('pageWidth', pageWidth)
+                    console.log('scale', Screen.mainScreen.scale)
+
+                    if(isAndroid) {
+                        isTiny = isTiny && Screen.mainScreen.scale < 1
+                    }
+                    if(isTiny) this.page.className += ' tiny'
                 } else {
-                    this.page.className = ''
-                    console.log('not constrained')
+                    let isSmall = false;  // small only applies to android
+                    if(isAndroid) {
+                        isSmall = !isTiny && Screen.mainScreen.scale < 2
+                    }
+                    this.page.className = isSmall ? 'small' : ''
+                    // console.log('not constrained')
                 }
-                console.log(this.page.className)
+                console.log('page classname', this.page.className)
 
                 //// ----->>>>
                 let nbText = this.get('noBack')
