@@ -32,6 +32,7 @@ export class TBPage extends GridLayout {
             let pageWidth:number|undefined = this.page.getActualSize().width
             if(!this._isInit || this._isInit !== pageWidth) {
                 this._isInit = pageWidth
+                this.pageWidth = pageWidth // TODO: Note, yes, we could get rid of _isInit since it is redundant now to this.pageWidth
                 // We are now rebuilding enitirely on a layout change
                 this.removeColumns()
                 this.removeRows()
@@ -205,6 +206,7 @@ export class TBPage extends GridLayout {
     closeMenu() {
         if(this.menuDrop) {
             this.menuDrop.removeMenu()
+            delete this.menuDrop;
             return true
         }
         return false
@@ -299,8 +301,7 @@ class MenuItem extends StackLayout {
             if(isSubmenu) {
                 us.openSubmenu()
             } else if(us.info.role !== 'separator') {
-                const md = us.tbPage.getMenuDrop()
-                if (md) md.removeMenu()
+                us.tbPage.closeMenu()
                 // console.log("clicked on ",us.info)
                 getTheApp().onMenuAction(us.info)
             }
@@ -369,6 +370,8 @@ class MenuDrop extends AbsoluteLayout {
         }
     }
     removeMenu() {
+        this.off('tap')
+        this.isPassThroughParentEnabled = true;
         this.removeChildren()
         this.menu = null
     }
