@@ -5,6 +5,8 @@ import {TBPage,TBContent} from "./tb-page";
 import {SimpleLabel} from "./basics/simple-label";
 import {SimpleButton} from "./basics/simple-button";
 import {SimpleSlot} from "./basics/simple-slot";
+import {TextArea} from "./basics/text-area"
+import {TBScrollView} from "./layout/scroll-view";
 import {FillSpace} from "./layout/fill-space";
 import {FlexLayout} from "./layout/flex-layout";
 import {GridSection} from "./layout/grid-section";
@@ -31,6 +33,8 @@ export {TBPage as TBPage}
 export {TBContent as TBContent}
 export {SimpleLabel as SimpleLabel}
 export {SimpleButton as SimpleButton}
+export {TextArea as TextArea}
+export {TBScrollView as ScrollView}
 export {SimpleSlot as SimpleSlot}
 export {FillSpace as FillSpace}
 export {FlexLayout as FlexLayout}
