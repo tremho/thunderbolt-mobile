@@ -56,6 +56,7 @@ export default class ComponentBase extends StackLayout {
                                     console.error('Error in  "'+'UNNAMED COMPONENT'+' beforeLayout"', e)
                                 }
                                 setTimeout(() => {
+                                    this.com.setCommonPropsMobile(this)
                                     this.setProperties()
                                     this.com.bindComponent()
                                     this.com.setLocalBinds(this.localBinds)
