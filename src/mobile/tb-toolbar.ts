@@ -95,7 +95,7 @@ export class TBToolbar extends FlexboxLayout {
             in2.addChild(labelWrapper)
             in1.addChild(in2)
             toolButton.addChild(in1)
-            console.log('adding '+toolButton.id+ ' to toolbar')
+            // console.log('adding '+toolButton.id+ ' to toolbar')
             this.addChild(toolButton)
 
             toolButton.set('state', tool.state) // sets initial state

@@ -110,7 +110,7 @@ export class TBIndicators extends FlexboxLayout {
                 cn += ' indicator-state-'+ state
                 indicator.className = cn
 
-                console.log('--------------> Indicator '+indicator.id+' classname is ', indicator.get('className'))
+                // console.log('--------------> Indicator '+indicator.id+' classname is ', indicator.get('className'))
 
                 let icon = (indInfo.icons && indInfo.icons[state])
                 indIcon.src = icon

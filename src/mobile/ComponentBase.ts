@@ -19,6 +19,7 @@ let ComCommon:any, LocalBind:any
 
 export default class ComponentBase extends StackLayout {
     private _isInit: boolean = false
+    protected defaultProps:any = {}
     protected container: any
     public com: any
     private localBinds:any[] | undefined
@@ -56,7 +57,7 @@ export default class ComponentBase extends StackLayout {
                                     console.error('Error in  "'+'UNNAMED COMPONENT'+' beforeLayout"', e)
                                 }
                                 setTimeout(() => {
-                                    this.com.setCommonPropsMobile(this)
+                                    this.com.setCommonPropsMobile(this, this.defaultProps)
                                     this.setProperties()
                                     this.com.bindComponent()
                                     this.com.setLocalBinds(this.localBinds)
@@ -145,7 +146,7 @@ export default class ComponentBase extends StackLayout {
             const app = getTheApp()
             // console.log('>>>>>>>>>>>> getting activity from app', app, ed.app)
             const activity = app.currentActivity
-            console.log('activity found', activity)
+            // console.log('activity found', activity)
             console.log('should call '+target)
             if(activity && typeof activity[target] === 'function') {
                 activity[target](ed)

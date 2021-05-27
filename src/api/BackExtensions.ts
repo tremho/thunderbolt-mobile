@@ -8,7 +8,7 @@ export function registerExtensionModule(moduleName:string, module:any) {
 }
 
 export function callExtensionApi(moduleName:string, functionName:string, args:any[]) {
-    console.log(`calling ${functionName} from module "${moduleName}"`)
+    // console.log(`calling ${functionName} from module "${moduleName}"`)
     // @ts-ignore
     const mod = extensionModules[moduleName]
     const fn = mod[functionName]

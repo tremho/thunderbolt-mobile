@@ -8,6 +8,8 @@ export class SimpleLabel extends ComponentBase {
 
     // Override to create our button
     public createControl() {
+        this.label.set("whiteSpace", "nowrap")
+        this.label.set("textWrap", false)
         this.container.addChild(this.label)
     }
 

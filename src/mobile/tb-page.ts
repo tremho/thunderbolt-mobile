@@ -103,7 +103,7 @@ export class TBPage extends GridLayout {
                 this.addChildAtCell(menuBar,0,0)
 
                 // each time layout changes, check to see if we need to change to constrained mode
-                console.log('testing for constraint change at ', this.getActualSize().width)
+                // console.log('testing for constraint change at ', this.getActualSize().width)
                 // note N.B.: we don't have any other classnames at Page level. System classes are above this.
                 // and I had a weird problem with multiple names that makes it easier to just assume this case of class name set or empty
                 let isTiny = pageWidth <=320
@@ -114,8 +114,8 @@ export class TBPage extends GridLayout {
                     // console.log(JSON.stringify(device, null, 2))
                     // console.log('Scale: ',Screen.mainScreen.scale)
 
-                    console.log('pageWidth', pageWidth)
-                    console.log('scale', Screen.mainScreen.scale)
+                    // console.log('pageWidth', pageWidth)
+                    // console.log('scale', Screen.mainScreen.scale)
 
                     if(isAndroid) {
                         isTiny = isTiny && Screen.mainScreen.scale < 1
@@ -129,7 +129,7 @@ export class TBPage extends GridLayout {
                     this.page.className = isSmall ? 'small' : ''
                     // console.log('not constrained')
                 }
-                console.log('page classname', this.page.className)
+                // console.log('page classname', this.page.className)
 
                 //// ----->>>>
                 let nbText = this.get('noBack')
