@@ -6,7 +6,7 @@ import {TextView, Color} from '@nativescript/core'
 export class TextArea extends ComponentBase {
     private textView:TextView = new TextView()
 
-    // Override to create our button
+    // Override to create our control
     public createControl() {
         this.container.addChild(this.textView)
     }

@@ -1,4 +1,5 @@
 import {StackLayout, View} from '@nativescript/core'
+import {TBContent} from "./tb-page";
 
 export class EventData {
     app:any|undefined
@@ -36,8 +37,7 @@ export default class ComponentBase extends StackLayout {
         try {
             this.container = this
             this.on('layoutChanged', () => {
-                // console.log('in layoutChanged')
-                if (!this._isInit) {
+                if(!this._isInit) {
                     this._isInit = true
                     this.com = new ComCommon(this)
                     this.com.waitForModel().then(() => {
@@ -134,6 +134,7 @@ export default class ComponentBase extends StackLayout {
      *
      */
     protected setActionResponder(view:any, eventName:string, tag:string = 'action') {
+        if(!view) return;
         const target = this.get(tag)
         const ed = new EventData()
         ed.app = getTheApp()
@@ -161,11 +162,13 @@ export default class ComponentBase extends StackLayout {
         const bv = this.com.getComponentAttribute(this, 'bind') // only bind if there is a bind statement
         if(bindName && bv) {
             this.addBinding(control, bindName, controlProp)
-            control.bindingContext.on('propertyChange', (ev: any) => {
-                let text = this.evalExpressionString(str, control.parent || control)
-                // console.log('on propertyChange', control, controlProp, text)
-                control.set(controlProp, text)
-            })
+            if(control.bindingContext) {
+                control.bindingContext.on('propertyChange', (ev: any) => {
+                    let text = this.evalExpressionString(str, control.parent || control)
+                    // console.log('on propertyChange', control, controlProp, text)
+                    control.set(controlProp, text)
+                })
+            }
         }
     }
 

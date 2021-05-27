@@ -17,7 +17,7 @@ import {TBToolbar} from "./tb-toolbar";
 import {TBIndicators} from "./tb-indicators";
 
 export class TBPage extends GridLayout {
-    private _isInit: number|undefined = 0
+    private _isInit:boolean = false
     private back:Label|undefined
     private mbox:Label|undefined
     private _title:Label|undefined
@@ -30,10 +30,15 @@ export class TBPage extends GridLayout {
         this.on('layoutChanged', () => {
             // console.log('in layoutChanged')
             let pageWidth:number|undefined = this.page.getActualSize().width
-            if(!this._isInit || this._isInit !== pageWidth) {
-                this._isInit = pageWidth
-                this.pageWidth = pageWidth // TODO: Note, yes, we could get rid of _isInit since it is redundant now to this.pageWidth
-                // We are now rebuilding enitirely on a layout change
+            // console.log('tbPage layoutChange ',pageWidth, this.pageWidth)
+            if(this.pageWidth !== pageWidth) {
+                this.pageWidth = pageWidth
+                if(this._isInit && this.get('reloadOnOrientationChange') === 'true') {
+                    // console.log("---------------- Reloading due to orientation change --------------")
+                    return getTheApp().reloadCurrentPage()
+                }
+                this._isInit = true;
+                // We are now rebuilding the title bar entirely on a layout change
                 this.removeColumns()
                 this.removeRows()
                 let c;
@@ -166,9 +171,10 @@ export class TBPage extends GridLayout {
 
                 const model = getTheApp().model
                 let tools = toolbarId && model.getAtPath('toolbar.'+toolbarId)
-                if(tools) toolbar.setTools(tools)
                 let indicatorItems = indicatorsId && model.getAtPath('indicators.'+indicatorsId)
+                toolbar.setTools(tools || [])
                 if(indicatorItems) indicators.setIndicators(indicatorItems)
+
             }
 
         })

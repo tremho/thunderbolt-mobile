@@ -14,7 +14,6 @@ export class TBStackLayout extends ComponentBase {
             height: "100%",
             align: "left"
         }
-
     }
     protected setProperties() {
     }
