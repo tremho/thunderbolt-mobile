@@ -45,7 +45,9 @@ export default class ComponentBase extends StackLayout {
                         // must occur on a nominal timeout to work across platforms
                         setTimeout(() => {
                             // console.log('executing timeout -- creating component')
-                            this.className = this.constructor.name
+                            let className = this.get('class') || this.get('className') || ''
+                            className += (className ? ' ' : '')+this.constructor.name
+                            this.className = className
                             this.localBinds = []
                             this.createControl()
                             // console.log('localBinds', this.localBinds)

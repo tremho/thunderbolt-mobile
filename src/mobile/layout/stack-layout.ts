@@ -1,23 +1,12 @@
 
-import ComponentBase from '../ComponentBase'
+import {StackLayout, PercentLength} from '@nativescript/core'
 
-import {StackLayout} from '@nativescript/core'
-
-export class TBStackLayout extends ComponentBase {
-    private stack:StackLayout = new StackLayout()
-
-    public createControl() {
-        this.stack.orientation = this.get('orientation')
-        this.container.addChild(this.stack)
-        this.defaultProps = {
-            width: "100%",
-            height: "100%",
-            align: "left"
-        }
+export class TBStackLayout extends StackLayout {
+    constructor() {
+        super()
+        this.set('height', this.get('height') || '100%')
+        this.set('width', this.get('width') || '100%')
+        this.set('horizontalAlignment', this.get('horizontalAlignment') || 'left')
     }
-    protected setProperties() {
-    }
-
 }
-
 
