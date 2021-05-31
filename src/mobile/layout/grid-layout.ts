@@ -1,25 +1,22 @@
 
-import ComponentBase from '../ComponentBase'
+import {GridLayout, ItemSpec, GridUnitType} from '@nativescript/core'
 
-import {GridLayout} from '@nativescript/core'
-
-export class TBGridLayout extends ComponentBase {
-    private grid:GridLayout = new GridLayout()
-
-    public createControl() {
-        // this.grid
-        // todo: all the properties
-        // areas
-        // gridTemplateColumns, gridTemplateRows
-        // gridTemplate
-        // gridAutoColumns, gridAutoRows,
-        // gridAutoFLow
-        // cm.parseFits(props)
-        this.container.addChild(this.grid)
-    }
-    protected setProperties() {
+export class TBGridLayout extends GridLayout {
+    constructor() {
+        super()
+        this.on('layoutChanged', () => {
+            //@ts-ignore
+            let gap = Number(this.gridGap)
+            if(isFinite(gap)) {
+                let kids = this.getChildrenCount()
+                let i = 0;
+                while(i < kids) {
+                    let child = this.getChildAt(i)
+                    child.margin = gap
+                    i++
+                }
+            }
+        })
     }
 
 }
-
-
