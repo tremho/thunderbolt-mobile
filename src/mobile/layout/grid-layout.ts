@@ -20,7 +20,6 @@ export class TBGridLayout extends GridLayout {
         this.on('layoutChanged', () => {
             //@ts-ignore
             let gap = Number(this.gridGap)
-            console.log('gridGap is ', gap)
             if(isFinite(gap)) {
                 setTimeout(() => {
                     let kids = this.getChildrenCount()
