@@ -14,20 +14,23 @@ export class TBGridLayout extends GridLayout {
         //     i++
         // }
         // let ablock = areas.join(' ')
-        // console.log('setting template areas to ', ablock)
+        // console.log('setting template Gap isreas to ', ablock)
         // this.templateAreas = ablock
 
         this.on('layoutChanged', () => {
             //@ts-ignore
             let gap = Number(this.gridGap)
+            console.log('gridGap is ', gap)
             if(isFinite(gap)) {
-                let kids = this.getChildrenCount()
-                let i = 0;
-                while(i < kids) {
-                    let child = this.getChildAt(i)
-                    child.margin = gap
-                    i++
-                }
+                setTimeout(() => {
+                    let kids = this.getChildrenCount()
+                    let i = 0;
+                    while(i < kids) {
+                        let child = this.getChildAt(i)
+                        child.margin = gap
+                        i++
+                    }
+                })
             }
         })
     }
