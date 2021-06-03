@@ -47,50 +47,52 @@ export class TBGridLayout extends GridLayout {
         }
         this.set('columns', val)
     }
+    set gridTemplateRows(val:string) {
+        if(val.substring(0, 6) === 'repeat') {
+            let po = val.indexOf('(')
+            let pc = val.indexOf(')', po)
+            let rx = val.substring(po+1, pc)
+            let parts = rx.split(',')
+            let count = Number(parts[0])
+            let stmt = parts[1]
+            val = (stmt+' ').repeat(count)
+        }
+        this.set('rows', val)
+    }
     set gap(val:string) {
         this.set('gridGap', val)
     }
 
-    // area rows
-    set areaRow1(val:string) {
-        this.templateAreas[1] = val
-        this.addRow(new ItemSpec(1, GridUnitType.AUTO))
+    set gridColumnStart(val:string) {
+        this.set('col', ''+(Number(val) -1))
     }
-    set areaRow2(val:string) {
-        this.templateAreas[2] = val
-        this.addRow(new ItemSpec(1, GridUnitType.AUTO))
+    set gridColumnEnd(val:string) {
+        let start = Number(this.get('col'))
+        let end = Number(val)
+        if(isFinite(start) && isFinite(end)) {
+            this.set('colSpan', ''+(end-start+1))
+        }
     }
-    set areaRow3(val:string) {
-        this.templateAreas[3] = val
-        this.addRow(new ItemSpec(1, GridUnitType.AUTO))
+    set gridRowStart(val:string) {
+        this.set('row', ''+(Number(val) -1))
     }
-    set areaRow4(val:string) {
-        this.templateAreas[4] = val
-        this.addRow(new ItemSpec(1, GridUnitType.AUTO))
+    set gridRowEnd(val:string) {
+        let start = Number(this.get('row'))
+        let end = Number(val)
+        if(isFinite(start) && isFinite(end)) {
+            this.set('rowSpan', ''+(end-start+1))
+        }
     }
-    set areaRow5(val:string) {
-        this.templateAreas[5] = val
-        this.addRow(new ItemSpec(1, GridUnitType.AUTO))
+
+    set gridTemplateAreas(val:string) {
+        let xareas = val.split('/')
+        for(let i = 0; i<xareas.length; i++) {
+            this.templateAreas.push(xareas[i])
+            this.addRow(new ItemSpec(1, GridUnitType.AUTO))
+        }
     }
-    set areaRow6(val:string) {
-        this.templateAreas[6] = val
-        this.addRow(new ItemSpec(1, GridUnitType.AUTO))
-    }
-    set areaRow7(val:string) {
-        this.templateAreas[7] = val
-        this.addRow(new ItemSpec(1, GridUnitType.AUTO))
-    }
-    set areaRow8(val:string) {
-        this.templateAreas[8] = val
-        this.addRow(new ItemSpec(1, GridUnitType.AUTO))
-    }
-    set areaRow9(val:string) {
-        this.templateAreas[9] = val
-        this.addRow(new ItemSpec(1, GridUnitType.AUTO))
-    }
-    set areaRow10(val:string) {
-        this.templateAreas[10] = val
-        this.addRow(new ItemSpec(1, GridUnitType.AUTO))
+    set areas(val:string) {
+        this.gridTemplateAreas = val
     }
 
     findGridArea(name:string) {
