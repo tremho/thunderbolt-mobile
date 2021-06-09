@@ -10,7 +10,11 @@ export class SimpleLabel extends ComponentBase {
     public createControl() {
         this.label.set("whiteSpace", "nowrap")
         this.label.set("textWrap", false)
+        this.textComponent = this.label // so ComCommon will align text
         this.container.addChild(this.label)
+        // set the default alignment of component to the left. The {N} default appears to be center.
+        this.label.set('horizontalAlignment', 'left')
+        this.set('horizontalAlignment', 'left')
     }
 
     protected setProperties() {

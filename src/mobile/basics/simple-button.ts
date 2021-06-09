@@ -9,6 +9,7 @@ export class SimpleButton extends ComponentBase {
 
     // Override to create our button
     public createControl() {
+        this.textComponent = this.button // so ComCommon will align text
         this.container.addChild(this.button)
         this.setActionResponder(this.button, 'tap', 'action')
     }

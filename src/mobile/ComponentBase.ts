@@ -20,6 +20,7 @@ let ComCommon:any, LocalBind:any
 
 export default class ComponentBase extends StackLayout {
     private _isInit: boolean = false
+    protected textComponent:any = null
     protected defaultProps:any = {}
     protected container: any
     public com: any
