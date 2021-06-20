@@ -113,7 +113,8 @@ export class TBIndicators extends FlexboxLayout {
                 // console.log('--------------> Indicator '+indicator.id+' classname is ', indicator.get('className'))
 
                 let icon = (indInfo.icons && indInfo.icons[state])
-                indIcon.src = icon
+                indIcon.className = 'indIcon'
+                indIcon.src = icon ? '~/assets/'+icon : ''
             }
             update() // initial setting
             if(extension && extension.onSetToPage) extension.onSetToPage({component: indicator, info:indInfo})

@@ -162,7 +162,8 @@ export default class ComponentBase extends StackLayout {
         let text = this.evalExpressionString(str, control.parent || control)
         // console.log('setting initial text for ', control, text)
         control.set(controlProp, text)
-        const bv = this.com.getComponentAttribute(this, 'bind') // only bind if there is a bind statement
+        let bv = this.com.getComponentAttribute(this, 'bind') // only bind if there is a bind statement
+        if(!bv) bv = str.indexOf("$$") !== -1 // or if we are referring to page data
         if(bindName && bv) {
             this.addBinding(control, bindName, controlProp)
             if(control.bindingContext) {

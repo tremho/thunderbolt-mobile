@@ -3,7 +3,8 @@
 
 import * as nsfs from '@nativescript/core/file-system'
 const {TextDecoder} = require('web-encoding')
-import {encoding} from '@nativescript/core'
+import * as TextModule from "@nativescript/core/text";
+import * as base64 from "base-64";
 
 function PathNotFound(path:string) {
     class PathNotFound extends Error {
@@ -26,20 +27,28 @@ export function fileExists(pathName:string):Promise<boolean> {
     return Promise.resolve(nsfs.File.exists(pathName))
 }
 
-export function readFileArrayBuffer(pathName:string):Promise<ArrayBuffer> {
+export function readFileArrayBuffer(pathName:string):Promise<Uint8Array> {
     const data = nsfs.File.fromPath(pathName).readSync(err => {
         if(err) {
             throw err
         }
     })
     const size = data.length || 0
+    let ba:Uint8Array = new Uint8Array(size)
     if(global.isAndroid) {
-        const ba = new Uint8Array(size)
         ba.set(data)
-        return Promise.resolve(ba.buffer)
     } else {
-        throw Error('No implementation for readFileArrayBuffer for ios yet')
+        let nsdata:NSData = (data as NSData)
+        const intRef: any = new interop.Reference(interop.types.int8, interop.alloc(nsdata.length));
+        let ba = new Uint8Array(nsdata.length)
+        nsdata.getBytes(intRef)
+        for(let i=0; i<nsdata.length; i++) {
+            ba[i] = intRef[i]
+        }
+
     }
+    return Promise.resolve(ba)
+
 }
 
 export function writeFileText(pathName:string, text:string):Promise<void> {
@@ -48,6 +57,7 @@ export function writeFileText(pathName:string, text:string):Promise<void> {
             throw err
         })
     } catch(e) {
+        console.error(e.message)
         throw e
     }
     return Promise.resolve()
@@ -57,20 +67,30 @@ export function writeFileArrayBuffer(pathName:string, data:ArrayBuffer):Promise<
     try {
         const dv = new DataView(data)
         const size = dv.byteLength
-        const zs = '\0'.repeat(size)
+        let ba
         if (global.isAndroid) {
-            const ba = new java.lang.String(zs).getBytes() // allocate the correct number of bytes (or more)
+            const zs = '\0'.repeat(size)
+            ba = new java.lang.String(zs).getBytes() // allocate the correct number of bytes (or more)
             for (let i = 0; i < size; i++) {
                 ba[i] = dv.getInt8(i)
             }
-            nsfs.File.fromPath(pathName).writeSync(ba, (err: Error) => {
-                throw err
-            })
         } else {
-            throw Error('No implementation for writeFileArrayBuffer for ios yet')
+            const intRef: any = new interop.Reference(interop.types.int8, interop.alloc(size));
+            for (let i = 0; i < size; i++) {
+                intRef[i] = dv.getInt8(i)
+            }
+            ba = NSData.dataWithBytesLength(intRef, size);
+            // ba = interop.bufferFromData(nsdata);
+            // const decoder = new TextDecoder('utf8');
+            // const b64encoded = btoa(decoder.decode(ba));
+            // ba = atob(b64encoded)
         }
+        nsfs.File.fromPath(pathName).writeSync(ba, (err: Error) => {
+            throw err
+        })
 
     } catch(e) {
+        console.error(e.message)
         throw e
     }
     return Promise.resolve()
@@ -82,6 +102,7 @@ export function fileDelete(pathName:string): Promise<void> {
             throw err
         })
     } catch(e) {
+        console.error(e.message)
         throw e
     }
     return Promise.resolve()
@@ -142,6 +163,7 @@ export function fileStats(pathName:string):Promise<FileDetails> {
         fd.type = file.size === undefined ? 'folder' : 'file'
         return Promise.resolve(fd)
     } catch(e) {
+        console.error(e.message)
         throw e
     }
 }
@@ -150,6 +172,7 @@ export function createFolder(pathName:string): Promise<void> {
     try {
         nsfs.Folder.fromPath(pathName)
     } catch(e) {
+        console.error(e.message)
         throw e
     }
     return Promise.resolve()
@@ -165,6 +188,7 @@ export function removeFolder(pathName:string, andClear:boolean):Promise<void> {
             }
         })
     } catch(e) {
+        console.error(e.message)
         throw e
     }
     return Promise.resolve()

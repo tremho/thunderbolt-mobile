@@ -235,6 +235,7 @@ class MenuItemInfo {
     role:string = ''
     checked:boolean = false
     icon:string = ''
+    iconSize: number[] = []
     disabled:boolean = false
     children:MenuItemInfo[]|undefined
 
@@ -262,21 +263,14 @@ class MenuItem extends StackLayout {
         }
         if(info.icon) {
             ispan = new Image()
-            ispan.src = '~/assets/0_smile.png'
-            ispan.width = ispan.height = 20
-            // try {
-            //     if (info.icon.indexOf('http') === 0 && info.icon.indexOf('://') !== -1) {
-            //         imageSourceModule.ImageSource.fromUrl(info.icon).then(imgsrc => {
-            //             ispan.imageSource = imgsrc
-            //         })
-            //     } else {
-            //         console.log('going for imagesource from file', info.icon)
-            //         ispan.imageSource = imageSourceModule.ImageSource.fromFileSync(info.icon)
-            //     }
-            // } catch (e) {
-            //     console.error(e)
-            //     throw e
-            // }
+            let path = info.icon
+            if(path.charAt(0) == path.charAt(path.length-1) && (path.charAt(0) === '"' || path.charAt(0) === "'")) {
+                path = path.substring(1, path.length-1)
+            }
+            ispan.src = '~/assets/'+ path
+            ispan.className = 'menuIcon' // sadly has no effect. default of 20 set below.
+            ispan.width = info.iconSize && info.iconSize[0] || 20;
+            ispan.height = info.iconSize && (info.iconSize[1] || info.iconSize[0]) || 20;
 
         }
         if(label) {

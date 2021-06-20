@@ -119,7 +119,7 @@ export class TBToolbar extends FlexboxLayout {
                 // console.log('--------------> ToolButton '+tool.id+' state is ', toolButton.get('state'))
 
                 let icon = (tool.icons && tool.icons[state])
-                tbIcon.src = icon
+                tbIcon.src = icon ? '~/assets/'+icon : ''
             }
             update() // initial setting
             if(extension && extension.onSetToPage) extension.onSetToPage({component:toolButton, info:tool})
