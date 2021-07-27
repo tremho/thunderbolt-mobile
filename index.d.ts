@@ -1,1 +1,1 @@
-declare module "thunderbolt-mobile"
+declare module "@tremho/jove-mobile"

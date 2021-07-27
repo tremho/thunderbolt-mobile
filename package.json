@@ -1,7 +1,7 @@
 {
-  "name": "thunderbolt-mobile",
-  "version": "0.5.0",
-  "description": "Mobile (Nativescript) component of Thunerbolt framework",
+  "name": "@tremho/jove-mobile",
+  "version": "0.6.0",
+  "description": "Mobile (Nativescript) component of Jove framework",
   "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/tremho/thunderbolt-mobile.git"
   },
   "keywords": [
-    "Thunderbolt",
+    "Jove",
     "framework",
     "desktop",
     "mobile",

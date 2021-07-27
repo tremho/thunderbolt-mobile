@@ -7,6 +7,7 @@ export class EventData {
     tag:string|undefined
     eventType: string|undefined
     platEvent: string|undefined
+    value?:any
 }
 
 export const appBridge:any = {
@@ -57,7 +58,7 @@ export default class ComponentBase extends StackLayout {
                                     // @ts-ignore
                                     this.beforeLayout && this.beforeLayout()
                                 } catch(e) {
-                                    console.error('Error in  "'+'UNNAMED COMPONENT'+' beforeLayout"', e)
+                                    console.error('Error in  "'+className+' beforeLayout"', e)
                                 }
                                 setTimeout(() => {
                                     this.com.setCommonPropsMobile(this, this.defaultProps)
@@ -138,24 +139,38 @@ export default class ComponentBase extends StackLayout {
      */
     protected setActionResponder(view:any, eventName:string, tag:string = 'action') {
         if(!view) return;
+        view.on(eventName, (ev:any) => {
+            this.respondToAction(view, eventName, tag)
+        })
+    }
+
+    /**
+     * Close cousin to `setActionResponder`, but we call this from an event handler we've already captured in
+     * rather than have it set up the listener for us
+     *
+     * @param {View} view The inner control view the event refers to
+     * @param {string} eventName Name of the event to listen to
+     * @param {string} tag Name of the property we registered the handler name with
+     * @protected
+     */
+    protected respondToAction(view:any, event:any, eventName:string, tag:string = 'action', value?:any) {
         const target = this.get(tag)
         const ed = new EventData()
         ed.app = getTheApp()
         ed.sourceComponent = view as any
         ed.eventType = eventName
         ed.tag = tag
-        view.on(eventName, (ev:any) => {
-            console.log('Event occurs', eventName)
-            ed.platEvent = ev
-            const app = getTheApp()
-            // console.log('>>>>>>>>>>>> getting activity from app', app, ed.app)
-            const activity = app.currentActivity
-            // console.log('activity found', activity)
-            console.log('should call '+target)
-            if(activity && typeof activity[target] === 'function') {
-                activity[target](ed)
-            }
-        })
+        ed.value = value
+        console.log('Event occurs', eventName)
+        ed.platEvent = event
+        const app = getTheApp()
+        // console.log('>>>>>>>>>>>> getting activity from app', app, ed.app)
+        const activity = app.currentActivity
+        // console.log('activity found', activity)
+        console.log('should call '+target)
+        if(activity && typeof activity[target] === 'function') {
+            activity[target](ed)
+        }
     }
 
     protected setDynamicExpressions(str:string, control:View, controlProp:string, bindName?:string) {
