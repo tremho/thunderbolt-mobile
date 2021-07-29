@@ -35,6 +35,7 @@ export function readFileArrayBuffer(pathName:string):Promise<Uint8Array> {
     })
     const size = data.length || 0
     let ba:Uint8Array = new Uint8Array(size)
+    // @ts-ignore
     if(global.isAndroid) {
         ba.set(data)
     } else {
@@ -68,6 +69,7 @@ export function writeFileArrayBuffer(pathName:string, data:ArrayBuffer):Promise<
         const dv = new DataView(data)
         const size = dv.byteLength
         let ba
+        // @ts-ignore
         if (global.isAndroid) {
             const zs = '\0'.repeat(size)
             ba = new java.lang.String(zs).getBytes() // allocate the correct number of bytes (or more)
