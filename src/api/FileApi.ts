@@ -216,21 +216,30 @@ export function readFolder(pathName:string):Promise<FileDetails[]> {
 class UserPathInfo {
     home:string = ''
     cwd:string = ''
+    assets:string = ''
+    appData:string = ''
+    documents:string = ''
+    downloads:string = ''
+    desktop:string = ''
     userName:string = ''
     uid:Number | undefined
     gid:Number | undefined
 }
 
-// Will return an empty object for Nativescript
+
 export function getUserAndPathInfo(): Promise<UserPathInfo> {
-    // const userInfo = os.userInfo()
     const out = new UserPathInfo()
-    // out.home = userInfo.homedir
-    return getAppPath().then((ap:string) => {
-        out.home = out.cwd = ap
-        return out
-    })
-    // out.userName = userInfo.username
-    // out.uid = userInfo.uid
-    // out.gid = userInfo.gid
+    out.cwd = nsfs.knownFolders.currentApp().path
+    out.documents = nsfs.knownFolders.documents().path
+    out.appData = nsfs.knownFolders.temp().path
+
+    let res = out.cwd+'/assets'
+    if(nsfs.File.exists(res)) {
+        out.assets = res
+    }
+
+    // Note there are some ios-specific locations in knownFolders.ios that may be useful there, but we'll ignore for now
+
+    return Promise.resolve(out)
+
 }
