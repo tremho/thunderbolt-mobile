@@ -1,6 +1,6 @@
 {
   "name": "@tremho/jove-mobile",
-  "version": "0.6.7-prerelease-1",
+  "version": "0.6.7-prerelease-12",
   "description": "Mobile (Nativescript) component of Jove framework",
   "main": "build/index.js",
   "scripts": {
