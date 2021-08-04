@@ -170,7 +170,13 @@ export class TBPage extends GridLayout {
                 menuBar.addChildAtCell(indicators, 0, 4)
 
                 const model = getTheApp().model
-                let tools = toolbarId && model.getAtPath('toolbar.'+toolbarId)
+                let tools
+                try {
+                    tools = toolbarId && model.getAtPath('toolbar.' + toolbarId)
+                }
+                catch(e) {
+                    console.error('failed to set tools', e.message)
+                }
                 let indicatorItems = indicatorsId && model.getAtPath('indicators.'+indicatorsId)
                 toolbar.setTools(tools || [])
                 if(indicatorItems) indicators.setIndicators(indicatorItems)
