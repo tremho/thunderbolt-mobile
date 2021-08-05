@@ -1,11 +1,12 @@
 {
   "name": "@tremho/jove-mobile",
-  "version": "0.6.9-pre-release.10",
+  "version": "0.6.9-pre-release.11",
   "description": "Mobile (Nativescript) component of Jove framework",
   "main": "build/index.js",
   "scripts": {
     "prepublish": "npm run build",
-    "build": "rm -fr build node_modules && tsc && npm install",
+    "clean": "rm -fr build node_modules && npm install",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
