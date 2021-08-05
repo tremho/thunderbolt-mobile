@@ -169,17 +169,24 @@ export class TBPage extends GridLayout {
                 // indicators.horizontalAlignment = 'right'
                 menuBar.addChildAtCell(indicators, 0, 4)
 
+                console.log('>>>>>>>>> Doing tb-page toolbar setup >>>>>>>>>>>')
                 const model = getTheApp().model
                 let tools
                 try {
                     tools = toolbarId && model.getAtPath('toolbar.' + toolbarId)
                 }
                 catch(e) {
-                    console.error('failed to set tools', e.message)
+                    console.warn('failed to set tools', e.message)
                 }
-                let indicatorItems = indicatorsId && model.getAtPath('indicators.'+indicatorsId)
+                console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
+                let indicatorItems
+                try {
+                    indicatorItems = indicatorsId && model.getAtPath('indicators.'+indicatorsId)
+                } catch(e) {
+                    console.warn('failed to set indicators', e.message)
+                }
                 toolbar.setTools(tools || [])
-                if(indicatorItems) indicators.setIndicators(indicatorItems)
+                if(indicatorItems) indicators.setIndicators(indicatorItems || [])
 
             }
 

@@ -43,7 +43,7 @@ export default class ComponentBase extends StackLayout {
                     this._isInit = true
                     this.com = new ComCommon(this)
                     this.com.waitForModel().then(() => {
-                        // console.log('past waitReady')
+                        console.log('>>>>>>>>>> ***** past waitReady')
                         // must occur on a nominal timeout to work across platforms
                         setTimeout(() => {
                             // console.log('executing timeout -- creating component')
