@@ -52,7 +52,7 @@ export class TBPage extends GridLayout {
                 this.addRow(new ItemSpec(1, GridUnitType.AUTO))
                 this.addRow(new ItemSpec(1, GridUnitType.STAR))
 
-                // console.log("%%%%%%%%%%%%%%%%%%%% Constructing MenuBar")
+                console.log("%%%%%%%%%%%%%%%%%%%% Constructing MenuBar")
                 const menuBar = new GridLayout()
                 menuBar.removeColumns();
                 menuBar.removeRows()
@@ -134,7 +134,7 @@ export class TBPage extends GridLayout {
                     this.page.className = isSmall ? 'small' : ''
                     // console.log('not constrained')
                 }
-                // console.log('page classname', this.page.className)
+                console.log('page classname', this.page.className)
 
                 //// ----->>>>
                 let nbText = this.get('noBack')
@@ -143,6 +143,7 @@ export class TBPage extends GridLayout {
                 const menuId = this.get('menu-id')
                 const toolbarId = this.get('toolbar-id')
                 const indicatorsId = this.get('indicators-id')
+                console.log('menuId, toolbarId, indicatorsId', menuId, toolbarId, indicatorsId)
                 if(!noBack) {
                     // console.log('--- applying tap handler to back button')
                     this.back.on('tap', (ev)=> {
@@ -198,11 +199,13 @@ export class TBPage extends GridLayout {
         const model = getTheApp().model
         let menu
         // get the menu
+        console.log('looking for menu info at menu.'+menuId)
         try {
             menu = model.getAtPath('menu.'+menuId) || ''
         } catch(e) {
             console.error(e)
         }
+        console.log('menu',menu)
         if(this.mbox) {
             let items = menu.children || []
             this.menuDrop = new MenuDrop(this.pageWidth)
