@@ -39,7 +39,7 @@ export class TBIndicators extends FlexboxLayout {
         this.removeChildren()
         this.width = (indicators && indicators.length * boxSize) || 0
         const app = getTheApp()
-        app.model.addSection('toolbar', indicators)
+        app.model.addSection('indicators', indicators)
         indicators.forEach(indInfo => {
             const indicator = new StackLayout()
             indicator.className = 'tb-indicator ' + indInfo.className || ''
