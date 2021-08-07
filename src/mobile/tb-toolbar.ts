@@ -38,7 +38,7 @@ export class TBToolbar extends FlexboxLayout {
             this.width = tbWidth
         }
         const app = getTheApp()
-        app.model.addSection('toolbar', tools)
+        // app.model.addSection('toolbar', tools)
         tools.forEach(tool => {
             const toolButton = new StackLayout()
             toolButton.className = 'tb-toolbutton ' + tool.className || ''
