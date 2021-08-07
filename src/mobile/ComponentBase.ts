@@ -43,7 +43,7 @@ export default class ComponentBase extends StackLayout {
                 if(!this._isInit) {
                     this._isInit = true
                     this.com = new ComCommon(this)
-                    this.cm = this.com
+                    this.cm = this.com // duplicate, but named like this on desktop side
                     this.com.waitForModel().then(() => {
                         console.log('>>>>>>>>>> ***** past waitReady')
                         // must occur on a nominal timeout to work across platforms
