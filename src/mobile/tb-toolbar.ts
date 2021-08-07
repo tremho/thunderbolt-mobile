@@ -45,7 +45,7 @@ export class TBToolbar extends FlexboxLayout {
             toolButton.id = tool.id
             // toolButton.width = this.boxSize // !! // >
 
-            app.model.addSection('toolbar'+tool.id, tool)
+            app.model.addSection('toolbar-'+tool.id, tool)
 
             let extension:any
             const extType = tool.type
