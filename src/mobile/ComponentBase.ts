@@ -65,6 +65,12 @@ export default class ComponentBase extends StackLayout {
                                     this.setProperties()
                                     this.com.bindComponent()
                                     this.com.setLocalBinds(this.localBinds)
+                                    try {
+                                        // @ts-ignore
+                                        this.afterLayout && this.afterLayout()
+                                    } catch(e) {
+                                        console.error('Error in  "'+className+' afterLayout"', e)
+                                    }
                                     this.com.componentIsReady()
                                 })
                             }
@@ -79,7 +85,38 @@ export default class ComponentBase extends StackLayout {
         }
     }
 
-    /**
+    // custom component lifecycle methods (mimicking similar in riot)
+    protected beforeLayout() {
+        if(this.preStdOnMounted) {
+            try {
+                this.preStdOnMounted()
+            } catch(e) {
+                console.error(e)
+            }
+        }
+    }
+    protected afterLayout() {
+        if(this.postStdOnMounted) {
+            try {
+                this.postStdOnMounted()
+            } catch(e) {
+                console.error(e)
+            }
+        }
+    }
+
+    protected preStdOnMounted() {
+        // init and constructional operations
+    }
+    protected postStdOnMounted() {
+        // after layout and binding has occurred
+    }
+    protected preStdOnBeforeUpdate() {
+        // dynamic tweaks to appearance (called on bind fire)
+    }
+
+
+        /**
      * Implement in the control.
      * Create the view hierarchy of the control, starting with `this.container`
      * and call `this.addBinding` for each view and property that is to be bound
