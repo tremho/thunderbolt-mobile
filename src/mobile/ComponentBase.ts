@@ -234,15 +234,14 @@ export default class ComponentBase extends StackLayout {
     }
 
     findComponentBaseContainer(control:any) {
-        // if this child's parent is a ComponentBase
+        // it's a component base if it has a 'b' function, if not, walk up the parentage tree to find it
         let tc = control
         let found = false
         while(tc) {
-            found = (tc.b !== null)
-            if(found) break;
+            if(tc.b) break;
             tc = tc.parent
         }
-        return (tc && tc.componentBase) || control
+        return tc
     }
 
     protected evalExpressionString(str:string, component:any) {
