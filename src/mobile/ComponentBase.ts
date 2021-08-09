@@ -214,8 +214,8 @@ export default class ComponentBase extends StackLayout {
         }
     }
 
-    protected setDynamicExpressions(str:string, control:View, controlProp:string, bindName?:string) {
-        let component = this.findComponentBaseContainer(control.parent || control)
+    protected setDynamicExpressions(str:string = '', control:View, controlProp:string, bindName?:string) {
+        let component = this.findComponentBaseContainer(control)
         let text = this.evalExpressionString(str, component)
         // console.log('setting initial text for ', control, text)
         control.set(controlProp, text)
