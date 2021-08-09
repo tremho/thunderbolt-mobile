@@ -56,7 +56,6 @@ export default class ComponentBase extends StackLayout {
                             this.className = className
                             this.localBinds = []
                             this.createControl()
-                            this.container && this.container.componentBase = this
                             // console.log('localBinds', this.localBinds)
                             if(this.com) {
                                 try {
@@ -239,11 +238,11 @@ export default class ComponentBase extends StackLayout {
         let tc = control
         let found = false
         while(tc) {
-            found = tc.componentBase
+            found = (tc.b !== null)
             if(found) break;
             tc = tc.parent
         }
-        return tc && tc.componentBase
+        return (tc && tc.componentBase) || control
     }
 
     protected evalExpressionString(str:string, component:any) {
