@@ -22,6 +22,7 @@ class Div extends StackLayout{
     constructor() {
         super()
         this.inner.orientation = 'horizontal'
+        super.addChild(this.inner)
     }
     addChild(view: View) {
         this.inner.addChild(view)

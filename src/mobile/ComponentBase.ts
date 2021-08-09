@@ -236,7 +236,6 @@ export default class ComponentBase extends StackLayout {
     findComponentBaseContainer(control:any) {
         // it's a component base if it has a 'b' function, if not, walk up the parentage tree to find it
         let tc = control
-        let found = false
         while(tc) {
             if(tc.b) break;
             tc = tc.parent
