@@ -26,6 +26,7 @@ export default class ComponentBase extends StackLayout {
     protected container: any
     public com: any
     public cm: any // same as com
+    public b:any // comBinding eval
     private localBinds:any[] | undefined
 
     public static bridgeAppGetter(getter:any, comCommon:any) {
@@ -44,6 +45,7 @@ export default class ComponentBase extends StackLayout {
                     this._isInit = true
                     this.com = new ComCommon(this)
                     this.cm = this.com // duplicate, but named like this on desktop side
+                    this.b = this.cm.evalBinding
                     this.com.waitForModel().then(() => {
                         console.log('>>>>>>>>>> ***** past waitReady')
                         // must occur on a nominal timeout to work across platforms

@@ -1,5 +1,5 @@
 
-import {StackLayout, Label} from '@nativescript/core'
+import {StackLayout, Label, View} from '@nativescript/core'
 
 import {TBPage,TBContent} from "./tb-page";
 import {SimpleLabel} from "./basics/simple-label";
@@ -16,8 +16,20 @@ import {TBGridLayout} from "./layout/grid-layout";
 import {CondSect} from "./layout/cond-sect"
 
 
+class Div extends StackLayout{
+    inner:StackLayout = new StackLayout()
+
+    constructor() {
+        super()
+        this.inner.orientation = 'horizontal'
+    }
+    addChild(view: View) {
+        this.inner.addChild(view)
+    }
+}
+
 function makeDiv() {
-    return new StackLayout()
+    return new Div()
 }
 function makeSpan() {
     const sl = new StackLayout()
