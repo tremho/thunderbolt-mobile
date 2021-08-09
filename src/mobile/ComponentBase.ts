@@ -215,7 +215,8 @@ export default class ComponentBase extends StackLayout {
     }
 
     protected setDynamicExpressions(str:string, control:View, controlProp:string, bindName?:string) {
-        let text = this.evalExpressionString(str, control.parent || control)
+        let component = this.findComponentBaseContainer(control.parent || control)
+        let text = this.evalExpressionString(str, component)
         // console.log('setting initial text for ', control, text)
         control.set(controlProp, text)
         let bv = this.com.getComponentAttribute(this, 'bind') // only bind if there is a bind statement
@@ -230,6 +231,18 @@ export default class ComponentBase extends StackLayout {
                 })
             }
         }
+    }
+
+    findComponentBaseContainer(control:any) {
+        // if this child's parent is a ComponentBase
+        let tc = control
+        let found = false
+        while(!found) {
+            found = (tc instanceof ComponentBase)
+            if(found) break;
+            tc = tc.parent
+        }
+        return tc
     }
 
     protected evalExpressionString(str:string, component:any) {
