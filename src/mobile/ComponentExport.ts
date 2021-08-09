@@ -29,6 +29,7 @@ class Div extends StackLayout{
 }
 
 function makeDiv() {
+    console.log('making new Div')
     return new Div()
 }
 function makeSpan() {
