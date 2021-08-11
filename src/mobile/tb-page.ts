@@ -52,7 +52,7 @@ export class TBPage extends GridLayout {
                 this.addRow(new ItemSpec(1, GridUnitType.AUTO))
                 this.addRow(new ItemSpec(1, GridUnitType.STAR))
 
-                console.log("%%%%%%%%%%%%%%%%%%%% Constructing MenuBar")
+                // console.log("%%%%%%%%%%%%%%%%%%%% Constructing MenuBar")
                 const menuBar = new GridLayout()
                 menuBar.removeColumns();
                 menuBar.removeRows()
@@ -143,7 +143,7 @@ export class TBPage extends GridLayout {
                 const menuId = this.get('menu-id')
                 const toolbarId = this.get('toolbar-id')
                 const indicatorsId = this.get('indicators-id')
-                console.log('menuId, toolbarId, indicatorsId', menuId, toolbarId, indicatorsId)
+                // console.log('menuId, toolbarId, indicatorsId', menuId, toolbarId, indicatorsId)
                 if(!noBack) {
                     // console.log('--- applying tap handler to back button')
                     this.back.on('tap', (ev)=> {
@@ -170,7 +170,7 @@ export class TBPage extends GridLayout {
                 // indicators.horizontalAlignment = 'right'
                 menuBar.addChildAtCell(indicators, 0, 4)
 
-                console.log('>>>>>>>>> Doing tb-page toolbar setup >>>>>>>>>>>')
+                // console.log('>>>>>>>>> Doing tb-page toolbar setup >>>>>>>>>>>')
                 const model = getTheApp().model
                 let tools
                 try {
@@ -179,7 +179,7 @@ export class TBPage extends GridLayout {
                 catch(e) {
                     console.warn('failed to set tools', e.message)
                 }
-                console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
+                // console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
                 let indicatorItems
                 try {
                     indicatorItems = indicatorsId && model.getAtPath('indicators.'+indicatorsId)
@@ -199,7 +199,7 @@ export class TBPage extends GridLayout {
         const model = getTheApp().model
         let menu
         // get the menu
-        console.log('looking for menu info at menu.'+menuId)
+        // console.log('looking for menu info at menu.'+menuId)
         try {
             menu = model.getAtPath('menu.'+menuId) || ''
         } catch(e) {

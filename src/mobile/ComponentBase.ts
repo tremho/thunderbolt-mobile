@@ -47,7 +47,7 @@ export default class ComponentBase extends StackLayout {
                     this.cm = this.com // duplicate, but named like this on desktop side
                     this.b = this.cm.evalBinding
                     this.com.waitForModel().then(() => {
-                        console.log('>>>>>>>>>> ***** past waitReady')
+                        // console.log('>>>>>>>>>> ***** past waitReady')
                         // must occur on a nominal timeout to work across platforms
                         setTimeout(() => {
                             // console.log('executing timeout -- creating component')
@@ -202,13 +202,13 @@ export default class ComponentBase extends StackLayout {
         ed.eventType = eventName
         ed.tag = tag
         ed.value = value
-        console.log('Event occurs', eventName)
+        // console.log('Event occurs', eventName)
         ed.platEvent = event
         const app = getTheApp()
         // console.log('>>>>>>>>>>>> getting activity from app', app, ed.app)
         const activity = app.currentActivity
         // console.log('activity found', activity)
-        console.log('should call '+target)
+        // console.log('should call '+target)
         if(activity && typeof activity[target] === 'function') {
             activity[target](ed)
         }
