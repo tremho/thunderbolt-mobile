@@ -12,6 +12,8 @@ import {
 import {GridUnitType, ItemSpec} from "@nativescript/core/ui/layouts/grid-layout"
 import {isAndroid, device} from "@nativescript/core/platform";
 
+import {AndroidApplication} from "@nativescript/core"
+
 import {getTheApp} from './ComponentBase'
 import {TBToolbar} from "./tb-toolbar";
 import {TBIndicators} from "./tb-indicators";
@@ -26,6 +28,8 @@ export class TBPage extends GridLayout {
 
     constructor() {
         super();
+
+        console.log(">>>>>>>>>>>>>>> Android Application Back Pressed Event ", AndroidApplication.activityBackPressedEvent)
 
         this.on('layoutChanged', () => {
             // console.log('in layoutChanged')
