@@ -29,8 +29,6 @@ export class TBPage extends GridLayout {
     constructor() {
         super();
 
-        console.log(">>>>>>>>>>>>>>> Android Application Back Pressed Event ", AndroidApplication.activityBackPressedEvent)
-
         this.on('layoutChanged', () => {
             // console.log('in layoutChanged')
             let pageWidth:number|undefined = this.page.getActualSize().width
