@@ -29,6 +29,9 @@ class Div extends StackLayout{
     }
 }
 
+class Img extends Image {
+}
+
 function makeDiv() {
     return new Div()
 }
@@ -36,6 +39,9 @@ function makeSpan() {
     const sl = new StackLayout()
     sl.orientation = 'horizontal'
     return sl
+}
+function makeImg() {
+    return new Img()
 }
 function makeLabel(text:string) {
     const label = new Label()
