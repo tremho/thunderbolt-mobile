@@ -1,5 +1,5 @@
 
-import {StackLayout, Label, View} from '@nativescript/core'
+import {StackLayout, Label, View, Image} from '@nativescript/core'
 
 import {TBPage,TBContent} from "./tb-page";
 import {SimpleLabel} from "./basics/simple-label";
