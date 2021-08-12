@@ -41,6 +41,7 @@ function makeSpan() {
     return sl
 }
 function makeImg() {
+    console.log('in makeImg')
     return new Img()
 }
 function makeLabel(text:string) {
