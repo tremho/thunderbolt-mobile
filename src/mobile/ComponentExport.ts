@@ -67,4 +67,6 @@ export {CondSect as CondSect}
 
 export {makeDiv as makeDiv}
 export {makeSpan as makeSpan}
+export {makeImg as makeImg}
 export {makeLabel as makeLabel}
+
