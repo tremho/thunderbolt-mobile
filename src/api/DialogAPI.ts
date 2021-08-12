@@ -15,6 +15,13 @@ export function openDialog(dialogOptions:DialogOptions):Promise<number> {
         const title = dialogOptions.title
         const message = dialogOptions.message +'\n' +dialogOptions.detail
         const buttons:string[] = (dialogOptions.buttons as string[])
+        for(let i=0; i<buttons.length; i++) {
+            let t = buttons[i]
+            t = t.replace(/&&/g,'@AMP@')
+            t = t.replace(/&/g, '')
+            t = t.replace(/@AMP@/g, '&')
+            buttons[i] = t
+        }
         if(buttons.length === 1) {
             NSDialog.alert({title, message, okButtonText:buttons[0]}).then(()=>{
                 resolve(0)
