@@ -1,6 +1,8 @@
 import {StackLayout, View} from '@nativescript/core'
 import {TBContent} from "./tb-page";
 
+import {ComNormal} from '@tremho/jove-common'
+
 export class EventData {
     app:any|undefined
     sourceComponent:any|undefined
@@ -24,10 +26,12 @@ export default class ComponentBase extends StackLayout {
     protected textComponent:any = null
     protected defaultProps:any = {}
     protected container: any
+    protected tag:string = ''
     public com: any
     public cm: any // same as com
     public b:any // comBinding eval
     private localBinds:any[] | undefined
+    private comNormal: ComNormal;
 
     public static bridgeAppGetter(getter:any, comCommon:any) {
         appBridge.getTheApp = getter
@@ -40,6 +44,8 @@ export default class ComponentBase extends StackLayout {
         super()
         try {
             this.container = this
+            this.tag = this.constructor.name.toLowerCase()
+            this.comNormal = new ComNormal(this)
             this.on('layoutChanged', () => {
                 if(!this._isInit) {
                     this._isInit = true
@@ -268,6 +274,16 @@ export default class ComponentBase extends StackLayout {
         }
         return str
     }
+
+    // ComNormal implementation
+    get isIOS(): boolean { return this.comNormal.isIOS }
+    get isAndroid(): boolean { return this.comNormal.isAndroid }
+    get isMobile(): boolean { return this.comNormal.isMobile }
+    elementFind(tag:string):any { return this.comNormal.elementFind(tag) }
+    elementFindAll(tag:string):any[] { return this.comNormal.elementFindAll(tag) }
+    listenFor(pseudoEventTag:string, func:(ed:any)=>{}) { return this.comNormal.listenFor(pseudoEventTag, func) }
+    getElementBounds(element:any):any { return this.comNormal.getElementBounds(element) }
+
 }
 
 
