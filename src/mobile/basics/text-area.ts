@@ -10,7 +10,7 @@ export class TextArea extends ComponentBase {
     public createControl() {
         this.textComponent = this.textView // so ComCommon will align text
         this.textView.className = 'TextArea'
-        this.container.addChild(this.textView)
+        this.component.addChild(this.textView)
     }
 
     protected setProperties() {

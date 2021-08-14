@@ -34,7 +34,7 @@ export class SimpleList extends ComponentBase {
             this.listBox.addChild(listItem)
             index++
         }
-        this.container.addChild(this.listBox)
+        this.component.addChild(this.listBox)
     }
     public newSelection(selectedIndex:number) {
         let i = 0

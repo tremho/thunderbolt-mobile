@@ -11,7 +11,7 @@ export class FillSpace extends ComponentBase {
         // this.fill =
         this.fill.width = this.get('width')
         this.fill.height = this.get('height')
-        this.container.addChild(this.fill)
+        this.component.addChild(this.fill)
         // this.addBinding(this.fill, 'width', 'width')
         // this.addBinding(this.fill, 'height', 'height')
     }
