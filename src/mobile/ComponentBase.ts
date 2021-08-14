@@ -1,7 +1,7 @@
 import {StackLayout, View} from '@nativescript/core'
 import {TBContent} from "./tb-page";
 
-import {ComNormal} from '@tremho/jove-common'
+import {ComNormal} from '../common-core/ComNormal'
 
 export class EventData {
     app:any|undefined
