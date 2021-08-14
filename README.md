@@ -6,6 +6,7 @@ Must combine with @tremho/jove-common.
 Requires @tremho/jove-cli for toolchain. 
 Requires @tremho/jove-desktop for desktop builds. 
 
+Have fun out there!
 
 [project](https://github.com/tremho/thunderbolt-common/projects/1)
 [wiki](https://github.com/tremho/thunderbolt-common/wiki)
