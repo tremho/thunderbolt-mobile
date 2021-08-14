@@ -25,6 +25,7 @@ export default class ComponentBase extends StackLayout {
     private _isInit: boolean = false
     protected textComponent:any = null
     protected defaultProps:any = {}
+    protected container: any
     protected component: any
     protected tagName:string = ''
     public com: any
@@ -44,6 +45,7 @@ export default class ComponentBase extends StackLayout {
         super()
         try {
             this.component = this
+            this.container = this // TODO: for backward compatibility. deprecated
             this.comNormal = new ComNormal(this)
             this.on('layoutChanged', () => {
                 if(!this._isInit) {
