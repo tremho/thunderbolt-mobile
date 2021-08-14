@@ -26,7 +26,7 @@ export default class ComponentBase extends StackLayout {
     protected textComponent:any = null
     protected defaultProps:any = {}
     protected container: any
-    protected tag:string = ''
+    protected tagName:string = ''
     public com: any
     public cm: any // same as com
     public b:any // comBinding eval
@@ -44,7 +44,7 @@ export default class ComponentBase extends StackLayout {
         super()
         try {
             this.container = this
-            this.tag = this.constructor.name.toLowerCase()
+            this.tagName = this.constructor.name.toLowerCase()
             this.comNormal = new ComNormal(this)
             this.on('layoutChanged', () => {
                 if(!this._isInit) {
@@ -124,7 +124,6 @@ export default class ComponentBase extends StackLayout {
     protected preStdOnBeforeUpdate() {
         // dynamic tweaks to appearance (called on bind fire)
     }
-
 
         /**
      * Implement in the control.
@@ -281,7 +280,7 @@ export default class ComponentBase extends StackLayout {
     get isMobile(): boolean { return this.comNormal.isMobile }
     elementFind(tag:string):any { return this.comNormal.elementFind(tag) }
     elementFindAll(tag:string):any[] { return this.comNormal.elementFindAll(tag) }
-    listenFor(pseudoEventTag:string, func:(ed:any)=>{}) { return this.comNormal.listenFor(pseudoEventTag, func) }
+    listenToFor(el:any, pseudoEventTag:string, func:(ed:any)=>{}) { return this.comNormal.listenToFor(el, pseudoEventTag, func) }
     getElementBounds(element:any):any { return this.comNormal.getElementBounds(element) }
 
 }

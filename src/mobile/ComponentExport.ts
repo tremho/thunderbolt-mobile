@@ -18,7 +18,7 @@ import {CondSect} from "./layout/cond-sect"
 
 class Div extends StackLayout{
     inner:StackLayout = new StackLayout()
-    tag:string = 'div'
+    tagName:string = 'div'
 
     constructor() {
         super()
@@ -31,7 +31,7 @@ class Div extends StackLayout{
 }
 
 class Img extends Image {
-    tag:string = 'img'
+    tagName:string = 'img'
 }
 
 function makeDiv() {
@@ -40,7 +40,7 @@ function makeDiv() {
 function makeSpan() {
     const sl = new StackLayout()
     //@ts-ignore
-    sl.tag = 'span'
+    sl.tagName = 'span'
     sl.orientation = 'horizontal'
     return sl
 }
@@ -50,7 +50,7 @@ function makeImg() {
 function makeLabel(text:string) {
     const label = new Label()
     // @ts-ignore
-    label.tag = 'label'
+    label.tagName = 'label'
     label.set('text', text)
     return label
 }
