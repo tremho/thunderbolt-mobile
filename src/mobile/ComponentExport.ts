@@ -38,11 +38,12 @@ class Div extends StackLayout{
 class Img extends Image {
     tagName:string = 'img'
 }
-
+// Now with absolute option
 function makeDiv(type:string) {
     const abs = type === 'absolute'
     return new Div(abs)
 }
+// Now with absolute option
 function makeSpan(type:string) {
     const abs = type === 'absolute'
     let sl

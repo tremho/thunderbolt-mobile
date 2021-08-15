@@ -61,6 +61,7 @@ export default class ComponentBase extends StackLayout {
                             let className = this.get('class') || this.get('className') || ''
                             className += (className ? ' ' : '')+this.constructor.name
                             this.className = className
+                            this.tagName = className
                             this.localBinds = []
                             this.createControl()
                             // console.log('localBinds', this.localBinds)
