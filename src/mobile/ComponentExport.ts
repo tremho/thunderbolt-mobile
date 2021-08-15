@@ -1,5 +1,5 @@
 
-import {StackLayout, Label, View, Image} from '@nativescript/core'
+import {StackLayout, AbsoluteLayout, View, Label, Image} from '@nativescript/core'
 
 import {TBPage,TBContent} from "./tb-page";
 import {SimpleLabel} from "./basics/simple-label";
@@ -17,12 +17,17 @@ import {CondSect} from "./layout/cond-sect"
 
 
 class Div extends StackLayout{
-    inner:StackLayout = new StackLayout()
+    inner:StackLayout | AbsoluteLayout
     tagName:string = 'div'
 
-    constructor() {
+    constructor(abs:boolean) {
         super()
-        this.inner.orientation = 'horizontal'
+        if(abs) this.inner = new AbsoluteLayout()
+        else {
+            const sl = new StackLayout()
+            sl.orientation = 'horizontal'
+            this.inner = sl
+        }
         super.addChild(this.inner)
     }
     addChild(view: View) {
@@ -34,14 +39,21 @@ class Img extends Image {
     tagName:string = 'img'
 }
 
-function makeDiv() {
-    return new Div()
+function makeDiv(type:string) {
+    const abs = type === 'absolute'
+    return new Div(abs)
 }
-function makeSpan() {
-    const sl = new StackLayout()
+function makeSpan(type:string) {
+    const abs = type === 'absolute'
+    let sl
+    if(abs) {
+        sl = new AbsoluteLayout()
+    } else {
+        sl = new StackLayout()
+        sl.orientation = 'horizontal'
+    }
     //@ts-ignore
     sl.tagName = 'span'
-    sl.orientation = 'horizontal'
     return sl
 }
 function makeImg() {
