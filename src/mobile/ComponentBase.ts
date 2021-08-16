@@ -280,6 +280,7 @@ export default class ComponentBase extends StackLayout {
     get isIOS(): boolean { return this.comNormal.isIOS }
     get isAndroid(): boolean { return this.comNormal.isAndroid }
     get isMobile(): boolean { return this.comNormal.isMobile }
+    getProp(propName:string) { return this.comNormal.getProp(propName)}
     elementFind(tag:string):any { return this.comNormal.elementFind(tag) }
     elementFindAll(tag:string):any[] { return this.comNormal.elementFindAll(tag) }
     listenToFor(el:any, pseudoEventTag:string, func:(ed:any)=>{}) { return this.comNormal.listenToFor(el, pseudoEventTag, func) }
