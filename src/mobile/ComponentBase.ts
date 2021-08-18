@@ -205,7 +205,7 @@ export default class ComponentBase extends StackLayout {
         const target = this.get(tag)
         const ed = new EventData()
         ed.app = getTheApp()
-        ed.sourceComponent = this.cm.findComponentBaseContainer(view) // return the full component, not just the element view
+        ed.sourceComponent = this.findComponentBaseContainer(view) // return the full component, not just the element view
         ed.eventType = eventName
         ed.tag = tag
         ed.value = value
