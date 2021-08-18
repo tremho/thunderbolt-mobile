@@ -18,7 +18,7 @@ export class SimpleLabel extends ComponentBase {
     }
 
     protected setProperties() {
-        this.setDynamicExpressions(this.get('text') || 'simple-label', this.label, 'text', 'text')
+        this.setDynamicExpressions(this.get('text') || '$text', this.label, 'text', 'text')
     }
 
 }

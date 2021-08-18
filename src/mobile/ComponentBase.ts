@@ -224,20 +224,19 @@ export default class ComponentBase extends StackLayout {
     protected setDynamicExpressions(str:string = '', control:View, controlProp:string, bindName?:string) {
         let component = this.findComponentBaseContainer(control)
         let text = this.evalExpressionString(str, component)
-        console.log('setting initial text for ', control, text)
-        control.set(controlProp, text)
-        if(control.bindingContext) control.bindingContext.off('propertyChange')
+        setTimeout(()=> {
+            console.log('setting initial text for ', control, text)
+            control.set(controlProp, text)
+        })
         let bv = this.com.getComponentAttribute(this, 'bind') // only bind if there is a bind statement
         if(!bv) bv = str.indexOf("$") !== -1 // or if we are referring to bound or page data
         if(bindName && bv && component.b) {
             this.addBinding(control, bindName, controlProp)
             if(control.bindingContext) {
-                const xstr = str
-                // do on change thereafter
+                control.bindingContext.off('propertyChange')
                 control.bindingContext.on('propertyChange', (ev: any) => {
-                    let text = this.evalExpressionString(xstr, component)
-                    console.log('on propertyChange', control, controlProp, text)
-                    console.log('xstr', xstr)
+                    let text = this.evalExpressionString(str, component)
+                    // console.log('on propertyChange', control, controlProp, text)
                     control.set(controlProp, text)
                 })
             }

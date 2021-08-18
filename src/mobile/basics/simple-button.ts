@@ -15,7 +15,7 @@ export class SimpleButton extends ComponentBase {
     }
 
     protected setProperties() {
-        this.setDynamicExpressions(this.get('text') || 'simple-button', this.button, 'text')
+        this.setDynamicExpressions(this.get('text') || '$text', this.button, 'text')
     }
 
 }

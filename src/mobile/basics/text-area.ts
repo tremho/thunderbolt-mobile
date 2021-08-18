@@ -14,7 +14,7 @@ export class TextArea extends ComponentBase {
     }
 
     protected setProperties() {
-        this.setDynamicExpressions(this.get('text') || 'text-area', this.textView, 'text', 'text')
+        this.setDynamicExpressions(this.get('text') || '$text', this.textView, 'text', 'text')
     }
 
 }
