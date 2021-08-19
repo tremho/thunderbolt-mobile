@@ -233,7 +233,7 @@ export default class ComponentBase extends StackLayout {
         if(bindName && bv && component.b) {
             this.addBinding(control, bindName, controlProp)
             if(control.bindingContext) {
-                // control.bindingContext.off('propertyChange')
+                control.bindingContext.off('propertyChange')
                 control.bindingContext.on('propertyChange', (ev: any) => {
                     let text = this.evalExpressionString(str, component)
                     // console.log('on propertyChange', control, controlProp, text)
