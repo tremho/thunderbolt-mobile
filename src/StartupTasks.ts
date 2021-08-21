@@ -80,6 +80,7 @@ function mergeRuntimeInformation(buildEnv:any) {
 }
 
 export function passEnvironmentAndGetTitles(): { appName:string, title:string } {
+    console.log('########### window info should be here ###########')
     console.log('passedEnvironment', passedEnvironment)
     Application.setResources({passedEnvironment:passedEnvironment})
 
