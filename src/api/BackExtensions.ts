@@ -2,7 +2,7 @@
 const extensionModules = {}
 
 export function registerExtensionModule(moduleName:string, module:any) {
-    console.log(`registering ${moduleName} module...`)
+    console.log(`registering ${moduleName} module... `)
     // @ts-ignore
     extensionModules[moduleName] = module
 }
