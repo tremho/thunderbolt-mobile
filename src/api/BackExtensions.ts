@@ -2,9 +2,13 @@
 const extensionModules = {}
 
 export function registerExtensionModule(moduleName:string, module:any) {
-    console.log(`registering ${moduleName} module... `)
-    // @ts-ignore
-    extensionModules[moduleName] = module
+    try {
+        console.log(`registering ${moduleName} module... `)
+        // @ts-ignore
+        extensionModules[moduleName] = module
+    } catch(e) {
+        console.error("ERROR at registerExtensionModule", e)
+    }
 }
 
 export function callExtensionApi(moduleName:string, functionName:string, args:any[]) {
