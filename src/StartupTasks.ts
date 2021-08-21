@@ -1,7 +1,7 @@
 
 import * as nsfs from '@nativescript/core/file-system'
 import {FileSystemEntity} from "@nativescript/core/file-system";
-import {Device} from '@nativescript/core'
+import {Device, Screen} from '@nativescript/core'
 import {Application} from '@nativescript/core'
 
 let passedEnvironment = {}
@@ -69,6 +69,10 @@ function mergeRuntimeInformation(buildEnv:any) {
                 hostVersion: Device.osVersion, // (if nativescript)
                 manufacturer: Device.manufacturer // (if nativescript)
             }
+        },
+        window: {
+            width: Screen.mainScreen.widthDIPs,
+            height: Screen.mainScreen.heightDIPs
         }
     }
     passedEnvironment = env
