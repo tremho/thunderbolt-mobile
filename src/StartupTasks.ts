@@ -76,10 +76,15 @@ function mergeRuntimeInformation(buildEnv:any) {
 }
 
 export function passEnvironmentAndGetTitles(): { appName:string, title:string } {
+    console.log('passedEnvironment', passedEnvironment)
     Application.setResources({passedEnvironment:passedEnvironment})
 
     let env:any = passedEnvironment
+    if(!env.build || !env.build.app) {
+        throw Error('missing build environment data')
+    }
     let appName = (env.build.app && env.build.app.name) || 'jove-app'
     let title = env.build.app.displayName || appName
+    console.log('... appName, title', appName, title)
     return {appName, title}
 }
