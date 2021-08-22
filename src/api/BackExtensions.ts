@@ -1,9 +1,16 @@
 
+import * as nscore from "@nativescript/core";
+
 const extensionModules = {}
 
 export function registerExtensionModule(moduleName:string, module:any) {
     try {
         console.log(`registering ${moduleName} module... `)
+        module._nscore = nscore
+        module.nativescriptCoreObject = (name:string) => {
+            // @ts-ignore
+            return nscore[name]
+        }
         // @ts-ignore
         extensionModules[moduleName] = module
     } catch(e) {
