@@ -1,17 +1,18 @@
 
 import * as nscore from "@nativescript/core";
 
+const nscoreAccess = {
+    nativescriptCoreObject: (objName:string) => {
+        //@ts-ignore
+        return nscore[objName]
+    }
+}
+
 const extensionModules = {}
 
 export function registerExtensionModule(moduleName:string, module:any) {
     try {
         console.log(`registering ${moduleName} module... `)
-        if(module.nativescriptCoreObject) {
-            module.nativescriptCoreObject = (name: string) => {
-                // @ts-ignore
-                return nscore[name]
-            }
-        }
         // @ts-ignore
         extensionModules[moduleName] = module
     } catch(e) {
@@ -30,7 +31,7 @@ export function callExtensionApi(moduleName:string, functionName:string, args:an
     }
     return new Promise((resolve, reject) => {
         try {
-            response = fn(...args)
+            response = fn.apply(nscoreAccess, args) // allow access via this.nativescriptCoreObject
         } catch(e) {
             error = e.message
         }
