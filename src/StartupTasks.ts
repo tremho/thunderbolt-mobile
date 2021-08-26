@@ -19,7 +19,7 @@ export function readBuildEnvironment() {
     for(let i=0; i<files.length; i++) {
         const f = files[i]
         const fileName = f.path.substring(f.path.lastIndexOf('/'))
-        console.log(`${i+1} - ${fileName})`)
+        console.log(`${i+1} - ${fileName}`)
     }
     console.log('%%%%%%%%%%%%%%%%%%%%%%%%%')
 
