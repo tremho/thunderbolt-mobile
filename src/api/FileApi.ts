@@ -28,7 +28,7 @@ export function fileExists(pathName:string):Promise<boolean> {
 }
 
 export function readFileArrayBuffer(pathName:string):Promise<Uint8Array> {
-    const data = nsfs.File.fromPath(pathName).readSync(err => {
+    const data = nsfs.File.fromPath(pathName).readSync((err:Error) => {
         if(err) {
             throw err
         }
@@ -57,7 +57,7 @@ export function writeFileText(pathName:string, text:string):Promise<void> {
         nsfs.File.fromPath(pathName).writeTextSync(text, (err:Error) => {
             throw err
         })
-    } catch(e) {
+    } catch(e:any) {
         console.error(e.message)
         throw e
     }
@@ -91,7 +91,7 @@ export function writeFileArrayBuffer(pathName:string, data:ArrayBuffer):Promise<
             throw err
         })
 
-    } catch(e) {
+    } catch(e:any) {
         console.error(e.message)
         throw e
     }
@@ -103,7 +103,7 @@ export function fileDelete(pathName:string): Promise<void> {
         nsfs.File.fromPath(pathName).removeSync( err => {
             throw err
         })
-    } catch(e) {
+    } catch(e:any) {
         console.error(e.message)
         throw e
     }
@@ -164,7 +164,7 @@ export function fileStats(pathName:string):Promise<FileDetails> {
         fd.size = file.size
         fd.type = file.size === undefined ? 'folder' : 'file'
         return Promise.resolve(fd)
-    } catch(e) {
+    } catch(e:any) {
         console.error(e.message)
         throw e
     }
@@ -173,7 +173,7 @@ export function fileStats(pathName:string):Promise<FileDetails> {
 export function createFolder(pathName:string): Promise<void> {
     try {
         nsfs.Folder.fromPath(pathName)
-    } catch(e) {
+    } catch(e:any) {
         console.error(e.message)
         throw e
     }
@@ -189,7 +189,7 @@ export function removeFolder(pathName:string, andClear:boolean):Promise<void> {
                 throw err
             }
         })
-    } catch(e) {
+    } catch(e:any) {
         console.error(e.message)
         throw e
     }

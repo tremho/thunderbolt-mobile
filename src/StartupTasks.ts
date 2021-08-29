@@ -42,7 +42,7 @@ export function readBuildEnvironment() {
                     error: "Unable to locate " + beFile,
                 }
             }
-        } catch (e) {
+        } catch (e:any) {
             console.error('Unable to read ' + beFile, e)
             be = {
                 error: "Unable to read " + beFile,

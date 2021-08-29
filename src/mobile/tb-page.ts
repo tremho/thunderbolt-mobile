@@ -178,14 +178,14 @@ export class TBPage extends GridLayout {
                 try {
                     tools = toolbarId && model.getAtPath('toolbar.' + toolbarId)
                 }
-                catch(e) {
+                catch(e:any) {
                     console.warn('failed to set tools', e.message)
                 }
                 // console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
                 let indicatorItems
                 try {
                     indicatorItems = indicatorsId && model.getAtPath('indicators.'+indicatorsId)
-                } catch(e) {
+                } catch(e:any) {
                     console.warn('failed to set indicators', e.message)
                 }
                 toolbar.setTools(tools || [])
@@ -204,7 +204,7 @@ export class TBPage extends GridLayout {
         // console.log('looking for menu info at menu.'+menuId)
         try {
             menu = model.getAtPath('menu.'+menuId) || ''
-        } catch(e) {
+        } catch(e:any) {
             console.error(e)
         }
         console.log('menu',menu)

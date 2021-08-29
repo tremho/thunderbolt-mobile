@@ -15,7 +15,7 @@ export function registerExtensionModule(moduleName:string, module:any) {
         console.log(`registering ${moduleName} module... `)
         // @ts-ignore
         extensionModules[moduleName] = module
-    } catch(e) {
+    } catch(e:any) {
         console.error("ERROR at registerExtensionModule", e)
     }
 }
@@ -32,7 +32,7 @@ export function callExtensionApi(moduleName:string, functionName:string, args:an
     return new Promise((resolve, reject) => {
         try {
             response = fn.apply(nscoreAccess, args) // allow access via this.nativescriptCoreObject
-        } catch(e) {
+        } catch(e:any) {
             error = e.message
         }
         if(error) reject(error)
