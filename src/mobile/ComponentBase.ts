@@ -1,4 +1,5 @@
 import {StackLayout, View} from '@nativescript/core'
+import Platform from '@nativescript/core/platform'
 import {TBContent} from "./tb-page";
 
 import {ComNormal} from '../common-core/ComNormal'
@@ -289,6 +290,7 @@ export default class ComponentBase extends StackLayout {
     listenToFor(el:any, pseudoEventTag:string, func:(ed:any)=>{}) { return this.comNormal.listenToFor(el, pseudoEventTag, func) }
     getElementBounds(element:any):any { return this.comNormal.getElementBounds(element) }
     setStyleProp(el:any, prop:string, value:number|string, unit?:string) { return this.comNormal.setStyleProp(el, prop, value, unit)}
+    getDIPScale() { return Platform.Screen.mainScreen.scale }
 }
 
 
