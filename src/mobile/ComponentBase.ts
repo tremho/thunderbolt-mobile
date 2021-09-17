@@ -1,5 +1,5 @@
 import {StackLayout, View} from '@nativescript/core'
-import Platform from '@nativescript/core/platform'
+const Platform  = require('@nativescript/core/platform')
 import {TBContent} from "./tb-page";
 
 import {ComNormal} from '../common-core/ComNormal'
