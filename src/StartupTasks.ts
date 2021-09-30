@@ -56,6 +56,8 @@ export function readBuildEnvironment() {
 }
 function mergeRuntimeInformation(buildEnv:any) {
 
+    console.log('>> in mergeRuntimeInformation')
+
     const env = {
         build: buildEnv,
         runtime: {
@@ -76,6 +78,7 @@ function mergeRuntimeInformation(buildEnv:any) {
         }
     }
     passedEnvironment = env
+    console.log('>> out of mergeRuntimeInformation')
     return env
 }
 
