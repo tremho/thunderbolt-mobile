@@ -14,3 +14,12 @@ export {Observable as Observable}
 export {mainApi as mainApi}
 export {callExtensionApi as callExtensionApi}
 
+console.log('>>>>>>>>>>>>>>>')
+console.log('mobile index exports')
+console.log('targetPlatform', targetPlatform)
+console.log('ComponentBase', ComponentBase)
+console.log('componentExport', componentExport)
+console.log('Observable', Observable)
+console.log('mainApi', mainApi)
+console.log('callExtensionApi', callExtensionApi)
+console.log('<<<<<<<<<<<<<<<<<')
