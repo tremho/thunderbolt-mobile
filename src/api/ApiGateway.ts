@@ -29,5 +29,7 @@ export const mainApi = {
     DialogOptions: dialogApi.DialogOptions,
     openDialog: dialogApi.openDialog,
 
-    webSend: WebApi.webSend
+    webSend: WebApi.webSend,
+
+    fin: "That's all folks"
 }
