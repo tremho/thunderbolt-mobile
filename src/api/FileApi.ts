@@ -15,20 +15,31 @@ function PathNotFound(path:string) {
     return new PathNotFound(path)
 }
 
+function resPath(pathName:string):string {
+    let resPath
+    if(pathName.charAt(0) === '/') {
+        resPath = pathName
+    } else {
+        resPath = nsfs.knownFolders.currentApp().path
+        if(resPath.charAt(resPath.length-1) !== '/') resPath += '/'
+        resPath += pathName
+    }
+    return resPath
+}
+
 export function getAppPath():Promise<string> {
     return Promise.resolve(nsfs.knownFolders.currentApp().path)
 }
 
 export function readFileText(pathName:string):Promise<string> {
-
-    return nsfs.File.fromPath(pathName).readText()
+    return nsfs.File.fromPath(resPath(pathName)).readText()
 }
 export function fileExists(pathName:string):Promise<boolean> {
-    return Promise.resolve(nsfs.File.exists(pathName))
+    return Promise.resolve(nsfs.File.exists(resPath(pathName)))
 }
 
 export function readFileArrayBuffer(pathName:string):Promise<Uint8Array> {
-    const data = nsfs.File.fromPath(pathName).readSync((err:Error) => {
+    const data = nsfs.File.fromPath(resPath(pathName)).readSync((err:Error) => {
         if(err) {
             throw err
         }
@@ -54,7 +65,7 @@ export function readFileArrayBuffer(pathName:string):Promise<Uint8Array> {
 
 export function writeFileText(pathName:string, text:string):Promise<void> {
     try {
-        nsfs.File.fromPath(pathName).writeTextSync(text, (err:Error) => {
+        nsfs.File.fromPath(resPath(pathName)).writeTextSync(text, (err:Error) => {
             throw err
         })
     } catch(e:any) {
@@ -87,7 +98,7 @@ export function writeFileArrayBuffer(pathName:string, data:ArrayBuffer):Promise<
             // const b64encoded = btoa(decoder.decode(ba));
             // ba = atob(b64encoded)
         }
-        nsfs.File.fromPath(pathName).writeSync(ba, (err: Error) => {
+        nsfs.File.fromPath(resPath(pathName)).writeSync(ba, (err: Error) => {
             throw err
         })
 
@@ -100,7 +111,7 @@ export function writeFileArrayBuffer(pathName:string, data:ArrayBuffer):Promise<
 
 export function fileDelete(pathName:string): Promise<void> {
     try {
-        nsfs.File.fromPath(pathName).removeSync( err => {
+        nsfs.File.fromPath(resPath(pathName)).removeSync( err => {
             throw err
         })
     } catch(e:any) {
@@ -115,10 +126,10 @@ export function fileMove(pathName:string, newPathName:string):Promise<void> {
     // we can't actually move a file with the Nativescript file system but we can
     // copy its contents and delete the original.
 
-    const data = nsfs.File.fromPath(pathName).readSync((err:Error) => {
+    const data = nsfs.File.fromPath(resPath(pathName)).readSync((err:Error) => {
         throw err
     })
-    nsfs.File.fromPath(newPathName).writeSync(data, (err:Error) => {
+    nsfs.File.fromPath(resPath(newPathName)).writeSync(data, (err:Error) => {
         throw err
     })
     nsfs.File.fromPath(pathName).removeSync()
@@ -136,10 +147,10 @@ export function fileRename(pathName:string, newBase:string): Promise<void> {
 }
 
 export function fileCopy(pathName:string, toPathName:string):Promise<void> {
-    const data = nsfs.File.fromPath(pathName).readSync((err:Error) => {
+    const data = nsfs.File.fromPath(resPath(pathName)).readSync((err:Error) => {
         throw err
     })
-    nsfs.File.fromPath(toPathName).writeSync(data, (err:Error) => {
+    nsfs.File.fromPath(resPath(toPathName)).writeSync(data, (err:Error) => {
         throw err
     })
     return Promise.resolve()
@@ -157,7 +168,7 @@ export class FileDetails  {
 export function fileStats(pathName:string):Promise<FileDetails> {
     try {
         const fd = new FileDetails()
-        const file = nsfs.File.fromPath(pathName)
+        const file = nsfs.File.fromPath(resPath(pathName))
         fd.fileName = file.name
         fd.parentPath = file.parent.path
         fd.mtimeMs = file.lastModified.getTime()
@@ -172,7 +183,7 @@ export function fileStats(pathName:string):Promise<FileDetails> {
 
 export function createFolder(pathName:string): Promise<void> {
     try {
-        nsfs.Folder.fromPath(pathName)
+        nsfs.Folder.fromPath(resPath(pathName))
     } catch(e:any) {
         console.error(e.message)
         throw e
@@ -184,7 +195,7 @@ export function removeFolder(pathName:string, andClear:boolean):Promise<void> {
 
     // TODO: Implement recursive clearing if andClear is true
     try {
-        nsfs.Folder.fromPath(pathName).removeSync((err:any) => {
+        nsfs.Folder.fromPath(resPath(pathName)).removeSync((err:any) => {
             if(err) {
                 throw err
             }
@@ -198,7 +209,7 @@ export function removeFolder(pathName:string, andClear:boolean):Promise<void> {
 
 export function readFolder(pathName:string):Promise<FileDetails[]> {
     const details:FileDetails[] = []
-    const entries = nsfs.Folder.fromPath(pathName).getEntitiesSync((err:any) => {
+    const entries = nsfs.Folder.fromPath(resPath(pathName)).getEntitiesSync((err:any) => {
         if(err) throw err
     })
     entries.forEach((entry:any) => {
