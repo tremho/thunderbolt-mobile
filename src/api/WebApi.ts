@@ -58,7 +58,7 @@ export function webSend(request:WebRequest) : Promise<WebResponse> {
     options.url = request.endpoint
 
     console.log('websend preparing', request.method+' '+request.endpoint)
-    console.log('websend sending ')
+    console.log('websend sending ', JSON.stringify(options))
     return http.request(options).then((result:any) => {
         resp.code = result.statusCode
         resp.statusType = StatusType.None
