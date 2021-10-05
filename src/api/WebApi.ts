@@ -78,7 +78,7 @@ export function webSend(request:WebRequest) : Promise<WebResponse> {
             resp.statusType = StatusType.ServerError
         }
         resp.headers = result.headers
-        resp.body = result.content
+        resp.body = result.content.toString() // we'll keep it as text and convert client-side to avoid json error traps
         console.log('returning resp', resp)
         return resp
     })
