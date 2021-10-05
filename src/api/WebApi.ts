@@ -57,6 +57,7 @@ export function webSend(request:WebRequest) : Promise<WebResponse> {
     options.method = request.method
     let q = ''
     for(let p of Object.getOwnPropertyNames(request.parameters || {})) {
+        // @ts-ignore
         let v = request.parameters[p]
         q += (q ? '&': '?')+p+'='+v
     }
