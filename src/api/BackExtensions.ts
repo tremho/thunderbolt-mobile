@@ -14,11 +14,19 @@ const extensionModules = {}
 
 export function registerExtensionModule(backContext:any, moduleName:string, module:any) {
     try {
+        if(typeof module.initContext === 'function') {
+            console.log('setting module context on registration')
+            try {
+                module.initContext(InjectionRequirements, backContext)
+            } catch(e) {
+                console.error("ERROR at registerExtensionModule (initContext)", e)
+            }
+        }
         console.log(`registering ${moduleName} module... `)
         // @ts-ignore
         extensionModules[moduleName] = module
     } catch(e:any) {
-        console.error("ERROR at registerExtensionModule", e)
+        console.error("ERROR at registerExtensionModule (registering)", e)
     }
 }
 
@@ -28,18 +36,6 @@ export function callExtensionApi(moduleName:string, functionName:string, args:an
     const mod = extensionModules[moduleName]
 
     let response:any, error:any;
-    if(!mod.contextSent) {
-        if(typeof mod.initContext === 'function') {
-            try {
-                mod.initContext(InjectionRequirements, FrameworkBackContext)
-                mod.contextSent = true
-            } catch(e) {
-                error = e
-            }
-        }
-    }
-
-
     const fn = mod[functionName]
     if(!fn) {
         error = `function "${functionName} does not exist in module "${moduleName}`
