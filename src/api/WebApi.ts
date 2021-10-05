@@ -52,12 +52,17 @@ export function webSend(request:WebRequest) : Promise<WebResponse> {
     const options:any = {}
     options.content = request.body
     // options.dontFollowRedirects = false
+    // options.timeout
     options.headers = request.headers
     options.method = request.method
-    // options.timeout
-    options.url = request.endpoint
+    let q = ''
+    for(let p of Object.getOwnPropertyNames(request.parameters || {})) {
+        let v = request.parameters[p]
+        q += (q ? '&': '?')+p+'='+v
+    }
+    options.url = request.endpoint+q
 
-    console.log('websend preparing', request.method+' '+request.endpoint)
+    console.log('websend preparing', request.method+' '+options.url)
     console.log('websend sending ', JSON.stringify(options))
     return http.request(options).then((result:any) => {
         resp.code = result.statusCode
