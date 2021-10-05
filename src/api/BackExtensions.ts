@@ -12,7 +12,7 @@ const nscoreAccess = {
 
 const extensionModules = {}
 
-export function registerExtensionModule(moduleName:string, module:any) {
+export function registerExtensionModule(backContext:any, moduleName:string, module:any) {
     try {
         console.log(`registering ${moduleName} module... `)
         // @ts-ignore
