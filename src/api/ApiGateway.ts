@@ -1,14 +1,18 @@
 
 import * as fileApi from './FileApi'
 import * as dialogApi from './DialogAPI'
-import * as WebApi from './WebApi'
+import * as webApi from './WebApi'
 
-// TODO: change to export the whole namespace and change the app semantic from app.mainApi.NAME to app.api.NAME
-// with names FILE, DIALOG, and HTTP
+import {passEnvironmentAndGetTitles} from "../StartupTasks";
 
 export const mainApi = {
-    foo: "foo",
-    bar: "bar",
+    requestEnvironment: () => {passEnvironmentAndGetTitles()},
+
+    FILE: fileApi,
+    DIALOG: dialogApi,
+    INET: webApi
+
+/*
     getAppPath: fileApi.getAppPath,
     FileDetails: fileApi.FileDetails,
     fileCopy: fileApi.fileCopy,
@@ -32,4 +36,5 @@ export const mainApi = {
     webSend: WebApi.webSend,
 
     fin: "That's all folks"
+ */
 }
