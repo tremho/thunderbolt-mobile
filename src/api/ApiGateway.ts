@@ -10,15 +10,7 @@ export const mainApi = {
 
     FILE: fileApi,
     DIALOG: dialogApi,
-    INET: webApi,
-    FOO: {
-        getAppPath: fileApi.getAppPath,
-        FileDetails: fileApi.FileDetails,
-        fileCopy: fileApi.fileCopy,
-        fileMove: fileApi.fileMove,
-        fileStats: fileApi.fileStats
-    }
-
+    INET: webApi
 /*
     getAppPath: fileApi.getAppPath,
     FileDetails: fileApi.FileDetails,
