@@ -8,9 +8,9 @@ import {passEnvironmentAndGetTitles} from "../StartupTasks";
 export const mainApi = {
     requestEnvironment: () => {passEnvironmentAndGetTitles()},
 
-    FILE: fileApi,
-    DIALOG: dialogApi,
-    INET: webApi
+    ...fileApi,
+    ...dialogApi,
+    ...webApi
 /*
     getAppPath: fileApi.getAppPath,
     FileDetails: fileApi.FileDetails,
