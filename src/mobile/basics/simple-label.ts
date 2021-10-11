@@ -21,9 +21,9 @@ export class SimpleLabel extends ComponentBase {
         if(this.get('action')) this.setActionResponder(this.label, 'tap', 'action')
     }
 
-    protected setProperties() {
-        this.setDynamicExpressions(this.get('text') || '$text', this.label, 'text', 'text')
-    }
+    // protected setProperties() {
+    //     this.setDynamicExpressions(this.get('text') || '$text', this.label, 'text', 'text')
+    // }
 
 }
 

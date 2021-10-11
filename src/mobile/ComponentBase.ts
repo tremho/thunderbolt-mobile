@@ -80,7 +80,7 @@ export default class ComponentBase extends StackLayout {
                                 setTimeout(() => {
                                     this.com.setCommonPropsMobile(this, this.defaultProps)
                                     this.com.bindComponent2(this.props)
-                                    this.setProperties()
+                                    // this.setProperties()
                                     this.com.setLocalBinds(this.localBinds)
                                     try {
                                         // @ts-ignore
