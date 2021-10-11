@@ -78,10 +78,10 @@ export default class ComponentBase extends StackLayout {
                                     console.error('Error in  "'+className+' beforeLayout"', e)
                                 }
                                 setTimeout(() => {
-                                    this.com.setCommonPropsMobile(this, this.defaultProps)
+                                    // this.com.setCommonPropsMobile(this, this.defaultProps)
                                     this.com.bindComponent2(this.props)
                                     // this.setProperties()
-                                    this.com.setLocalBinds(this.localBinds)
+                                    // this.com.setLocalBinds(this.localBinds)
                                     try {
                                         // @ts-ignore
                                         this.afterLayout && this.afterLayout()
