@@ -1,4 +1,4 @@
-import {StackLayout, View} from '@nativescript/core'
+import {Observable, StackLayout, View} from '@nativescript/core'
 const Platform  = require('@nativescript/core/platform')
 import {TBContent} from "./tb-page";
 
@@ -28,6 +28,7 @@ export default class ComponentBase extends StackLayout {
     protected defaultProps:any = {}
     protected container: any
     protected component: any
+    protected state:any;
     protected tagName:string = ''
     public com: any
     public cm: any // same as com
@@ -66,6 +67,8 @@ export default class ComponentBase extends StackLayout {
                             this.tagName = className
                             this.localBinds = []
                             this.createControl()
+                            this.state = this.bindingContext = new Observable()
+
                             // console.log('localBinds', this.localBinds)
                             if(this.com) {
                                 try {
