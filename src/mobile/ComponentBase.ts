@@ -31,6 +31,7 @@ export default class ComponentBase extends StackLayout {
     protected tagName:string = ''
     public com: any
     public cm: any // same as com
+    public props: any = {}
     public b:any // comBinding eval
     private localBinds:any[] | undefined
     private comNormal: ComNormal;
@@ -75,7 +76,7 @@ export default class ComponentBase extends StackLayout {
                                 }
                                 setTimeout(() => {
                                     this.com.setCommonPropsMobile(this, this.defaultProps)
-                                    this.com.bindComponent2()
+                                    this.com.bindComponent2(this.props)
                                     this.setProperties()
                                     this.com.setLocalBinds(this.localBinds)
                                     try {

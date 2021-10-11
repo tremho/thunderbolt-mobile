@@ -8,6 +8,9 @@ export class SimpleLabel extends ComponentBase {
 
     // Override to create our label
     public createControl() {
+        this.props = {
+            text: this.get('text')
+        }
         this.label.set("whiteSpace", "nowrap")
         this.label.set("textWrap", false)
         this.textComponent = this.label // so ComCommon will align text
