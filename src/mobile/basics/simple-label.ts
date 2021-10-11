@@ -9,7 +9,7 @@ export class SimpleLabel extends ComponentBase {
     // Override to create our label
     public createControl() {
         this.props = {
-            text: this.get('text')
+            text: {component: this.label, locprop: 'text', value: this.get('text')}
         }
         this.label.set("whiteSpace", "nowrap")
         this.label.set("textWrap", false)
