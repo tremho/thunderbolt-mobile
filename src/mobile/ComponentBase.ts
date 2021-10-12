@@ -1,4 +1,4 @@
-import {Observable, StackLayout, View} from '@nativescript/core'
+import {StackLayout, View} from '@nativescript/core'
 const Platform  = require('@nativescript/core/platform')
 import {TBContent} from "./tb-page";
 
@@ -28,13 +28,13 @@ export default class ComponentBase extends StackLayout {
     protected defaultProps:any = {}
     protected container: any
     protected component: any
-    protected state:any;
+    // protected state:any;
     protected tagName:string = ''
     public com: any
     public cm: any // same as com
     public props: any = {}
     public b:any // comBinding eval
-    private localBinds:any[] | undefined
+    // private localBinds:any[] | undefined
     private comNormal: ComNormal;
 
     public static bridgeAppGetter(getter:any, comCommon:any) {
@@ -55,7 +55,7 @@ export default class ComponentBase extends StackLayout {
                     this._isInit = true
                     this.com = new ComCommon(this)
                     this.cm = this.com // duplicate, but named like this on desktop side
-                    this.b = this.cm.evalBinding
+                    this.b = this.cm.evalBinding // TODO: This may be obsolete now
                     this.com.waitForModel().then(() => {
                         // console.log('>>>>>>>>>> ***** past waitReady')
                         // must occur on a nominal timeout to work across platforms
@@ -65,9 +65,8 @@ export default class ComponentBase extends StackLayout {
                             className += (className ? ' ' : '')+this.constructor.name
                             this.className = className
                             this.tagName = className
-                            this.localBinds = []
+                            // this.localBinds = []
                             this.createControl()
-                            this.state = this.bindingContext = new Observable()
 
                             // console.log('localBinds', this.localBinds)
                             if(this.com) {
@@ -78,7 +77,7 @@ export default class ComponentBase extends StackLayout {
                                     console.error('Error in  "'+className+' beforeLayout"', e)
                                 }
                                 setTimeout(() => {
-                                    // this.com.setCommonPropsMobile(this, this.defaultProps)
+                                    this.com.setCommonPropsMobile(this, this.defaultProps)
                                     this.com.bindComponent2(this.props)
                                     // this.setProperties()
                                     // this.com.setLocalBinds(this.localBinds)
@@ -99,6 +98,19 @@ export default class ComponentBase extends StackLayout {
             // Log.exception(e)
             console.error(e)
             throw e
+        }
+    }
+
+    /**
+     * update items in props to their controls
+     * This is called on a model binding event
+     * Note: we are not using Nativescript Observable binding any longer
+     */
+    public update() {
+        for(let pi of Object.getOwnPropertyNames(this.props || [])) {
+            const po:any = pi
+            let {value} = this.cm.evaluateBindExpression(po.value)
+            po.component.set(po.locprop, value || '')
         }
     }
 
@@ -150,9 +162,9 @@ export default class ComponentBase extends StackLayout {
      * Note: this is a good place to call setDynamicExpressions at.
      * @protected
      */
-    protected setProperties() {
-        console.warn('control '+this.constructor.name+' should implement a setProperties method')
-    }
+    // protected setProperties() {
+    //     console.warn('control '+this.constructor.name+' should implement a setProperties me')
+    // }
 
     /**
      * Set an internal view and one of its properties to be bound to
@@ -168,10 +180,10 @@ export default class ComponentBase extends StackLayout {
      * @param bindLocalName
      * @param viewProperty
      */
-    public addBinding(view:any, bindLocalName:string, viewProperty:string) {
-        let lb = [view, bindLocalName, viewProperty]
-        if(this.localBinds) this.localBinds.push(lb)
-    }
+    // public addBinding(view:any, bindLocalName:string, viewProperty:string) {
+    //     let lb = [view, bindLocalName, viewProperty]
+    //     if(this.localBinds) this.localBinds.push(lb)
+    // }
 
     /**
      * Call here to register event handlers for the inner control views of a component
@@ -227,25 +239,26 @@ export default class ComponentBase extends StackLayout {
     }
 
     protected setDynamicExpressions(str:string = '', control:View, controlProp:string, bindName?:string) {
-        let component = this.findComponentBaseContainer(control)
-        let text = this.evalExpressionString(str, component)
-        setTimeout(()=> {
-            console.log('setting initial text for ', control, text)
-            control.set(controlProp, text)
-        })
-        let bv = this.com.getComponentAttribute(this, 'bind') // only bind if there is a bind statement
-        if(!bv) bv = str.indexOf("$") !== -1 // or if we are referring to bound or page data
-        if(bindName && bv && component.b) {
-            this.addBinding(control, bindName, controlProp)
-            if(control.bindingContext) {
-                control.bindingContext.off('propertyChange')
-                control.bindingContext.on('propertyChange', (ev: any) => {
-                    let text = this.evalExpressionString(str, component)
-                    // console.log('on propertyChange', control, controlProp, text)
-                    control.set(controlProp, text)
-                })
-            }
-        }
+        console.warn('setDynamicExpressions is obsolete')
+        // let component = this.findComponentBaseContainer(control)
+        // let text = this.evalExpressionString(str, component)
+        // setTimeout(()=> {
+        //     console.log('setting initial text for ', control, text)
+        //     control.set(controlProp, text)
+        // })
+        // let bv = this.com.getComponentAttribute(this, 'bind') // only bind if there is a bind statement
+        // if(!bv) bv = str.indexOf("$") !== -1 // or if we are referring to bound or page data
+        // if(bindName && bv && component.b) {
+        //     this.addBinding(control, bindName, controlProp)
+        //     if(control.bindingContext) {
+        //         control.bindingContext.off('propertyChange')
+        //         control.bindingContext.on('propertyChange', (ev: any) => {
+        //             let text = this.evalExpressionString(str, component)
+        //             // console.log('on propertyChange', control, controlProp, text)
+        //             control.set(controlProp, text)
+        //         })
+        //     }
+        // }
     }
 
     findComponentBaseContainer(control:any) {
@@ -259,29 +272,30 @@ export default class ComponentBase extends StackLayout {
     }
 
     protected evalExpressionString(str:string, component:any) {
-        let pos = 0
-        while(pos < str.length) {
-            let xsn = str.indexOf('$', pos)
-            if (xsn !== -1) {
-                if (str.charAt(xsn - 1) !== '\\') {
-                    component.bound = component.bindingContext // just to make sure this is set
-                    const lit = str.substring(0, xsn++)
-                    let xnn = str.indexOf(' ', xsn)
-                    if (xnn == -1) xnn = str.indexOf(',', xsn) // todo: really should break on non-alphanum
-                    if (xnn == -1) xnn = str.length
-                    let expr = str.substring(xsn, xnn)
-                    if(expr.charAt(0) === '$') {
-                        expr = 'data.'+expr.substring(1)
-                    }
-                    const postLit = str.substring(xnn)
-                    str = lit + component.b(expr) + postLit
-                }
-                pos = xsn+1
-            } else {
-                break;
-            }
-        }
-        return str
+        console.warn('ComponentBase:evalExpressionString is deprecated (obsolete)')
+        // let pos = 0
+        // while(pos < str.length) {
+        //     let xsn = str.indexOf('$', pos)
+        //     if (xsn !== -1) {
+        //         if (str.charAt(xsn - 1) !== '\\') {
+        //             component.bound = component.bindingContext // just to make sure this is set
+        //             const lit = str.substring(0, xsn++)
+        //             let xnn = str.indexOf(' ', xsn)
+        //             if (xnn == -1) xnn = str.indexOf(',', xsn) // todo: really should break on non-alphanum
+        //             if (xnn == -1) xnn = str.length
+        //             let expr = str.substring(xsn, xnn)
+        //             if(expr.charAt(0) === '$') {
+        //                 expr = 'data.'+expr.substring(1)
+        //             }
+        //             const postLit = str.substring(xnn)
+        //             str = lit + component.b(expr) + postLit
+        //         }
+        //         pos = xsn+1
+        //     } else {
+        //         break;
+        //     }
+        // }
+        // return str
     }
 
     // ComNormal implementation
