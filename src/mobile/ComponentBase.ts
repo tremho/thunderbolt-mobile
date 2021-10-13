@@ -28,7 +28,7 @@ export default class ComponentBase extends StackLayout {
     protected defaultProps:any = {}
     protected container: any
     protected component: any
-    protected state:any = {}     // dummy now, no longer an observable
+    protected state:any = {}     // plain object now, holds values rendered at update
     protected tagName:string = ''
     public com: any
     public cm: any // same as com
@@ -108,9 +108,12 @@ export default class ComponentBase extends StackLayout {
      */
     public update() {
         for(let pi of Object.getOwnPropertyNames(this.props)) {
-            const po:any = this.props[pi]
-            let {value} = this.cm.evaluateBindExpression(po.value)
-            po.component.set(po.locprop, value || '')
+            const value = this.state[pi] || ''
+            const po = this.props[pi]
+            const comp = po.component
+            const locprop = po.locprop
+
+            comp.set(locprop, value)
         }
     }
 
