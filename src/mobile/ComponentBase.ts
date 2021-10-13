@@ -107,8 +107,8 @@ export default class ComponentBase extends StackLayout {
      * Note: we are not using Nativescript Observable binding any longer
      */
     public update() {
-        for(let pi of Object.getOwnPropertyNames(this.props || [])) {
-            const po:any = pi
+        for(let pi of Object.getOwnPropertyNames(this.props)) {
+            const po:any = this.props[pi]
             let {value} = this.cm.evaluateBindExpression(po.value)
             po.component.set(po.locprop, value || '')
         }
