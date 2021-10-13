@@ -28,7 +28,7 @@ export default class ComponentBase extends StackLayout {
     protected defaultProps:any = {}
     protected container: any
     protected component: any
-    // protected state:any;
+    protected state:any = {}     // dummy now, no longer an observable
     protected tagName:string = ''
     public com: any
     public cm: any // same as com
