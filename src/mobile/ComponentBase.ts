@@ -65,10 +65,7 @@ export default class ComponentBase extends StackLayout {
                             className += (className ? ' ' : '')+this.constructor.name
                             this.className = className
                             this.tagName = className
-                            // this.localBinds = []
                             this.createControl()
-
-                            // console.log('localBinds', this.localBinds)
                             if(this.com) {
                                 try {
                                     // @ts-ignore
@@ -77,10 +74,8 @@ export default class ComponentBase extends StackLayout {
                                     console.error('Error in  "'+className+' beforeLayout"', e)
                                 }
                                 setTimeout(() => {
-                                    // this.com.setCommonPropsMobile(this, this.defaultProps)
+                                    this.com.setCommonPropsMobile(this, this.defaultProps)
                                     this.com.bindComponent2(this.props)
-                                    // this.setProperties()
-                                    // this.com.setLocalBinds(this.localBinds)
                                     try {
                                         // @ts-ignore
                                         this.afterLayout && this.afterLayout()
@@ -95,7 +90,6 @@ export default class ComponentBase extends StackLayout {
                 }
             })
         } catch (e) {
-            // Log.exception(e)
             console.error(e)
             throw e
         }
@@ -169,24 +163,6 @@ export default class ComponentBase extends StackLayout {
     //     console.warn('control '+this.constructor.name+' should implement a setProperties me')
     // }
 
-    /**
-     * Set an internal view and one of its properties to be bound to
-     * a local binding name.
-     * Note that the local binding name must be established by a bind directive
-     * somewhere in the scope.
-     *
-     * @example:
-     *   // to bind the 'text' property of a Label to the locally bound value 'name':
-     *   this.addBinding(label, 'name', 'text')
-     *
-     * @param view
-     * @param bindLocalName
-     * @param viewProperty
-     */
-    // public addBinding(view:any, bindLocalName:string, viewProperty:string) {
-    //     let lb = [view, bindLocalName, viewProperty]
-    //     if(this.localBinds) this.localBinds.push(lb)
-    // }
 
     /**
      * Call here to register event handlers for the inner control views of a component
@@ -243,25 +219,6 @@ export default class ComponentBase extends StackLayout {
 
     protected setDynamicExpressions(str:string = '', control:View, controlProp:string, bindName?:string) {
         console.warn('setDynamicExpressions is obsolete')
-        // let component = this.findComponentBaseContainer(control)
-        // let text = this.evalExpressionString(str, component)
-        // setTimeout(()=> {
-        //     console.log('setting initial text for ', control, text)
-        //     control.set(controlProp, text)
-        // })
-        // let bv = this.com.getComponentAttribute(this, 'bind') // only bind if there is a bind statement
-        // if(!bv) bv = str.indexOf("$") !== -1 // or if we are referring to bound or page data
-        // if(bindName && bv && component.b) {
-        //     this.addBinding(control, bindName, controlProp)
-        //     if(control.bindingContext) {
-        //         control.bindingContext.off('propertyChange')
-        //         control.bindingContext.on('propertyChange', (ev: any) => {
-        //             let text = this.evalExpressionString(str, component)
-        //             // console.log('on propertyChange', control, controlProp, text)
-        //             control.set(controlProp, text)
-        //         })
-        //     }
-        // }
     }
 
     findComponentBaseContainer(control:any) {
@@ -276,29 +233,6 @@ export default class ComponentBase extends StackLayout {
 
     protected evalExpressionString(str:string, component:any) {
         console.warn('ComponentBase:evalExpressionString is deprecated (obsolete)')
-        // let pos = 0
-        // while(pos < str.length) {
-        //     let xsn = str.indexOf('$', pos)
-        //     if (xsn !== -1) {
-        //         if (str.charAt(xsn - 1) !== '\\') {
-        //             component.bound = component.bindingContext // just to make sure this is set
-        //             const lit = str.substring(0, xsn++)
-        //             let xnn = str.indexOf(' ', xsn)
-        //             if (xnn == -1) xnn = str.indexOf(',', xsn) // todo: really should break on non-alphanum
-        //             if (xnn == -1) xnn = str.length
-        //             let expr = str.substring(xsn, xnn)
-        //             if(expr.charAt(0) === '$') {
-        //                 expr = 'data.'+expr.substring(1)
-        //             }
-        //             const postLit = str.substring(xnn)
-        //             str = lit + component.b(expr) + postLit
-        //         }
-        //         pos = xsn+1
-        //     } else {
-        //         break;
-        //     }
-        // }
-        // return str
     }
 
     // ComNormal implementation
