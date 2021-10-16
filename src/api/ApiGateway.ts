@@ -8,6 +8,7 @@ import {passEnvironmentAndGetTitles} from "../StartupTasks";
 
 export const mainApi = {
     requestEnvironment: () => {passEnvironmentAndGetTitles()},
+    appExit: (code:number) => {process.exit(code)},
 
     ...fileApi,
     ...dialogApi,
