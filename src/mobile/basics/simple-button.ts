@@ -9,14 +9,17 @@ export class SimpleButton extends ComponentBase {
 
     // Override to create our button
     public createControl() {
+        this.props = {
+            text: {component: this.button, locprop: 'text', value: this.get('text')}
+        }
         this.textComponent = this.button // so ComCommon will align text
         this.component.addChild(this.button)
         this.setActionResponder(this.button, 'tap', 'action')
     }
 
-    protected setProperties() {
-        this.setDynamicExpressions(this.get('text') || '$text', this.button, 'text')
-    }
+    // protected setProperties() {
+    //     this.setDynamicExpressions(this.get('text') || '$text', this.button, 'text')
+    // }
 
 }
 

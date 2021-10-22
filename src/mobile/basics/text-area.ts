@@ -8,14 +8,17 @@ export class TextArea extends ComponentBase {
 
     // Override to create our control
     public createControl() {
+        this.props = {
+            text: {component: this.textView, locprop: 'text', value: this.get('text')}
+        }
         this.textComponent = this.textView // so ComCommon will align text
         this.textView.className = 'TextArea'
         this.component.addChild(this.textView)
     }
 
-    protected setProperties() {
-        this.setDynamicExpressions(this.get('text') || '$text', this.textView, 'text', 'text')
-    }
+    // protected setProperties() {
+    //     this.setDynamicExpressions(this.get('text') || '$text', this.textView, 'text', 'text')
+    // }
 
 }
 
