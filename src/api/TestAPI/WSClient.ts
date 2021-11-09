@@ -14,7 +14,10 @@ export class WSClient {
         ////
         return new Promise(resolve => {
             this.ws.on('error', (w: any, e: Error) => {
-                this.handleEvent('error',e)
+                console.log('we see an error at ws ', e)
+                if(e.message.indexOf('SLF4J') === -1) {
+                    this.handleEvent('error', e)
+                }
             })
             this.ws.on('close', (w: any, code: number, reason: string) => {
                 this.handleEvent('close', {code, reason})
