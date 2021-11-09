@@ -1,15 +1,7 @@
 
-import {WSClient, clientTest} from "./WSClient";
+import {clientTest} from "./WSClient";
 
-let testStatus:string = "{}"
-
-function setTestStatus(inStatus:any) {
-    testStatus = JSON.stringify(inStatus)
-}
-
-export async function startTest(host:string) {
-    console.log('Jove Mobile test host is', host)
+export async function startTest(host:string = 'localhost') {
     let service = "ws://"+host+":51610"
-    console.log('  .... service is', service)
     return clientTest(service)
 }
