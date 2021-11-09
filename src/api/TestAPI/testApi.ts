@@ -1,5 +1,5 @@
 
-import {H2Client} from "./H2Client";
+import {WSClient} from "./WSClient";
 
 let testStatus:string = "{}"
 
