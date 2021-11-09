@@ -15,9 +15,7 @@ export class WSClient {
         return new Promise(resolve => {
             this.ws.on('error', (w: any, e: Error) => {
                 console.log('we see an error at ws ', e)
-                if(e.message.indexOf('SLF4J') === -1) {
-                    this.handleEvent('error', e)
-                }
+                this.handleEvent('error', e)
             })
             this.ws.on('close', (w: any, code: number, reason: string) => {
                 this.handleEvent('close', {code, reason})
@@ -55,6 +53,9 @@ export async function connectClient(service:string):Promise<WSClient> {
     console.log('connecting to', service)
     const client = new WSClient()
     return new Promise(resolve => {
+        client.on('error', (e:Error) => {
+            resolve(client)
+        })
         client.on('connect', (data:any) => {
             resolve(client)
         })
