@@ -65,6 +65,13 @@ export async function clientTest(service:string):Promise<number> {
     return new Promise(resolve => {
         console.log('starting client test')
         connectClient(service).then((client:any) => {
+            client.on('close', (data:any) => {
+                if(data.code === 1000) {// normal close
+                    console.log('client closed normally', data.reason)
+                } else {
+                    console.warn('cient closed abnormally', code, data.reason)
+                }
+            })
             client.on('data', (data:any) => {
                 const directive = data.toString()
                 console.log('received directive', directive)
