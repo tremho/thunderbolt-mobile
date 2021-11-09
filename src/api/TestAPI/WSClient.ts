@@ -10,7 +10,7 @@ export class WSClient {
     eventMap:any = {}
 
     connect(serviceUrl:string) {
-        this.ws = new WS(serviceUrl, {protocols:[], debug:false, timeout:5000})
+        this.ws = new WS(serviceUrl, {protocols:[], debug:false, timeout:25000})
         ////
         return new Promise(resolve => {
             this.ws.on('error', (w: any, e: Error) => {
