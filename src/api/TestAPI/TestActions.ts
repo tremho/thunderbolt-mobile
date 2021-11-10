@@ -94,7 +94,12 @@ export async function callPageFunction(funcName:string, parameters:string[] = []
  * @param delay
  */
 export async function wait(delay:number) {
-    return new Promise(resolve => { setTimeout(resolve, delay)})
+    return new Promise(resolve => {
+        const timerId = setTimeout(() => {
+            clearTimeout(timerId)
+            resolve(delay)
+        }, delay)
+    })
 }
 
 // perform a menu action
