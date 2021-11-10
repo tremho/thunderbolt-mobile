@@ -1,4 +1,5 @@
 
+import * as testActions from './TestActions'
 
 function add(num1:number, num2:number) {
     return num1+num2
@@ -39,7 +40,7 @@ export function getReport() {
     return rpt
 }
 
-export function executeDirective(action:string):Promise<string> {
+export async function executeDirective(action:string):Promise<string> {
     const parts = action.split(' ')
     const cmd = parts[0]
     const arg1 = parts[1]
@@ -67,14 +68,23 @@ export function executeDirective(action:string):Promise<string> {
         }
         break
         case 'fetch': {
-            res = doSomethingAsync()
+            res = await doSomethingAsync()
         }
+            break;
         default: {
-            res = ''
+            const tactany:any = testActions
+            const ta = tactany[cmd]
+            console.log('looking for testAction', cmd)
+            if(typeof ta === 'function') {
+                console.log('found', cmd, ...parts.slice(1))
+                res = await ta(...parts.slice(1))
+                console.log('result is ', res)
+            }
         }
-        break
+            break
     }
-    return Promise.resolve(''+res).then((rec) => {
+    return Promise.resolve(res).then((rec) => {
+        rec = typeof rec === 'object' ? JSON.stringify(rec) : ''+rec
         record(action, rec)
         return rec
     })

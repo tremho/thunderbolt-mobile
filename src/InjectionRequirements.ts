@@ -3,7 +3,7 @@ import {Application} from '@nativescript/core'
 import {registerExtensionModule} from "./api/BackExtensions";
 import * as startupTasks from './StartupTasks'
 import ComponentBase from "./mobile/ComponentBase"
-import {mainApi} from './api/ApiGateway'
+import {mainApi, setCallTestRequest} from './api/ApiGateway'
 import {callExtensionApi} from "./api/BackExtensions";
 
 const injections = {
@@ -13,6 +13,7 @@ const injections = {
     ComponentBase,
     registerExtensionModule,
     mainApi,
+    setCallTestRequest,
     callExtensionApi
 }
 export default injections

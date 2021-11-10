@@ -1,5 +1,5 @@
 
-// TODO: Implement WS client using a working version of Nativescript-websockets  (we must patch this first)
+// Note this is my patched version of @master.technology/websockets.  Meant to be temporary pending official fix.
 const WS = require('@tremho/mt-ns-websockets')
 
 import {executeDirective, getReport} from "./PoCActions";
