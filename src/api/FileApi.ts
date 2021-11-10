@@ -224,7 +224,7 @@ export function readFolder(pathName:string):Promise<FileDetails[]> {
     return Promise.resolve(details)
 }
 
-class UserPathInfo {
+export class UserPathInfo {
     home:string = ''
     cwd:string = ''
     assets:string = ''
