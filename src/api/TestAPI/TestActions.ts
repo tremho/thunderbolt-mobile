@@ -93,9 +93,11 @@ export async function callPageFunction(funcName:string, parameters:string[] = []
  * wait for a given number of milliseconds
  * @param delay
  */
-export async function wait(delay:number) {
+export function wait(delay:number):Promise<number> {
+    console.log('wait ',delay, Date.now())
     return new Promise(resolve => {
         const timerId = setTimeout(() => {
+            console.log('done wait', Date.now())
             clearTimeout(timerId)
             resolve(delay)
         }, delay)
