@@ -20,6 +20,7 @@ let callTestRequest = (r:string, params:string[]) => {console.log('CTR Not Hooke
 
 export function setCallTestRequest(ctr:any) {
     callTestRequest = ctr
+    console.log(">>>>>>>>>> HOOKING CTR as ", callTestRequest)
 }
 
 export function sendTestRequest(request: string, params: string[], cb?:any) {
