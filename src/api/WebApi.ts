@@ -3,7 +3,7 @@ const http = require('@nativescript/core/http')
 /**
  * Structure of object for a Web Request
  */
-class WebRequest {
+export class WebRequest {
     endpoint:string = ''
     method: string = ''
     headers: object = {} // key-value object
@@ -36,7 +36,7 @@ enum StatusType {
 /**
  * Structure of object for a Web Response
  */
-class WebResponse {
+export class WebResponse {
     code: number = 0
     statusType: StatusType = StatusType.None
     headers: object = {} // key value

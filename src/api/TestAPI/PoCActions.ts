@@ -41,6 +41,7 @@ export function getReport() {
 }
 
 export async function executeDirective(action:string):Promise<string> {
+    console.log('client: executeDirective', action)
     const parts = action.split(' ')
     const cmd = parts[0]
     const arg1 = parts[1]

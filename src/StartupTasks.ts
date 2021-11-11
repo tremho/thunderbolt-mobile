@@ -9,19 +9,19 @@ let passedEnvironment = {}
 export function readBuildEnvironment() {
     let be = {}
 
-    console.log('>>$$$$ in readBuildEnvironment ')
+    // console.log('>>$$$$ in readBuildEnvironment ')
 
     const cwd = nsfs.knownFolders.currentApp().path
     console.log('ns cwd (app) ', cwd)
     const files = nsfs.Folder.fromPath(cwd).getEntitiesSync()
-    console.log('%%%%%%%%%%%%%%%%%%%%%%%%%')
-    console.log('contents at app root:')
+    // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%')
+    // console.log('contents at app root:')
     for(let i=0; i<files.length; i++) {
         const f = files[i]
         const fileName = f.path.substring(f.path.lastIndexOf('/'))
         console.log(`${i+1} - ${fileName}`)
     }
-    console.log('%%%%%%%%%%%%%%%%%%%%%%%%%')
+    // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%')
 
 
     let beFile ='BuildEnvironment.json'
@@ -50,13 +50,13 @@ export function readBuildEnvironment() {
             }
         }
     }
-    console.log('returning build environment data as ', be)
+    // console.log('returning build environment data as ', be)
     return mergeRuntimeInformation(be)
 
 }
 function mergeRuntimeInformation(buildEnv:any) {
 
-    console.log('>> in mergeRuntimeInformation')
+    // console.log('>> in mergeRuntimeInformation')
 
     const env = {
         build: buildEnv,
@@ -78,13 +78,13 @@ function mergeRuntimeInformation(buildEnv:any) {
         }
     }
     passedEnvironment = env
-    console.log('>> out of mergeRuntimeInformation')
+    // console.log('>> out of mergeRuntimeInformation')
     return env
 }
 
 export function passEnvironmentAndGetTitles(): { appName:string, title:string } {
-    console.log('########### window info should be here ###########')
-    console.log('passedEnvironment', passedEnvironment)
+    // console.log('########### window info should be here ###########')
+    // console.log('passedEnvironment', passedEnvironment)
     Application.setResources({passedEnvironment:passedEnvironment})
 
     let env:any = passedEnvironment
@@ -93,6 +93,6 @@ export function passEnvironmentAndGetTitles(): { appName:string, title:string } 
     }
     let appName = (env.build.app && env.build.app.name) || 'jove-app'
     let title = env.build.app.displayName || appName
-    console.log('... appName, title', appName, title)
+    // console.log('... appName, title', appName, title)
     return {appName, title}
 }
