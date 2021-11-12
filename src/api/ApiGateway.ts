@@ -4,11 +4,13 @@ import * as dialogApi from './DialogAPI'
 import * as webApi from './WebApi'
 import * as testApi from './TestAPI/testApi'
 
+import {exit} from 'nativescript-exit'
+
 import {passEnvironmentAndGetTitles} from "../StartupTasks";
 
 export const mainApi = {
     requestEnvironment: () => {passEnvironmentAndGetTitles()},
-    appExit: (code:number) => {process.exit(code)},
+    appExit: (code:number) => {exit(code)},
 
     ...fileApi,
     ...dialogApi,

@@ -1,6 +1,6 @@
 {
   "name": "@tremho/jove-mobile",
-  "version": "0.6.9-pre-release.162",
+  "version": "0.6.9-pre-release.163",
   "description": "Mobile (Nativescript) component of Jove framework",
   "main": "build/index.js",
   "scripts": {
@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@tremho/jove-common": "^0.6.9-pre-release.226",
+    "nativescript-exit": "^1.0.1",
     "web-encoding": "^1.1.5"
   }
 }
