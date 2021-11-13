@@ -14,7 +14,7 @@ export class WSClient {
         ////
         return new Promise(resolve => {
             this.ws.on('error', (w: any, e: Error) => {
-                console.log('we see an error at ws ', e)
+                // console.log('we see an error at ws ', e)
                 this.handleEvent('error', e)
             })
             this.ws.on('close', (w: any, code: number, reason: string) => {
@@ -50,7 +50,7 @@ export class WSClient {
 }
 
 export async function connectClient(service:string):Promise<WSClient> {
-    console.log('connecting to', service)
+    // console.log('connecting to', service)
     const client = new WSClient()
     return new Promise(resolve => {
         client.on('error', (e:Error) => {
@@ -67,18 +67,18 @@ let rcount = 1
 let code = 1000
 export function clientTest(service:string):Promise<number> {
     return new Promise(resolve => {
-        console.log('starting client test')
+        // console.log('starting client test')
         connectClient(service).then((client:any) => {
             client.on('close', (data:any) => {
                 if(data.code === 1000) {// normal close
-                    console.log('client closed normally', data.reason)
+                    // console.log('client closed normally', data.reason)
                 } else {
-                    console.warn('client closed abnormally', code, data.reason)
+                    // console.warn('client closed abnormally', code, data.reason)
                 }
             })
             client.on('data', (data:any) => {
                 const directive = data.toString()
-                console.log('received directive', directive)
+                // console.log('received directive', directive)
                 if(directive === 'end')  {
                     // todo: we should get an overall test report and a code from this end and report it.
                     client.send(`${rcount}:${directive}=${code}`)
@@ -89,7 +89,7 @@ export function clientTest(service:string):Promise<number> {
                 Promise.resolve(reply).then((res:string) => {
                     const srep = `${rcount}:${directive}=${res}`
                     rcount++
-                    console.log('replying ', srep)
+                    // console.log('replying ', srep)
                     client.send(srep)
                 })
             })

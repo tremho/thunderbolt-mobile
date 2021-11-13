@@ -63,8 +63,8 @@ export function webSend(request:WebRequest) : Promise<WebResponse> {
     }
     options.url = request.endpoint+q
 
-    console.log('websend preparing', request.method+' '+options.url)
-    console.log('websend sending ', JSON.stringify(options))
+    // console.log('websend preparing', request.method+' '+options.url)
+    // console.log('websend sending ', JSON.stringify(options))
     return http.request(options).then((result:any) => {
         resp.code = result.statusCode
         resp.statusType = StatusType.None
@@ -85,7 +85,7 @@ export function webSend(request:WebRequest) : Promise<WebResponse> {
         }
         resp.headers = result.headers
         resp.body = result.content.toString() // we'll keep it as text and convert client-side to avoid json error traps
-        console.log('returning resp', resp)
+        // console.log('returning resp', resp)
         return resp
     })
 }
