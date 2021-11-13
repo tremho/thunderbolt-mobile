@@ -93,10 +93,15 @@ export async function callPageFunction(funcName:string, parameters:string[] = []
  * wait for a given number of milliseconds
  * @param delay
  */
-export async function wait(delay:number) {
+export async function wait(delay:number):Promise<void> {
 
+    let start = Date.now()
     console.log(">> Wait", delay)
-    return new Promise(resolve => { setTimeout(resolve, delay/10)})
+    return new Promise(resolve => {
+        setTimeout(() => {
+            console.log('>> wait ends', Date.now()-start)
+            resolve()
+        }, delay)})
 }
 
 // perform a menu action
