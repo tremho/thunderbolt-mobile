@@ -96,12 +96,14 @@ export async function callPageFunction(funcName:string, parameters:string[] = []
 export async function wait(delay:number):Promise<void> {
 
     let start = Date.now()
-    console.log(">> Wait", delay)
+    let divider = 10
+    let ddelay = delay/divider
+    console.log(">> Wait", delay, ddelay, divider)
     return new Promise(resolve => {
         setTimeout(() => {
             console.log('>> wait ends', Date.now()-start)
             resolve()
-        }, delay)})
+        }, ddelay)})
 }
 
 // perform a menu action
