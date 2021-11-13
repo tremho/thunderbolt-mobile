@@ -18,11 +18,11 @@ export const mainApi = {
     ...testApi
 }
 
-let callTestRequest = (r:string, params:string[]) => {console.log('CTR Not Hooked!')}
+let callTestRequest = (r:string, params:string[]) => {console.warn('CTR Not Hooked!')}
 
 export function setCallTestRequest(ctr:any) {
     callTestRequest = ctr
-    console.log(">>>>>>>>>> HOOKING CTR as ", callTestRequest)
+    // console.log(">>>>>>>>>> HOOKING CTR as ", callTestRequest)
 }
 
 export function sendTestRequest(request: string, params: string[], cb?:any) {
