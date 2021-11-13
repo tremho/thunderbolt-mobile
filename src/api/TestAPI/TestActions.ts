@@ -96,7 +96,7 @@ export async function callPageFunction(funcName:string, parameters:string[] = []
 export async function wait(delay:number) {
 
     console.log(">> Wait", delay)
-    return new Promise(resolve => { setTimeout(resolve, delay)})
+    return new Promise(resolve => { setTimeout(resolve, delay/10)})
 }
 
 // perform a menu action
