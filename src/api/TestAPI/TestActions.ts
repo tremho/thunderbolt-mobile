@@ -94,10 +94,7 @@ export async function callPageFunction(funcName:string, parameters:string[] = []
  * @param delay
  */
 export async function wait(delay:number) {
-    // console.log('waiting for '+delay/1000+' seconds')
-    // for whatever reason, we find this ends up as 9X longer than expected, so divide it down
-    delay = Math.floor(delay/8.8)
-    return new Promise(resolve => { setTimeout(resolve, delay)})
+    return new Promise(resolve => { setTimeout(resolve, 1)})
 }
 
 // perform a menu action
