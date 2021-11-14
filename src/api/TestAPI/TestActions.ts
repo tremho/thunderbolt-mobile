@@ -1,5 +1,6 @@
 
 import * as AppGateway from '../ApiGateway'
+import {Frame, Page, View} from '@nativescript/core'
 
 /**
  * Reads the value in the app model at the given model path
@@ -105,6 +106,132 @@ export async function wait(delay:number):Promise<void> {
             console.log('>> wait ends', Date.now()-start)
             resolve()
         }, ddelay)})
+}
+
+export async function time() {
+    return Date.now()
+}
+
+function compView(view:View) {
+
+    let comp:any = {}
+
+    comp.automationText = view.automationText
+    comp.className = view.className
+    const atts= [
+        'background',
+        'backgroundColor',
+        'backgroundImage',
+        'borderBottomColor',
+        'borderBottomLeftRadius',
+        'borderBottomRightRadius',
+        'borderBottomWidth',
+        'borderColor',
+        'borderLeftColor',
+        'borderLeftWidth',
+        'borderRadius',
+        'borderRightColor',
+        'borderRightWidth',
+        'borderTopColor',
+        'borderTopLeftRadius',
+        'borderTopRightRadius',
+        'borderTopWidth',
+        'borderWidth',
+        'col',
+        'colSpan',
+        'color',
+        'column',
+        'columnSpan',
+        'dock',
+        'domNode',
+        'effectiveBorderBottomWidth',
+        'effectiveBorderLeftWidth',
+        'effectiveBorderRightWidth',
+        'effectiveBorderTopWidth',
+        'effectiveHeight',
+        'effectiveLeft',
+        'effectiveMarginBottom',
+        'effectiveMarginLeft',
+        'effectiveMarginRight',
+        'effectiveMarginTop',
+        'effectiveMinHeight',
+        'effectiveMinWidth',
+        'effectivePaddingBottom',
+        'effectivePaddingLeft',
+        'effectivePaddingRight',
+        'effectivePaddingTop',
+        'effectiveTop',
+        'effectiveWidth',
+        'flexGrow',
+        'flexShrink',
+        'flexWrapBefore',
+        'height',
+        'horizontalAlignment',
+        'iosOverflowSafeArea',
+        'iosOverflowSafeAreaEnabled',
+        'isCollapsed',
+        'isEnabled',
+        "isLayoutRequired",
+        "isLayoutValid",
+        "isLoaded",
+        "isUserInteractionEnabled",
+        "left",
+        "margin",
+        "marginBottom",
+        "marginLeft",
+        "marginRight",
+        "marginTop",
+        "minHeight",
+        "minWidth",
+        "modal",
+        "opacity",
+        "order",
+        "originX",
+        "originY",
+        "perspective",
+        "recycleNativeView",
+        "rotate",
+        "rotateX",
+        "rotateY",
+        "row",
+        "rowSpan",
+        "scaleX",
+        'scaleY',
+        'style',
+        'top',
+        'translateX',
+        'translateY',
+        'typeName',
+        'verticalAlignment',
+        'viewController',
+        'visibility',
+        'width'
+    ]
+    for(let a of atts) {
+        comp[a] = view.get(a)
+    }
+    let sz = view.getActualSize()
+    let loc = view.getLocationInWindow()
+    comp.bounds = {
+        top: loc.y,
+        left : loc.x,
+        width: sz.width,
+        height: sz.height,
+        z : loc.z
+    }
+    comp.children = []
+    view.eachChildView((child:View) => {
+        comp.children.push(compView(child))
+        return true;
+    })
+}
+export async function tree() {
+    let tree:any = {}
+    const page:Page = Frame.topmost().currentPage;
+    let view:View = page.content
+    tree.pageId = page.id
+    tree.content = compView(view)
+    return tree
 }
 
 // perform a menu action
