@@ -231,6 +231,7 @@ export async function tree() {
     let view:View = page.content
     tree.pageId = page.id
     tree.content = compView(view)
+    console.log('tree before returning', tree)
     return tree
 }
 
