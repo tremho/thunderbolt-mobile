@@ -224,6 +224,7 @@ function compView(view:View) {
         comp.children.push(compView(child))
         return true;
     })
+    return comp
 }
 export async function tree() {
     let tree:any = {}
@@ -231,7 +232,7 @@ export async function tree() {
     let view:View = page.content
     tree.pageId = page.id
     tree.content = compView(view)
-    console.log('tree before returning', tree)
+    console.log('tree before returning', JSON.stringify(tree))
     return tree
 }
 
