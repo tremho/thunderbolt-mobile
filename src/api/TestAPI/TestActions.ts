@@ -96,9 +96,10 @@ export async function callPageFunction(funcName:string, parameters:string[] = []
 export async function wait(delay:number):Promise<void> {
 
     let start = Date.now()
-    let divider = 2.5
-    let ddelay = delay/divider
-    console.log(">> Wait", delay, ddelay, divider)
+    let sub = 50
+    let ddelay = delay - sub
+    if(ddelay < 0) ddelay = 0
+    console.log(">> Wait", delay, ddelay, sub)
     return new Promise(resolve => {
         setTimeout(() => {
             console.log('>> wait ends', Date.now()-start)
