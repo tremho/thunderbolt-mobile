@@ -118,6 +118,7 @@ function compView(view:View) {
 
     comp.automationText = view.automationText
     comp.className = view.className
+    comp.constName = view.constructor?.name || '---'
     const atts= [
         // 'background',
         // 'backgroundColor',
