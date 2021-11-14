@@ -226,6 +226,13 @@ function compView(view:View) {
         comp.children.push(compView(child))
         return true;
     })
+    comp.children.sort((a:any,b:any) => {
+        let at = a.bounds?.top || Number.MAX_SAFE_INTEGER
+        let bt = b.bounds?.top || Number.MAX_SAFE_INTEGER
+        if(at < bt) return -1
+        if(at > bt) return 1
+        return 0
+    })
     return comp
 }
 export async function tree() {
