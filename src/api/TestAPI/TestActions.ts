@@ -245,8 +245,46 @@ export async function tree() {
     return tree
 }
 
-// perform a menu action
-// perform a tool action
+// perform a menu action menu Options/Other/Foobar
+// perform a tool/indicator action (X can do with page action instead)
 //
 // take + record screenshot
+
+async function appiumInteropReady():Promise<void> {
+    return new Promise(resolve => {
+        const page:Page = Frame.topmost().currentPage;
+        const tbPage = page.content
+        let int:any;
+        const check = () => {
+            if (tbPage.automationText === 'appium-ready') {
+                clearInterval(int)
+                resolve()
+            }
+        }
+        setInterval(check,300)
+    })
+}
+
+export async function appiumDirective(directive:string):Promise<void> {
+    await appiumInteropReady()
+    const page:Page = Frame.topmost().currentPage;
+    const tbPage = page.content
+    tbPage.automationText = 'directive:'+directive
+    // now, hopefully, appium will do its thing and when done it will reset the automationText to appium-ready for next time
+    return new Promise(resolve => {
+        let int: any;
+        const check = () => {
+            if (tbPage.automationText === 'appium-ready') {
+                clearInterval(int)
+                resolve()
+            }
+        }
+        setInterval(check, 300)
+    })
+}
+
+export async function screenshot() {
+    return appiumDirective('screenshot')
+}
+
 

@@ -28,6 +28,7 @@ export class TBPage extends GridLayout {
 
     constructor() {
         super();
+        this.automationText = 'appium-interop'
 
         this.on('layoutChanged', () => {
             // console.log('in layoutChanged')
