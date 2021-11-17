@@ -12,15 +12,15 @@ export function readBuildEnvironment() {
     // console.log('>>$$$$ in readBuildEnvironment ')
 
     const cwd = nsfs.knownFolders.currentApp().path
-    console.log('ns cwd (app) ', cwd)
+    // console.log('ns cwd (app) ', cwd)
     const files = nsfs.Folder.fromPath(cwd).getEntitiesSync()
     // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%')
     // console.log('contents at app root:')
-    for(let i=0; i<files.length; i++) {
-        const f = files[i]
-        const fileName = f.path.substring(f.path.lastIndexOf('/'))
-        console.log(`${i+1} - ${fileName}`)
-    }
+    // for(let i=0; i<files.length; i++) {
+    //     const f = files[i]
+    //     const fileName = f.path.substring(f.path.lastIndexOf('/'))
+    //     console.log(`${i+1} - ${fileName}`)
+    // }
     // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%')
 
 
@@ -30,7 +30,7 @@ export function readBuildEnvironment() {
     beFile = nsfs.knownFolders.currentApp().path+'/'+beFile
 
     let exists = nsfs.File.exists(beFile);
-    console.log(beFile + ' exists? ', exists)
+    // console.log(beFile + ' exists? ', exists)
     if(exists) {
         try {
             text = nsfs.File.fromPath(beFile).readTextSync()

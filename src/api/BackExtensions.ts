@@ -15,14 +15,14 @@ const extensionModules = {}
 export function registerExtensionModule(backContext:any, moduleName:string, module:any) {
     try {
         if(typeof module.initContext === 'function') {
-            console.log('setting module context on registration')
+            // console.log('setting module context on registration')
             try {
                 module.initContext(InjectionRequirements, backContext)
             } catch(e) {
                 console.error("ERROR at registerExtensionModule (initContext)", e)
             }
         }
-        console.log(`registering ${moduleName} module... `)
+        // console.log(`registering ${moduleName} module... `)
         // @ts-ignore
         extensionModules[moduleName] = module
     } catch(e:any) {

@@ -31,9 +31,9 @@ export async function setModelValue(modelPath:string, value:any) {
  * @param [propValue] optional if prop given, this is the value to match
  */
 export async function assignComponent(name:string, tagName:string, prop?:string, propValue?:string) {
-    console.log('assignComponent', name, tagName, prop, propValue)
+    // console.log('assignComponent', name, tagName, prop, propValue)
     const resp =  await AppGateway.sendTestRequest('assignComponent', [name, tagName, prop || '', propValue || ''])
-    console.log('assignComponent response', resp)
+    // console.log('assignComponent response', resp)
     return resp
 }
 
@@ -44,9 +44,9 @@ export async function assignComponent(name:string, tagName:string, prop?:string,
  * @param propName
  */
 export async function readComponentProperty(componentName:string, propName:string) {
-    console.log('readComponentProperty ', componentName, propName)
+    // console.log('readComponentProperty ', componentName, propName)
     const resp =  await AppGateway.sendTestRequest('readComponentProperty', [componentName, propName])
-    console.log('     response:', resp)
+    // console.log('     response:', resp)
     return resp
 }
 
@@ -68,7 +68,7 @@ export async function setComponentProperty(componentName:string, propName:string
  * @param action
  */
 export async function triggerAction(componentName:string, action:string) {
-    console.log('triggerAction', componentName, action)
+    // console.log('triggerAction', componentName, action)
     return await AppGateway.sendTestRequest('triggerAction', [componentName, action])
 }
 
@@ -110,6 +110,142 @@ export async function wait(delay:number):Promise<void> {
 
 export async function time() {
     return Date.now()
+<<<<<<< HEAD
+}
+
+function compView(view:View) {
+
+    let comp:any = {}
+
+    comp.automationText = view.automationText
+    comp.className = view.className
+    comp.tagName = view.constructor?.name || ''
+    const atts= [
+        // 'background',
+        // 'backgroundColor',
+        // 'backgroundImage',
+        // 'borderBottomColor',
+        // 'borderBottomLeftRadius',
+        // 'borderBottomRightRadius',
+        // 'borderBottomWidth',
+        // 'borderColor',
+        // 'borderLeftColor',
+        // 'borderLeftWidth',
+        // 'borderRadius',
+        // 'borderRightColor',
+        // 'borderRightWidth',
+        // 'borderTopColor',
+        // 'borderTopLeftRadius',
+        // 'borderTopRightRadius',
+        // 'borderTopWidth',
+        // 'borderWidth',
+        // 'col',
+        // 'colSpan',
+        // 'color',
+        // 'column',
+        // 'columnSpan',
+        // 'dock',
+        // 'domNode',
+        // 'effectiveBorderBottomWidth',
+        // 'effectiveBorderLeftWidth',
+        // 'effectiveBorderRightWidth',
+        // 'effectiveBorderTopWidth',
+        // 'effectiveHeight',
+        // 'effectiveLeft',
+        // 'effectiveMarginBottom',
+        // 'effectiveMarginLeft',
+        // 'effectiveMarginRight',
+        // 'effectiveMarginTop',
+        // 'effectiveMinHeight',
+        // 'effectiveMinWidth',
+        // 'effectivePaddingBottom',
+        // 'effectivePaddingLeft',
+        // 'effectivePaddingRight',
+        // 'effectivePaddingTop',
+        // 'effectiveTop',
+        // 'effectiveWidth',
+        // 'flexGrow',
+        // 'flexShrink',
+        // 'flexWrapBefore',
+        // 'height',
+        // 'horizontalAlignment',
+        // 'iosOverflowSafeArea',
+        // 'iosOverflowSafeAreaEnabled',
+        // 'isCollapsed',
+        // 'isEnabled',
+        // "isLayoutRequired",
+        // "isLayoutValid",
+        // "isLoaded",
+        // "isUserInteractionEnabled",
+        // "left",
+        // "margin",
+        // "marginBottom",
+        // "marginLeft",
+        // "marginRight",
+        // "marginTop",
+        // "minHeight",
+        // "minWidth",
+        // "modal",
+        // "opacity",
+        // "order",
+        // "originX",
+        // "originY",
+        // "perspective",
+        // "recycleNativeView",
+        // "rotate",
+        // "rotateX",
+        // "rotateY",
+        // "row",
+        // "rowSpan",
+        // "scaleX",
+        // 'scaleY',
+        // 'style',
+        // 'top',
+        // 'translateX',
+        // 'translateY',
+        // 'typeName',
+        // 'verticalAlignment',
+        // 'viewController',
+        // 'visibility',
+        // 'width'
+        'text',
+        'typeName'
+    ]
+    for(let a of atts) {
+        comp[a] = view.get(a)
+    }
+    let sz = view.getActualSize()
+    let loc = view.getLocationInWindow()
+    comp.bounds = {
+        top: loc.y,
+        left : loc.x,
+        width: sz.width,
+        height: sz.height,
+        z : loc.z
+    }
+    comp.children = []
+    view.eachChildView((child:View) => {
+        comp.children.push(compView(child))
+        return true;
+    })
+    comp.children.sort((a:any,b:any) => {
+        let at = a.bounds?.top || Number.MAX_SAFE_INTEGER
+        let bt = b.bounds?.top || Number.MAX_SAFE_INTEGER
+        if(at < bt) return -1
+        if(at > bt) return 1
+        return 0
+    })
+    return comp
+}
+export async function tree() {
+    let tree:any = {}
+    const page:Page = Frame.topmost().currentPage;
+    let view:View = page.content
+    tree.pageId = page.id
+    tree.content = compView(view)
+    return tree
+=======
+>>>>>>> 931b3b603e212e72399d66f3032424dec11e7e16
 }
 
 function compView(view:View) {
@@ -245,8 +381,9 @@ export async function tree() {
     return tree
 }
 
-// perform a menu action
-// perform a tool action
+// perform a menu action menu Options/Other/Foobar
+// perform a tool/indicator action (X can do with page action instead)
 //
 // take + record screenshot
+
 
