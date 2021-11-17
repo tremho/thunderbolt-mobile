@@ -118,7 +118,7 @@ function compView(view:View) {
 
     comp.automationText = view.automationText
     comp.className = view.className
-    comp._constName = view.constructor?.name || ''
+    comp.tagName = view.constructor?.name || ''
     const atts= [
         // 'background',
         // 'backgroundColor',
@@ -208,7 +208,7 @@ function compView(view:View) {
         // 'visibility',
         // 'width'
         'text',
-        'typeNaee'
+        'typeName'
     ]
     for(let a of atts) {
         comp[a] = view.get(a)
