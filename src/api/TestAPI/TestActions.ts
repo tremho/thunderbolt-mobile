@@ -264,7 +264,7 @@ export async function screenshot(name:string) {
     // but we can't do that from NS,
     // so we send back a base64 string
     // const b64 = imgsrc.toBase64String('png')
-    const b64 = 'data:image/png;base64,abcdefgbase64-todayisnotagooddaytodebug'
+    const b64 = 'data-foobar'//:image/png;base64,abcdefgbase64-todayisnotagooddaytodebug'
     console.log("We have base64", b64)
     return b64
 }
