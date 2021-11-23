@@ -254,16 +254,14 @@ export async function screenshot(name:string) {
     const page:Page = Frame.topmost().currentPage;
     let view:View = page.content
 
-    const ni = nshot.getImage(view)
-    console.log('we have our native image', ni)
-    // console.log('skipping image source stuff...')
-    const imgsrc = new ImageSource(ni)
-    console.log('we have our image source', imgsrc)
+    const nis:ImageSource = nshot.getImage(view)
+    console.log('we have our native imagesource', nis)
+    console.log('it has toBase64String ?', typeof nis.toBase64String)
 
     // desktop save image directly to project root from build directory
     // but we can't do that from NS,
     // so we send back a base64 string
-    const b64 = imgsrc.toBase64String('png')
+    const b64 = nis.toBase64String('png')
     // const b64 = 'data-foobar'//:image/png;base64,abcdefgbase64-todayisnotagooddaytodebug'
     console.log("We have base64", b64)
     return 'data:image/png;base64,'+b64
