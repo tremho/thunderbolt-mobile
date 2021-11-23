@@ -1,7 +1,6 @@
 
 import * as AppGateway from '../ApiGateway'
-import {Frame, Page, View} from '@nativescript/core'
-import {ImageSource} from '@nativescript/core/image-source'
+import {Frame, Page, View, ImageSource} from '@nativescript/core'
 
 /**
  * Reads the value in the app model at the given model path
