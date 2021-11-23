@@ -1,6 +1,7 @@
 
 import * as AppGateway from '../ApiGateway'
-import {Frame, Page, View, ImageSource} from '@nativescript/core'
+import {Frame, Page, View} from '@nativescript/core'
+const ImageSource = require("tns-core-modules/image-source");
 
 /**
  * Reads the value in the app model at the given model path
