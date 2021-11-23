@@ -212,11 +212,11 @@ export async function executeDirective(action:string):Promise<string> {
         default: {
             const tactany:any = testActions
             const ta = tactany[cmd]
-            // console.log('looking for testAction', cmd)
+            console.log('looking for testAction', cmd)
             if(typeof ta === 'function') {
-                // console.log('found', cmd, ...parts.slice(1))
+                console.log('found', cmd, ...parts.slice(1))
                 res = await ta(...parts.slice(1))
-                // console.log('result is ', res)
+                console.log('result is ', res)
             }
         }
             break
