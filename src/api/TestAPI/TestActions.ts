@@ -1,6 +1,6 @@
 
 import * as AppGateway from '../ApiGateway'
-import {Frame, Page, View} from '@nativescript/core'
+import {Frame, Page, View, Image} from '@nativescript/core'
 
 /**
  * Reads the value in the app model at the given model path
@@ -245,9 +245,20 @@ export async function tree() {
     return tree
 }
 
-// perform a menu action menu Options/Other/Foobar
-// perform a tool/indicator action (X can do with page action instead)
-//
-// take + record screenshot
+// Screenshot for NS
 
+const nshot  = require('nativescript-screenshot')
 
+export async function screenshot(name:string) {
+    const page:Page = Frame.topmost().currentPage;
+    let view:View = page.content
+
+    const img = new Image()
+    img.imageSource = nshot.getImage(view)
+
+    // desktop save image directly to project root from build directory
+    // but we can't do that from NS,
+    // so we send back a base64 string
+    const b64 = img.imageSource.toBase64String('png')
+    return b64
+}
