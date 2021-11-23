@@ -250,15 +250,19 @@ export async function tree() {
 const nshot  = require('nativescript-screenshot')
 
 export async function screenshot(name:string) {
+    console.log("Attempting Nativescript screenshot for ", name)
     const page:Page = Frame.topmost().currentPage;
     let view:View = page.content
 
     const ni = nshot.getImage(view)
+    console.log('we have our native image', ni)
     const imgsrc = new ImageSource(ni)
+    console.log('we have our image source', imgsrc)
 
     // desktop save image directly to project root from build directory
     // but we can't do that from NS,
     // so we send back a base64 string
     const b64 = imgsrc.toBase64String('png')
+    console.log("We have base64", b64)
     return b64
 }
