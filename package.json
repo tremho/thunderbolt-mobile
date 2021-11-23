@@ -1,10 +1,10 @@
 {
   "name": "@tremho/jove-mobile",
-  "version": "0.6.9-pre-release.208",
+  "version": "0.6.9-pre-release.209",
   "description": "Mobile (Nativescript) component of Jove framework",
   "main": "build/index.js",
   "scripts": {
-    "prepublish": "rm -fr src/common-core && mkdir src/common-core && cp ../thunderbolt-common/src/app-core/ComNormal.ts src/common-core/ComNormal.ts && cp ../thunderbolt-common/src/app-core/EventData.ts src/common-core/EventData.ts && npm run build",
+    "prepublish": "if [ -e ../thunderbolt-common ]; then rm -fr src/common-core && mkdir src/common-core && cp ../thunderbolt-common/src/app-core/ComNormal.ts src/common-core/ComNormal.ts && cp ../thunderbolt-common/src/app-core/EventData.ts src/common-core/EventData.ts && npm run build;  fi",
     "clean": "rm -fr build node_modules && npm install",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
