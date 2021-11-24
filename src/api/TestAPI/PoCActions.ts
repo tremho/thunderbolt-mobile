@@ -131,12 +131,17 @@ function startReport(title:string) {
             color: gray;
             margin-bottom: 1.5em;
         }
+        .tcap {
+            font-style: italic;
+            color: darkmagenta;
+            margin-bottom: 1.5em;
+        }
     </style>
     </head>
     <body>
     <hr>
     <h3>${title}</h3>
-    <p class="cap">Mobile (${Device.os} ${Device.osVersion}) ${ddt}</p>
+    <p class="tcap">Mobile (${Device.os} ${Device.osVersion}) ${ddt}</p>
     <ul>        
 `
 
