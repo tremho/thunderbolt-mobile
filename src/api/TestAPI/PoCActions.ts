@@ -1,5 +1,5 @@
 import * as testActions from './TestActions'
-import os from 'os'
+import {Device} from '@nativescript/core'
 
 function add(num1:number, num2:number) {
     return num1+num2
@@ -136,7 +136,7 @@ function startReport(title:string) {
     <body>
     <hr>
     <h3>${title}</h3>
-    <p class="cap">Mobile (${os.platform()}) ${ddt}</p>
+    <p class="cap">Mobile (${Device.os} ${Device.osVersion}) ${ddt}</p>
     <ul>        
 `
 
