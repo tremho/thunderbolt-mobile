@@ -52,7 +52,8 @@ function record(action:string, result:any) {
     rline += `<span class="ts">${ts}</span><span class="act">${action}</span>`
     if(action.substring(0,10) === 'screenshot') {
         let name = action.substring(11)
-        rline += `<div><img class="ss" src="${result}"><p class="cap">${name}</p></div>`
+        let ipath = '../../../latest/images/'+name+'.png'
+        rline += `<div><img class="ss" src="${ipath}"><p class="cap">${name}</p></div>`
     } else if(action.substring(0,13) === 'compareReport') {
         rline = `<span class="ts">${ts}</span><span class="im">Image mismatch</span>`
         let rpt = action.substring(14)
