@@ -62,13 +62,15 @@ function record(action:string, result:any) {
         let dpath = '../../../latest/images/' + imgName + '-diff.png'
         let stats = `Image ${imgName} differs ${pctDiff}% from comp`
         rline += `<div><img class="cs" src="${cpath}"><img class="df" src="${dpath}"><p class="cap">${stats}</p></div>`
-    } else if(action.substring(0,11) === 'reportTitle') {
-        let title = action.substring(11).replace(/\+/g, ' ')
-        rline = `<hr/><p class="ttl">${title}</p>`
     } else {
         rline += `<span class="res">${result}</span>`
     }
     rline += '</li>'
+
+    if(action.trim().substring(0,11) === 'remoteTitle') {
+        let title = action.substring(11).replace(/\+/g, ' ')
+        rline = `<hr/><p class="ttl">${title}</p>`
+    }
 
     report += rline
     // console.log('report line', rline)
@@ -119,8 +121,7 @@ function startReport(title:string) {
             padding-left: 1em;
             font-size: larger;
             color: darkblue;
-            font-weight: bold;
-        
+            font-weight: bold;        
         }
         .cap {
             margin:auto;
