@@ -58,10 +58,13 @@ function record(action:string, result:any) {
         rline = `<span class="ts">${ts}</span><span class="im">Image mismatch</span>`
         let rpt = action.substring(14)
         let [imgName, pctDiff] = rpt.split(',')
-        let cpath = '../../../comp/mobile/'+imgName+'.png'
-        let dpath = '../../../latest/images/'+imgName+'-diff.png'
+        let cpath = '../../../comp/mobile/' + imgName + '.png'
+        let dpath = '../../../latest/images/' + imgName + '-diff.png'
         let stats = `Image ${imgName} differs ${pctDiff}% from comp`
         rline += `<div><img class="cs" src="${cpath}"><img class="df" src="${dpath}"><p class="cap">${stats}</p></div>`
+    } else if(action.substring(0,11) === 'reportTitle') {
+        let title = action.substring(11).replace(/\+/g, ' ')
+        rline = `<hr/><p class="ttl">${title}</p>`
     } else {
         rline += `<span class="res">${result}</span>`
     }
@@ -109,8 +112,15 @@ function startReport(title:string) {
         .im {
             padding-left: 1em;
             font-size: larger;
-            color: red !important;
+            color: red;
             font-weight: bold;
+        }
+        .ttl {
+            padding-left: 1em;
+            font-size: larger;
+            color: darkblue;
+            font-weight: bold;
+        
         }
         .cap {
             margin:auto;
