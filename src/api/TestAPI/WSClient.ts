@@ -81,7 +81,7 @@ export function clientTest(service:string):Promise<number> {
                 if(directive.substring(0,7) === 'appium:') {
                     return;
                 }
-                console.log('received directive', directive)
+                // console.log('received directive', directive)
                 if(directive === 'end')  {
                     // todo: we should get an overall test report and a code from this end and report it.
                     client.send(`${rcount}:${directive}=${code}`)
@@ -92,7 +92,7 @@ export function clientTest(service:string):Promise<number> {
                 Promise.resolve(reply).then((res:string) => {
                     const srep = `${rcount}:${directive}=${res}`
                     rcount++
-                    console.log('replying ', srep)
+                    // console.log('replying ', srep)
                     client.send(srep)
                 })
             })

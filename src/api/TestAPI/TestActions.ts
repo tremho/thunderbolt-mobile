@@ -100,10 +100,10 @@ export async function wait(delay:number):Promise<void> {
     let sub = 50
     let ddelay = delay - sub
     if(ddelay < 0) ddelay = 0
-    console.log(">> Wait", delay, ddelay, sub)
+    // console.log(">> Wait", delay, ddelay, sub)
     return new Promise(resolve => {
         setTimeout(() => {
-            console.log('>> wait ends', Date.now()-start)
+            // console.log('>> wait ends', Date.now()-start)
             resolve()
         }, ddelay)})
 }
@@ -250,19 +250,19 @@ export async function tree() {
 const nshot  = require('nativescript-screenshot')
 
 export async function screenshot(name:string) {
-    console.log("Attempting Nativescript screenshot for ", name)
+    // console.log("Attempting Nativescript screenshot for ", name)
     const page:Page = Frame.topmost().currentPage;
     let view:View = page.content
 
     const nis:ImageSource = nshot.getImage(view)
-    console.log('we have our native imagesource', nis)
-    console.log('it has toBase64String ?', typeof nis.toBase64String)
+    // console.log('we have our native imagesource', nis)
+    // console.log('it has toBase64String ?', typeof nis.toBase64String)
 
     // desktop save image directly to project root from build directory
     // but we can't do that from NS,
     // so we send back a base64 string
     const b64 = nis.toBase64String('png')
     // const b64 = 'data-foobar'//:image/png;base64,abcdefgbase64-todayisnotagooddaytodebug'
-    console.log("We have base64", b64)
+    // console.log("We have base64", b64)
     return 'data:image/png;base64,'+b64
 }
