@@ -1,4 +1,5 @@
 import * as testActions from './TestActions'
+import os from 'os'
 
 function add(num1:number, num2:number) {
     return num1+num2
@@ -77,6 +78,7 @@ function record(action:string, result:any) {
 }
 
 function startReport(title:string) {
+
     let ddt = new Date().toLocaleString()
 
     // console.log('------ starting report')
@@ -118,7 +120,6 @@ function startReport(title:string) {
             font-weight: bold;
         }
         .ttl {
-            padding-left: 1em;
             font-size: larger;
             color: darkblue;
             font-weight: bold;        
@@ -133,34 +134,20 @@ function startReport(title:string) {
     </style>
     </head>
     <body>
-`
-    startReportSection(title)
-}
-
-function startReportSection(title:string) {
-
-    // console.log('-------starting report section for '+title)
-
-    report += `
     <hr>
     <h3>${title}</h3>
+    <p class="cap">Mobile (${os.platform()}) ${ddt}</p>
     <ul>        
 `
 
-}
-function endReportSection() {
-    // console.log('---- ending report section')
-    report += `
-    </ul>
-    <br/>    
-    `
 }
 
 function endReport() {
     // console.log('---- ending report')
     if(report) {
-        endReportSection()
         report += `
+    </ul>
+    <br/>    
     </body>
     </html>
 `
