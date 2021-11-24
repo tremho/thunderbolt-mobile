@@ -58,10 +58,10 @@ function record(action:string, result:any) {
     } else if(action.substring(0,13) === 'compareReport') {
         rline = `<span class="ts">${ts}</span><span class="im">Image mismatch</span>`
         let rpt = action.substring(14)
-        let [imgName, pctDiff] = rpt.split(',')
+        let [imgName, pctDiff, err] = rpt.split(',')
         let cpath = '../../../comp/mobile/' + imgName + '.png'
         let dpath = '../../../latest/images/' + imgName + '-diff.png'
-        let stats = `Image ${imgName} differs ${pctDiff}% from comp`
+        let stats = err || `Image ${imgName} differs ${pctDiff}% from comp`
         rline += `<div><img class="cs" src="${cpath}"><img class="df" src="${dpath}"><p class="cap">${stats}</p></div>`
     } else {
         rline += `<span class="res">${result}</span>`
