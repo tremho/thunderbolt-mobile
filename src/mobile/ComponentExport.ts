@@ -3,6 +3,7 @@ import {StackLayout, AbsoluteLayout, View, Label, Image} from '@nativescript/cor
 
 import {TBPage,TBContent} from "./tb-page";
 import {SimpleLabel} from "./basics/simple-label";
+import {LabeledValue} from "./basics/labeled-value"
 import {SimpleButton} from "./basics/simple-button";
 import {SimpleSlot} from "./basics/simple-slot";
 import {TextArea} from "./basics/text-area"
@@ -71,6 +72,7 @@ function makeLabel(text:string) {
 export {TBPage as TBPage}
 export {TBContent as TBContent}
 export {SimpleLabel as SimpleLabel}
+export {LabeledValue as LabeledValue}
 export {SimpleButton as SimpleButton}
 export {TextArea as TextArea}
 export {SimpleList as SimpleList}

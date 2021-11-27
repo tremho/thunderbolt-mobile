@@ -3,7 +3,7 @@ import ComponentBase from '../ComponentBase'
 
 import {Label, Color} from '@nativescript/core'
 
-export class SimpleLabel extends ComponentBase {
+export class LabeledValue extends ComponentBase {
     private label:Label = new Label()
     private value:Label = new Label()
 
