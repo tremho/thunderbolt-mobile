@@ -5,38 +5,24 @@ import {Label, Color} from '@nativescript/core'
 
 export class LabeledValue extends ComponentBase {
     private cLabel:Label = new Label()
-    private cValue:Label = new Label()
 
     // Override to create our label
     public createControl() {
         this.props = {
-            // our component property identified by the key (label)
+            // our component property identified by the key (text)
             // is represented by inner 'component' (this.label) at its property (text)
-            // and its parseable value comes from 'label' {this.get('label')}
-            label: {component: this.cLabel, locprop: 'text', value: this.get('label')},
-            // ditto for value
-            value: {component: this.cValue, locprop: 'text', value: this.get('value')}
+            // and its parseable value comes from 'value' {this.get('text')}
+            text: {component: this.cLabel, locprop: 'text', value: this.get('label')}
         }
-        // this.label.set('text', 'SIMPLE-LABEL')
-        console.log('cLabel', this.cLabel)
-        console.log('cValue', this.cValue)
-        console.log('set exists? ', !!this.cLabel.set)
+        this.cLabel.set('text', 'L-Value')
         this.cLabel.set("whiteSpace", "nowrap")
         this.cLabel.set("textWrap", false)
-        this.cLabel.className = 'label'
-        this.cValue.set("whiteSpace", "nowrap")
-        this.cValue.set("textWrap", false)
-        this.cValue.className = 'value'
-
         this.textComponent = this.cLabel // so ComCommon will align text
         this.component.addChild(this.cLabel)
-        this.component.addChild(this.cValue)
         // set the default alignment of component to the left. The {N} default appears to be center.
         this.cLabel.set('horizontalAlignment', 'left')
-        this.cValue.set('horizontalAlignment', 'left')
         this.set('horizontalAlignment', 'left')
         if(this.get('action')) this.setActionResponder(this.cLabel, 'tap', 'action')
-        if(this.get('action')) this.setActionResponder(this.cValue, 'tap', 'action')
     }
 
 }
