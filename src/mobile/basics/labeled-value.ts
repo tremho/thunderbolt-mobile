@@ -20,6 +20,11 @@ export class LabeledValue extends ComponentBase {
         // this.label.set('text', 'SIMPLE-LABEL')
         this.label.set("whiteSpace", "nowrap")
         this.label.set("textWrap", false)
+        this.label.className = 'label'
+        this.value.set("whiteSpace", "nowrap")
+        this.value.set("textWrap", false)
+        this.value.className = 'value'
+
         this.textComponent = this.label // so ComCommon will align text
         this.component.addChild(this.label)
         this.component.addChild(this.value)
