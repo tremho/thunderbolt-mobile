@@ -4,8 +4,8 @@ import ComponentBase from '../ComponentBase'
 import {Label, Color} from '@nativescript/core'
 
 export class LabeledValue extends ComponentBase {
-    private label:Label = new Label()
-    private value:Label = new Label()
+    private cLabel:Label = new Label()
+    private cValue:Label = new Label()
 
     // Override to create our label
     public createControl() {
@@ -13,30 +13,30 @@ export class LabeledValue extends ComponentBase {
             // our component property identified by the key (label)
             // is represented by inner 'component' (this.label) at its property (text)
             // and its parseable value comes from 'label' {this.get('label')}
-            label: {component: this.label, locprop: 'text', value: this.get('label')},
+            label: {component: this.cLabel, locprop: 'text', value: this.get('label')},
             // ditto for value
-            value: {component: this.value, locprop: 'text', value: this.get('value')}
+            value: {component: this.cValue, locprop: 'text', value: this.get('value')}
         }
         // this.label.set('text', 'SIMPLE-LABEL')
-        console.log('label', this.label)
-        console.log('value', this.value)
-        console.log('set exists? ', !!this.label.set)
-        this.label.set("whiteSpace", "nowrap")
-        this.label.set("textWrap", false)
-        this.label.className = 'label'
-        this.value.set("whiteSpace", "nowrap")
-        this.value.set("textWrap", false)
-        this.value.className = 'value'
+        console.log('cLabel', this.cLabel)
+        console.log('cValue', this.cValue)
+        console.log('set exists? ', !!this.cLabel.set)
+        this.cLabel.set("whiteSpace", "nowrap")
+        this.cLabel.set("textWrap", false)
+        this.cLabel.className = 'label'
+        this.cValue.set("whiteSpace", "nowrap")
+        this.cValue.set("textWrap", false)
+        this.cValue.className = 'value'
 
-        this.textComponent = this.label // so ComCommon will align text
-        this.component.addChild(this.label)
-        this.component.addChild(this.value)
+        this.textComponent = this.cLabel // so ComCommon will align text
+        this.component.addChild(this.cLabel)
+        this.component.addChild(this.cValue)
         // set the default alignment of component to the left. The {N} default appears to be center.
-        this.label.set('horizontalAlignment', 'left')
-        this.value.set('horizontalAlignment', 'left')
+        this.cLabel.set('horizontalAlignment', 'left')
+        this.cValue.set('horizontalAlignment', 'left')
         this.set('horizontalAlignment', 'left')
-        if(this.get('action')) this.setActionResponder(this.label, 'tap', 'action')
-        if(this.get('action')) this.setActionResponder(this.value, 'tap', 'action')
+        if(this.get('action')) this.setActionResponder(this.cLabel, 'tap', 'action')
+        if(this.get('action')) this.setActionResponder(this.cValue, 'tap', 'action')
     }
 
 }
