@@ -18,6 +18,9 @@ export class LabeledValue extends ComponentBase {
             value: {component: this.value, locprop: 'text', value: this.get('value')}
         }
         // this.label.set('text', 'SIMPLE-LABEL')
+        console.log('label', this.label)
+        console.log('value', this.value)
+        console.log('set exists? ', !!this.label.set)
         this.label.set("whiteSpace", "nowrap")
         this.label.set("textWrap", false)
         this.label.className = 'label'
