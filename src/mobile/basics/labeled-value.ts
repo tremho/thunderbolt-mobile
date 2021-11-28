@@ -16,11 +16,11 @@ export class LabeledValue extends ComponentBase {
             label: {component: this.cLabel, locprop: 'text', value: this.get('label')},
             value: {component: this.cValue, locprop: 'text', value: this.get('value')},
         }
-        this.cLabel.set('text', 'L-Value')
+        this.cLabel.className = 'label'
         this.cLabel.set("whiteSpace", "nowrap")
         this.cLabel.set("textWrap", false)
         this.textComponent = this.cLabel // so ComCommon will align text
-        this.cValue.set('text', 'L-Value')
+        this.cValue.className = 'value'
         this.cValue.set("whiteSpace", "nowrap")
         this.cValue.set("textWrap", false)
         this.component.orientation = 'horizontal'
