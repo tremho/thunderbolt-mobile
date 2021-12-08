@@ -28,7 +28,7 @@ const ignoreProps = [
 ]
 
 export class RepeatForEach extends ComponentBase {
-    private slots:View[] | null = null
+    private slots:any[] | null = null
     // Override to create our label
     public createControl() {
         console.log('>> repeat-for-each')
@@ -51,18 +51,24 @@ export class RepeatForEach extends ComponentBase {
         while(--n >=0) {
             let ch = this.getChildAt(n)
             console.log('existing child', ch)
-            if(collecting) this.slots.push(ch)
+            if(collecting) {
+                let cprops:any = {}
+                for(let p of Object.getOwnPropertyNames(ch)) {
+                    if(p.charAt(0) === '_' || ignoreProps.indexOf(p) !== -1) continue
+                    let v = ch.get(p)
+                    if(typeof v === 'string' || typeof v === 'number') {
+                        cprops[p] = ''+v
+                    }
+                }
+                this.slots.push({view:ch, props:cprops})
+            }
             this.removeChild(ch)
         }
         // then add the children back per repeat
         for(let item of subject) {
-            for(let c of this.slots) {
-                let cname = c.constructor.name
-                let cprops:any = {}
-                for(let p of Object.getOwnPropertyNames(c)) {
-                    if(p.charAt(0) === '_' || ignoreProps.indexOf(p) !== -1) continue
-                    cprops[p] = c.get(p)
-                }
+            for(let si of this.slots) {
+                let cname = si.view.constructor.name
+                let cprops = si.props
                 console.log('> we want to create ', cname, 'with', cprops)
 
             }
