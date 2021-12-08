@@ -9,7 +9,12 @@ export class Hr extends ComponentBase {
     // Override to create our label
     public createControl() {
         this.props = {
+            // our component property identified by the key (text)
+            // is represented by inner 'component' (this.label) at its property (text)
+            // and its parseable value comes from 'value' {this.get('text')}
+            // text: {component: this.label, locprop: 'text', value: this.get('text')}
         }
+        this.label.set('text', 'This is a horizontal rule')
         this.label.set("whiteSpace", "nowrap")
         this.label.set("textWrap", false)
         this.textComponent = this.label // so ComCommon will align text
