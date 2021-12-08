@@ -293,7 +293,7 @@ class MenuItem extends StackLayout {
 
         }
         if(label) {
-            label.text = info.label
+            label.text = info.label.replace(/&&/g, '%+%').replace(/&/g, '').replace('%+%', '&')
             if (info.children && info.children.length) {
                 label.text += ' \u25b8'
             }

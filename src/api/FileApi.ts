@@ -34,6 +34,13 @@ export function getAppPath():Promise<string> {
 export function readFileText(pathName:string):Promise<string> {
     return nsfs.File.fromPath(resPath(pathName)).readText()
 }
+export async function readFileJson(pathName:string):Promise<any> {
+    let rt = await readFileText(pathName)
+    try {
+        rt = JSON.parse(rt)
+    } catch(e) {}
+    return rt;
+}
 export function fileExists(pathName:string):Promise<boolean> {
     return Promise.resolve(nsfs.File.exists(resPath(pathName)))
 }
