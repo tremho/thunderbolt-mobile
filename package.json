@@ -1,6 +1,6 @@
 {
   "name": "@tremho/jove-mobile",
-  "version": "0.6.9-pre-release.239",
+  "version": "0.6.9-pre-release.240",
   "description": "Mobile (Nativescript) component of Jove framework",
   "main": "build/index.js",
   "scripts": {
@@ -36,9 +36,9 @@
   "homepage": "https://github.com/tremho/thunderbolt-mobile#readme",
   "devDependencies": {
     "@nativescript/types": "^8.0.1",
-    "run-script-os": "^1.1.6",
     "@types/base-64": "^1.0.0",
-    "@types/node": "^16.11.0"
+    "@types/node": "^16.11.0",
+    "run-script-os": "^1.1.6"
   },
   "dependencies": {
     "@nativescript/core": "^8.0.3",
