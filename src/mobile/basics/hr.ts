@@ -8,6 +8,7 @@ export class Hr extends ComponentBase {
 
     // Override to create our label
     public createControl() {
+        this.props = {}
         // console.log('>> hr setting other props')
         // this.label.set("whiteSpace", "nowrap")
         // this.label.set("textWrap", false)
