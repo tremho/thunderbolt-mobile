@@ -86,6 +86,9 @@ export {TBGridLayout as GridLayout}
 export {GridSection as GridSection}
 export {TBStackLayout as StackLayout}
 
+export {Hr as Hr}
+export {RepeatForEach as RepeatForEach}
+
 export {CondSect as CondSect}
 
 export {makeDiv as makeDiv}
