@@ -37,6 +37,17 @@ export class RepeatForEach extends ComponentBase {
             props[p] = this.get(p)
         }
         console.log('props', props)
+
+        // clear all children
+        let n = this.getChildrenCount();
+        while(--n >=0) {
+            let ch = this.getChildAt(n)
+            console.log('existing child', ch)
+            this.removeChild(ch)
+        }
+        // then add them
+
+
         console.log("<<<<<")
     }
 
