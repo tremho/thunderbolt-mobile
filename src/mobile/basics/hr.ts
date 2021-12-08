@@ -21,9 +21,9 @@ export class Hr extends ComponentBase {
         this.label.set('backgroundColor', 'black')
         this.label.set('width', '100%')
         this.label.set('height', '2')
-        this.className = 'hr'
-        this.set('horizontalAlignment', 'center')
-        this.set('verticalAlignment', 'top')
+        // this.className = 'hr'
+        // this.set('horizontalAlignment', 'center')
+        // this.set('verticalAlignment', 'top')
         console.log('>> hr done')
     }
 
