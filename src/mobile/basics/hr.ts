@@ -14,17 +14,22 @@ export class Hr extends ComponentBase {
             // and its parseable value comes from 'value' {this.get('text')}
             text: {component: this.label, locprop: 'text', value: 'This is a horizontal rule'}
         }
+        console.log('>> hr setting text')
         this.label.set('text', 'This is a horizontal rule')
+        console.log('>> hr setting other props')
         this.label.set("whiteSpace", "nowrap")
         this.label.set("textWrap", false)
         this.textComponent = this.label // so ComCommon will align text
+        console.log('>> hr label added as child')
         this.component.addChild(this.label)
         // set the default alignment of component to the left. The {N} default appears to be center.
-        this.label.set('horizontalAlignment', 'left')
-        this.label.set('borderColor', 'black')
-        this.label.set('borderWidth', 2)
+        console.log('>> hr setting alignment')
+        this.label.set('horizontalAlignment', 'center')
+        console.log('>> hr setting color')
+        this.label.set('backgroundColor', 'black')
+        this.label.set('color', 'pink')
         this.label.set('width', '100%')
-        this.label.set('height', 1)
+        this.label.set('height', '10')
         this.label.className = 'hr'
         this.set('horizontalAlignment', 'left')
         if(this.get('action')) this.setActionResponder(this.label, 'tap', 'action')
