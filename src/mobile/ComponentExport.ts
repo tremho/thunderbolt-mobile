@@ -7,6 +7,8 @@ import {LabeledValue} from "./basics/labeled-value"
 import {SimpleButton} from "./basics/simple-button";
 import {SimpleSlot} from "./basics/simple-slot";
 import {TextArea} from "./basics/text-area"
+import {Hr} from "./basics/hr"
+import {RepeatForEach} from "./basics/repeat-for-each"
 import {SimpleList} from "./list/simple-list";
 import {TBScrollView} from "./layout/scroll-view";
 import {FillSpace} from "./layout/fill-space";
