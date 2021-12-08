@@ -17,13 +17,14 @@ export class Hr extends ComponentBase {
         // set the default alignment of component to the left. The {N} default appears to be center.
         console.log('>> hr setting alignment')
         this.label.set('horizontalAlignment', 'center')
+        this.label.set('verticalAlignment', 'top')
         console.log('>> hr setting color')
         this.label.set('backgroundColor', 'black')
         this.label.set('width', '100%')
         this.label.set('height', '2')
         this.label.className = 'hr'
         this.set('horizontalAlignment', 'left')
-        if(this.get('action')) this.setActionResponder(this.label, 'tap', 'action')
+        console.log('>> hr done')
     }
 
     // protected setProperties() {
