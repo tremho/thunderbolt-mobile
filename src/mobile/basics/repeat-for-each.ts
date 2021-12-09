@@ -75,17 +75,13 @@ export class RepeatForEach extends ComponentBase {
             for(let si of this.slots) {
                 let cname = si.view.constructor.name
                 let cprops = si.props
-                console.log(`> create slot child of ${cname} with`, cprops)
+                console.log(`> create slot child of ${cname}`)
                 for (let p of Object.getOwnPropertyNames(cprops)) {
                     let v = cprops[p]
                     // preconvert % items
-                    v = replaceVarItems(v, vars)
-                    let px = this.com.evalInnerExpression(v, vars)
-                    px = px.replace('$', '')
-                    let ex = px;
-                    console.log('>> evaluating ', px)
-                    try {ex = eval(px)} catch(e) {}
-                    console.log(`> inner expression for ${p} (${cprops[p]}) = "${ex}"`)
+                    v = replaceVarItems(v, vars, item)
+                    let pv = this.com.evalInnerExpression(v, vars)
+                    console.log(` > inner expression for ${p} (${cprops[p]}) = "${pv}"`)
                 }
             }
         }
@@ -96,7 +92,7 @@ export class RepeatForEach extends ComponentBase {
 
 }
 
-function replaceVarItems(v:string, vars:any) {
+function replaceVarItems(v:string, vars:any, item:any) {
     while(true) {
         let n = v.indexOf('%')
         if (n === -1) break;
@@ -106,6 +102,16 @@ function replaceVarItems(v:string, vars:any) {
         vn = vn.substring(0, ve)
         let vv = vars[vn]
         v = v.replace('%' + vn, vv)
+    }
+    while(true) {
+        let n = v.indexOf('$item.')
+        if(n === -1) break;
+        let pn = v.substring(n+6)
+        let m = pn.match(/[^a-zA-Z0-9]/)
+        let pe = (m && m.index) || pn.length
+        pn = pn.substring(0, pe)
+        let rv = ''+item[pn]
+        v = v.substring(0, n)+rv+v.substring(pe)
     }
     return v
 
