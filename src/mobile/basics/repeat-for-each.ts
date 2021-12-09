@@ -69,6 +69,12 @@ export class RepeatForEach extends ComponentBase {
             for(let si of this.slots) {
                 let cname = si.view.constructor.name
                 let cprops = si.props
+                for (let p of Object.getOwnPropertyNames(cprops)) {
+                    let v = cprops[p]
+                    // preconvert % items
+                    let px = this.com.evalInnerExpression(v)
+                    console.log(`> inner expression for ${p} (${cprops[p]}) = "${px}"`)
+                }
                 console.log('> we want to create ', cname, 'with', cprops)
 
             }
