@@ -75,6 +75,7 @@ export class RepeatForEach extends ComponentBase {
             for(let si of this.slots) {
                 let cname = si.view.constructor.name
                 let cprops = si.props
+                console.log(`> create slot child of ${cname} with`, cprops)
                 for (let p of Object.getOwnPropertyNames(cprops)) {
                     let v = cprops[p]
                     // preconvert % items
