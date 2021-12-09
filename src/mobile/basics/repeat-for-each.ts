@@ -32,14 +32,19 @@ export class RepeatForEach extends ComponentBase {
     // Override to create our label
     public createControl() {
         console.log('>> repeat-for-each')
-        const props:any = {}
+        const vars:any = {}
         let subject:any[] = []
         for(let p of Object.getOwnPropertyNames(this)) {
-            if(p.charAt(0) === '_' || ignoreProps.indexOf(p) !== -1) continue
+            if(p.charAt(0) === '_' || p === 'slots' || ignoreProps.indexOf(p) !== -1) continue
             if(p === 'subject') subject = this.get(p)
-            else props[p] = this.get(p)
+            else vars[p] = this.get(p)
         }
-        console.log('props', props)
+        console.log('vars (pre-parsed)', vars)
+        for(let vp of Object.getOwnPropertyNames(vars)) {
+            let ex = vars[vp]
+            vars[vp] = this.com.evaluateBindExpression(vars[vp], true).value
+        }
+        console.log('vars (parsed)', vars)
 
         // clear all children / collect slot children
         let collecting = false
@@ -48,6 +53,7 @@ export class RepeatForEach extends ComponentBase {
             collecting = true
         }
         let n = this.getChildrenCount();
+
         while(--n >=0) {
             let ch = this.getChildAt(n)
             console.log('existing child', ch)
@@ -72,11 +78,9 @@ export class RepeatForEach extends ComponentBase {
                 for (let p of Object.getOwnPropertyNames(cprops)) {
                     let v = cprops[p]
                     // preconvert % items
-                    let px = this.com.evalInnerExpression(v)
+                    let px = this.com.evalInnerExpression(v, vars)
                     console.log(`> inner expression for ${p} (${cprops[p]}) = "${px}"`)
                 }
-                console.log('> we want to create ', cname, 'with', cprops)
-
             }
         }
 
