@@ -36,7 +36,7 @@ export class RepeatForEach extends ComponentBase {
         let subject:any[] = []
         for(let p of Object.getOwnPropertyNames(this)) {
             if(p.charAt(0) === '_' || p === 'slots' || ignoreProps.indexOf(p) !== -1) continue
-            if(p === 'subject') subject = this.get(p)
+            if(p === 'subject') subject = this.com.evaluateBindExpression(this.get(p), true).value
             else vars[p] = this.get(p)
         }
         console.log('vars (pre-parsed)', vars)
