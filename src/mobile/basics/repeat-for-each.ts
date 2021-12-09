@@ -79,6 +79,7 @@ export class RepeatForEach extends ComponentBase {
                 for (let p of Object.getOwnPropertyNames(cprops)) {
                     let v = cprops[p]
                     // preconvert % items
+                    v = replaceVarItems(v, vars)
                     let px = this.com.evalInnerExpression(v, vars)
                     console.log(`> inner expression for ${p} (${cprops[p]}) = "${px}"`)
                 }
@@ -91,4 +92,18 @@ export class RepeatForEach extends ComponentBase {
 
 }
 
+function replaceVarItems(v:string, vars:any) {
+    while(true) {
+        let n = v.indexOf('%')
+        if (n === -1) break;
+        let vn = v.substring(n + 1)
+        let m = vn.match(/[^a-zA-Z0-9]/)
+        let ve = (m && m.index) || vn.length
+        vn = vn.substring(0, ve)
+        let vv = vars[vn]
+        v = v.replace('%' + vn, vv)
+    }
+    return v
+
+}
 
