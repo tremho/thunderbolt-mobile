@@ -104,13 +104,14 @@ function replaceVarItems(v:string, vars:any, item:any) {
         v = v.replace('%' + vn, vv)
     }
     while(true) {
-        let n = v.indexOf('$item.')
+        let n = v.indexOf('$')
         if(n === -1) break;
-        let pn = v.substring(n+6)
-        let m = pn.match(/[^a-zA-Z0-9]/)
+        let pn = v.substring(n+1)
+        let m = pn.match(/[^a-zA-Z0-9.]/)
         let pe = (m && m.index) || pn.length
         pn = pn.substring(0, pe)
-        let rv = ''+item[pn]
+        let rv = pn
+        try { rv = eval(pn) } catch(e) {}
         v = v.substring(0, n)+rv+v.substring(pe)
     }
     return v
