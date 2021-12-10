@@ -101,7 +101,9 @@ function replaceVarItems(v:string = '', item:any, vars:any):string {
         let m = rn.match(/\s/)
         let re = (m && m.index) || rn.length
         rn = rn.substring(0, re)
-        let rv = vars[rn] || ''
+        let rv
+        if(rn) { rv = vars[rn] || '' }
+        else   { rv = pi }
         try {rv = eval(rv)} catch(e) {}
         out += pi.substring(0, ri)+rv+pi.substring(ri+re+1)
     }
