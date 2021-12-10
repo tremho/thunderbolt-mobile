@@ -95,17 +95,20 @@ function replaceVarItems(v:string = '', item:any, vars:any):string {
     const pparts = v.split('$')
     let out = ''
     for(let pi of pparts) {
-        let ri = pi.indexOf('%')
-        if(ri == -1) ri = pi.length;
-        let rn = pi.substring(ri+1)
-        let m = rn.match(/\s/)
-        let re = (m && m.index) || rn.length
-        rn = rn.substring(0, re)
-        let rv
-        if(rn) { rv = vars[rn] || '' }
-        else   { rv = pi }
-        try {rv = eval(rv)} catch(e) {}
-        out += pi.substring(0, ri)+rv+pi.substring(ri+re+1)
+        if(!pi) continue
+        //                                              //item.name        //item.%fact       //%unit
+        let ri = pi.indexOf('%')                        //-1               //5                //0
+        let rn = ''
+        if(ri !== -1) rn = pi.substring(ri+1)           //''               //'fact '         //'unit'
+        let m = rn.match(/\s/)                  //null             //{}              // {}
+        let re = (m && m.index) || rn.length            //0                //4               //4
+        rn = rn.substring(0, re)                        //''               //'fact'         // 'unit'
+        let rv = ''
+        if(rn) { rv = vars[rn] || '' }                  //''               //diameter       //kilometers
+        pi = pi.substring(0,ri)  + rv                   //''               //item.diameter  //''+kilometers
+        try {pi = eval(pi)} catch(e) {}                 //Mercury          //4879           //kilometers
+        pi += pi.substring(ri+re+1)                     // + ''            //+ ' '          // + ''
+        out += pi                                       // 'Mercury'         //'4879 '        // 'kilometers'
     }
     return out
 }
