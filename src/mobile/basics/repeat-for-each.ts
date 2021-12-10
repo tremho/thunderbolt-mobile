@@ -98,7 +98,7 @@ function replaceVarItems(v:string = '', item:any, vars:any):string {
         let ri = pi.indexOf('%')
         if(ri == -1) ri = pi.length;
         let rn = pi.substring(ri+1)
-        let m = rn.match(/[^a-zA-Z0-9]/)
+        let m = rn.match(/\s/)
         let re = (m && m.index) || rn.length
         rn = rn.substring(0, re)
         let rv = vars[rn] || ''
