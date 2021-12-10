@@ -95,6 +95,7 @@ export class RepeatForEach extends ComponentBase {
 function replaceVarItems(v:string = '', item:any):string {
     let n = v.indexOf('$')
     if(n === -1) return '';
+    let plit = v.substring(0, n)
     let pn = v.substring(n+1)
     let m = pn.match(/[^a-zA-Z0-9.]/)
     let pe = (m && m.index) || pn.length
