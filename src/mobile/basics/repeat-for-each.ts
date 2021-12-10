@@ -90,28 +90,22 @@ export class RepeatForEach extends ComponentBase {
     }
 
 }
-/*
- > create slot child of LabeledValue
->> evaluating $item.name item.name
-   > inner expression for label ($item.name) = (Mars) = "Mars"
->> evaluating $item.diameter $kilometers item.diameter
-> inner expression for value ($item.%fact $%unit) = (6792 ) = "6792"
- */
 
-function replaceVarItems(v:string, item:any):string {
+
+function replaceVarItems(v:string = '', item:any):string {
     let n = v.indexOf('$')
     if(n === -1) return '';
     let pn = v.substring(n+1)
     let m = pn.match(/[^a-zA-Z0-9.]/)
     let pe = (m && m.index) || pn.length
     pn = pn.substring(0, pe)
-    let rv = pn
+
     //>> evaluating $item.diameter $kilometers item.diameter
     let parts:string[] = pn.split('$')
     let out = ''
     for(let p of parts) {
         // @ts-ignore
-        let v = parts[p]
+        let v = parts[p] || ''
         let it = v.indexOf('item.')
         if(it !== -1)  {
             let ip = v.substring(it+5).trim()
@@ -121,6 +115,5 @@ function replaceVarItems(v:string, item:any):string {
         out += v
     }
     return out
-
 }
 
