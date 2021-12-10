@@ -111,6 +111,7 @@ function replaceVarItems(v:string, vars:any, item:any) {
         let pe = (m && m.index) || pn.length
         pn = pn.substring(0, pe)
         let rv = pn
+        console.log('>> evaluating', v, pn)
         try { rv = eval(pn) } catch(e) {}
         let nn = v.indexOf('$', pe+1)
         if(nn === -1) nn = v.length;
