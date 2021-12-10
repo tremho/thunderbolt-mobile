@@ -79,9 +79,8 @@ export class RepeatForEach extends ComponentBase {
                 for (let p of Object.getOwnPropertyNames(cprops)) {
                     let v = cprops[p]
                     // preconvert % items
-                    v = replaceVarItems(v, vars, item)
-                    let pv = this.com.evalInnerExpression(v, vars)
-                    console.log(` > inner expression for ${p} (${cprops[p]}) = (${v}) = "${pv}"`)
+                    v = replaceVarItems(v, item)
+                    console.log(` > inner expression for ${p} (${cprops[p]}) = "${v}"`)
                 }
             }
         }
@@ -91,33 +90,37 @@ export class RepeatForEach extends ComponentBase {
     }
 
 }
+/*
+ > create slot child of LabeledValue
+>> evaluating $item.name item.name
+   > inner expression for label ($item.name) = (Mars) = "Mars"
+>> evaluating $item.diameter $kilometers item.diameter
+> inner expression for value ($item.%fact $%unit) = (6792 ) = "6792"
+ */
 
-function replaceVarItems(v:string, vars:any, item:any) {
-    while(true) {
-        let n = v.indexOf('%')
-        if (n === -1) break;
-        let vn = v.substring(n + 1)
-        let m = vn.match(/[^a-zA-Z0-9]/)
-        let ve = (m && m.index) || vn.length
-        vn = vn.substring(0, ve)
-        let vv = vars[vn]
-        v = v.replace('%' + vn, vv)
+function replaceVarItems(v:string, item:any):string {
+    let n = v.indexOf('$')
+    if(n === -1) return '';
+    let pn = v.substring(n+1)
+    let m = pn.match(/[^a-zA-Z0-9.]/)
+    let pe = (m && m.index) || pn.length
+    pn = pn.substring(0, pe)
+    let rv = pn
+    //>> evaluating $item.diameter $kilometers item.diameter
+    let parts:string[] = pn.split('$')
+    let out = ''
+    for(let p of parts) {
+        // @ts-ignore
+        let v = parts[p]
+        let it = v.indexOf('item.')
+        if(it !== -1)  {
+            let ip = v.substring(it+5).trim()
+            let lit = v.substring(it+5+ip.length)
+            v = ''+ item[ip] + lit
+        }
+        out += v
     }
-    while(true) {
-        let n = v.indexOf('$')
-        if(n === -1) break;
-        let pn = v.substring(n+1)
-        let m = pn.match(/[^a-zA-Z0-9.]/)
-        let pe = (m && m.index) || pn.length
-        pn = pn.substring(0, pe)
-        let rv = pn
-        console.log('>> evaluating', v, pn)
-        try { rv = eval(pn) } catch(e) {}
-        let nn = v.indexOf('$', pe+1)
-        if(nn === -1) nn = v.length;
-        v = v.substring(0, n)+rv+v.substring(pe+1,nn)
-    }
-    return v
+    return out
 
 }
 
