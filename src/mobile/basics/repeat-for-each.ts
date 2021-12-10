@@ -111,7 +111,7 @@ function replaceVarItems(v:string = '', item:any, vars:any):string {
             pi = pi.substring(0,ri)  + rv//                    //''               //item.diameter  //''+kilometers
         }
         try {pi = eval(pi)} catch(e) {}//                      //Mercury          //4879           //kilometers
-        pi += opi.substring(ri+re+1)//                          // + ''            //+ ' '          // + ''
+        if(ri !== -1) pi += opi.substring(ri+re+1)//                          // + ''            //+ ' '          // + ''
         out += pi //                                          // 'Mercury'        //'4879 '        // 'kilometers'
     }
     return out
