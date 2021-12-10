@@ -96,11 +96,12 @@ function replaceVarItems(v:string = '', item:any, vars:any):string {
     let out = ''
     for(let pi of pparts) {
         let ri = pi.indexOf('%')
+        if(ri == -1) ri = pi.length;
         let rn = pi.substring(ri+1)
         let m = rn.match(/[^a-zA-Z0-9]/)
         let re = (m && m.index) || rn.length
         rn = rn.substring(0, re)
-        let rv = vars[rn]
+        let rv = vars[rn] || ''
         out += pi.substring(0, ri)+rv+pi.substring(ri+re)
     }
     try { out = eval(out)} catch(e) {}
