@@ -44,6 +44,7 @@ export class RepeatForEach extends ComponentBase {
             if(sp.length === 2) {
                 const section = sp[0]
                 const prop = sp[1]
+                console.log(`>> binding to ${pv}`)
                 this.com.model.bind(this, section, prop, (comp:any, prop:string, inValue:any) => {
                     console.log('>>> FIRING ON CHANGE ', comp, prop, inValue)
                 })
