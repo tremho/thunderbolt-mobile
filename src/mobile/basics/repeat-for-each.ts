@@ -1,6 +1,6 @@
 
 import ComponentBase from '../ComponentBase'
-import {View} from "@nativescript/core";
+import * as components from '../ComponentExport'
 
 const ignoreProps = [
     "pseudoClassAliases",
@@ -81,7 +81,10 @@ export class RepeatForEach extends ComponentBase {
                     // preconvert % items
                     v = replaceVarItems(v, item, vars)
                     console.log(` > inner expression for ${p} (${cprops[p]}) = "${v}"`)
+                    cprops[p] = v
                 }
+                const sc = createComponent(cname, cprops)
+                this.addChild(sc)
             }
         }
 
@@ -97,22 +100,32 @@ function replaceVarItems(v:string = '', item:any, vars:any):string {
     for(let pi of pparts) {
         if(!pi) continue
         let opi = pi
-        //                                              //item.name        //item.%fact       //%unit
-        let ri = pi.indexOf('%')//                             //-1               //5                //0
+        let ri = pi.indexOf('%')
         let rn = ''
         let re = 0
         if(ri !== -1) {
             rn = pi.substring(ri+1)
-            let m = rn.match( /\s/) //                   //null            //{}             // {}
-            re = (m && m.index) || rn.length//                   //0               //4              //4
-            rn = rn.substring(0, re)//                          //''               //'fact'         // 'unit'
+            let m = rn.match( /\s/)
+            re = (m && m.index) || rn.length
+            rn = rn.substring(0, re)
             let rv = ''
-            if(rn) { rv = vars[rn] || '' }//                   //''               //diameter       //kilometers
-            pi = pi.substring(0,ri)  + rv//                    //''               //item.diameter  //''+kilometers
+            if(rn) { rv = vars[rn] || '' }
+            pi = pi.substring(0,ri)  + rv
         }
-        try {pi = eval(pi)} catch(e) {}//                      //Mercury          //4879           //kilometers
-        if(ri !== -1) pi += opi.substring(ri+re+1)//                          // + ''            //+ ' '          // + ''
-        out += pi //                                          // 'Mercury'        //'4879 '        // 'kilometers'
+        try {pi = eval(pi)} catch(e) {}
+        if(ri !== -1) pi += opi.substring(ri+re+1)
+        out += pi
     }
     return out
+}
+
+function createComponent(cname:string, cprops:any) {
+    // @ts-ignore
+    const CC = components[cname]
+    let comp = new CC()
+    for(let p of Object.getOwnPropertyNames(cprops)) {
+        comp.set(p, cprops[p])
+    }
+    return comp
+
 }
