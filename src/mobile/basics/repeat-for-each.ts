@@ -102,19 +102,11 @@ function replaceVarItems(v:string = '', item:any):string {
     pn = pn.substring(0, pe)
 
     //>> evaluating $item.diameter $kilometers item.diameter
-    let parts:string[] = pn.split('$')
-    let out = ''
-    for(let p of parts) {
-        // @ts-ignore
-        let v = parts[p] || ''
-        let it = v.indexOf('item.')
-        if(it !== -1)  {
-            let ip = v.substring(it+5).trim()
-            let lit = v.substring(it+5+ip.length)
-            v = ''+ item[ip] + lit
-        }
-        out += v
-    }
-    return out
+    // @ts-ignore
+    v = pn
+    let ip = v.substring(5).trim()
+    let lit = v.substring(5+ip.length)
+    v = plit+ item[ip] + lit
+    return v
 }
 
