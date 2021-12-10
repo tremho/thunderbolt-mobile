@@ -91,34 +91,18 @@ export class RepeatForEach extends ComponentBase {
 
 }
 
-
 function replaceVarItems(v:string = '', item:any, vars:any):string {
-    let n = v.indexOf('$')
-    if(n === -1) return '';
-    let plit = v.substring(0, n)
-    let pn = v.substring(n+1)
-    let m = pn.match(/[^a-zA-Z0-9.]/)
-    let pe = (m && m.index) || pn.length
-    pn = pn.substring(0, pe)
-
-    let vi = pn.indexOf('%')
-    let vv = ''
-    while(vi !== -1) {
-        let vn = pn.substring(vi+1)
-        let m = vn.match(/[^a-zA-Z0-9.]/)
-        let ve = (m && m.index) || vn.length
-        vn = vn.substring(0, ve)
-        vv = ''+ vars[vn]
-        pn = pn.substring(0, vi)+vv+pn.substring(ve)
-        vi = pn.indexOf('%')
+    const pparts = v.split('$')
+    let out = ''
+    for(let pi of pparts) {
+        let ri = pi.indexOf('%')
+        let rn = pi.substring(ri+1)
+        let m = rn.match(/[^a-zA-Z0-9]/)
+        let re = (m && m.index) || rn.length
+        rn = rn.substring(0, re)
+        let rv = vars[rn]
+        out += pi.substring(0, ri)+rv+pi.substring(ri+re)
     }
-
-    //>> evaluating $item.diameter $kilometers item.diameter
-    // @ts-ignore
-    v = pn
-    let ip = v.substring(5).trim()
-    let lit = v.substring(5+ip.length)
-    v = plit+ item[ip] + lit
-    return v
+    try { out = eval(out)} catch(e) {}
+    return out
 }
-
