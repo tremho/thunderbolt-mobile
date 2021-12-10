@@ -102,8 +102,8 @@ function replaceVarItems(v:string = '', item:any, vars:any):string {
         let re = (m && m.index) || rn.length
         rn = rn.substring(0, re)
         let rv = vars[rn] || ''
-        out += pi.substring(0, ri)+rv+pi.substring(ri+re)
+        try {rv = eval(rv)} catch(e) {}
+        out += pi.substring(0, ri)+rv+pi.substring(ri+re+1)
     }
-    try { out = eval(out)} catch(e) {}
     return out
 }
