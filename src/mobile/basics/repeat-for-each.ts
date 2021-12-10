@@ -79,7 +79,7 @@ export class RepeatForEach extends ComponentBase {
                 for (let p of Object.getOwnPropertyNames(cprops)) {
                     let v = cprops[p]
                     // preconvert % items
-                    v = replaceVarItems(v, item)
+                    v = replaceVarItems(v, item, vars)
                     console.log(` > inner expression for ${p} (${cprops[p]}) = "${v}"`)
                 }
             }
@@ -92,7 +92,7 @@ export class RepeatForEach extends ComponentBase {
 }
 
 
-function replaceVarItems(v:string = '', item:any):string {
+function replaceVarItems(v:string = '', item:any, vars:any):string {
     let n = v.indexOf('$')
     if(n === -1) return '';
     let plit = v.substring(0, n)
@@ -100,6 +100,18 @@ function replaceVarItems(v:string = '', item:any):string {
     let m = pn.match(/[^a-zA-Z0-9.]/)
     let pe = (m && m.index) || pn.length
     pn = pn.substring(0, pe)
+
+    let vi = pn.indexOf('%')
+    let vv = ''
+    while(vi !== -1) {
+        let vn = pn.substring(vi+1)
+        let m = vn.match(/[^a-zA-Z0-9.]/)
+        let ve = (m && m.index) || vn.length
+        vn = vn.substring(0, ve)
+        vv = ''+ vars[vn]
+        pn = pn.substring(0, vi)+vv+pn.substring(ve)
+        vi = pn.indexOf('%')
+    }
 
     //>> evaluating $item.diameter $kilometers item.diameter
     // @ts-ignore
