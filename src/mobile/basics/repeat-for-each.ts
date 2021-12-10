@@ -81,7 +81,7 @@ export class RepeatForEach extends ComponentBase {
                     // preconvert % items
                     v = replaceVarItems(v, vars, item)
                     let pv = this.com.evalInnerExpression(v, vars)
-                    console.log(` > inner expression for ${p} (${cprops[p]}) = "${pv}"`)
+                    console.log(` > inner expression for ${p} (${cprops[p]}) = (${v}) = "${pv}"`)
                 }
             }
         }
