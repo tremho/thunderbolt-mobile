@@ -74,7 +74,7 @@ export class RepeatForEach extends ComponentBase {
         for(let item of subject) {
             for(let si of this.slots) {
                 let cname = si.view.constructor.name
-                let cprops = si.props
+                let cprops = Object.assign({},si.props) // copy so we don't corrupt our reference slot
                 console.log(`> data for ${item.name}`)
                 console.log(`> create slot child of ${cname}`)
                 for (let p of Object.getOwnPropertyNames(cprops)) {
