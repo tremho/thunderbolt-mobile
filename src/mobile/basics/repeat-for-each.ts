@@ -112,7 +112,9 @@ function replaceVarItems(v:string, vars:any, item:any) {
         pn = pn.substring(0, pe)
         let rv = pn
         try { rv = eval(pn) } catch(e) {}
-        v = v.substring(0, n)+rv+v.substring(n, pe+1)
+        let nn = v.indexOf('$', pe+1)
+        if(nn === -1) nn = v.length;
+        v = v.substring(0, n)+rv+v.substring(pe+1,nn)
     }
     return v
 
