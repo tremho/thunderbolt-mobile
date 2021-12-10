@@ -36,8 +36,18 @@ export class RepeatForEach extends ComponentBase {
         let subject:any[] = []
         for(let p of Object.getOwnPropertyNames(this)) {
             if(p.charAt(0) === '_' || p === 'slots' || ignoreProps.indexOf(p) !== -1) continue
-            if(p === 'subject') subject = this.com.evaluateBindExpression(this.get(p), true).value
+            let pv = this.get(p)
+            if(p === 'subject') subject = this.com.evaluateBindExpression(pv, true).value
             else vars[p] = this.get(p)
+
+            let sp = pv.split('.')
+            if(sp.length === 2) {
+                const section = sp[0]
+                const prop = sp[1]
+                this.com.model.bind(this, section, prop, (comp:any, prop:string, inValue:any) => {
+                    console.log('>>> FIRING ON CHANGE ', comp, prop, inValue)
+                })
+            }
         }
         console.log('vars (pre-parsed)', vars)
         for(let vp of Object.getOwnPropertyNames(vars)) {
