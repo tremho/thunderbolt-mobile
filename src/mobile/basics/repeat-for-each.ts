@@ -96,6 +96,7 @@ function replaceVarItems(v:string = '', item:any, vars:any):string {
     let out = ''
     for(let pi of pparts) {
         if(!pi) continue
+        let opi = pi
         //                                              //item.name        //item.%fact       //%unit
         let ri = pi.indexOf('%')//                             //-1               //5                //0
         let rn = ''
@@ -110,7 +111,7 @@ function replaceVarItems(v:string = '', item:any, vars:any):string {
             pi = pi.substring(0,ri)  + rv//                    //''               //item.diameter  //''+kilometers
         }
         try {pi = eval(pi)} catch(e) {}//                      //Mercury          //4879           //kilometers
-        pi += pi.substring(ri+re+1)//                          // + ''            //+ ' '          // + ''
+        pi += opi.substring(ri+re+1)//                          // + ''            //+ ' '          // + ''
         out += pi //                                          // 'Mercury'        //'4879 '        // 'kilometers'
     }
     return out
