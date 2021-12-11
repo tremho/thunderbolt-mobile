@@ -32,16 +32,16 @@ export class RepeatForEach extends ComponentBase {
     // Override to create our label
     public createControl() {
         console.log('>> repeat-for-each')
-        const vars:any = {}
-        let subject:any[] = []
-        for(let p of Object.getOwnPropertyNames(this)) {
-            if(p.charAt(0) === '_' || p === 'slots' || ignoreProps.indexOf(p) !== -1) continue
+        const vars: any = {}
+        let subject: any[] = []
+        for (let p of Object.getOwnPropertyNames(this)) {
+            if (p.charAt(0) === '_' || p === 'slots' || ignoreProps.indexOf(p) !== -1) continue
             let pv = this.get(p)
-            if(p === 'subject') subject = this.com.evaluateBindExpression(pv, true).value
+            if (p === 'subject') subject = this.com.evaluateBindExpression(pv, true).value
             else vars[p] = this.get(p)
 
             let ai = pv.indexOf('@')
-            if(ai !== -1) {
+            if (ai !== -1) {
                 pv = pv.substring(ai + 1)
                 let sp = pv.split('.')
                 if (sp.length === 2) {
@@ -50,10 +50,14 @@ export class RepeatForEach extends ComponentBase {
                     console.log(`>> binding to ${pv}`)
                     this.com.model.bind(this, section, prop, (comp: any, prop: string, inValue: any) => {
                         console.log('>>> FIRING ON CHANGE ', comp, prop, inValue)
+                        this.render(subject,vars)
                     })
                 }
             }
         }
+        this.render(subject,vars)
+    }
+    render(subject:any, vars:any) {
         console.log('vars (pre-parsed)', vars)
         for(let vp of Object.getOwnPropertyNames(vars)) {
             let ex = vars[vp]
