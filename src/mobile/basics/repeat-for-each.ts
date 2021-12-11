@@ -56,10 +56,10 @@ export class RepeatForEach extends ComponentBase {
                 }
             }
         }
-        firstVars = Object.assign({}, vars) // copy for subsequent renderings
         this.render(subject,vars)
     }
-    render(subject:any, vars:any) {
+    render(subject:any, varsIn:any) {
+        const vars = Object.assign({}, varsIn) // copy so as not to cross-contaminate
         console.log('vars (pre-parsed)', vars)
         for(let vp of Object.getOwnPropertyNames(vars)) {
             let ex = vars[vp]
