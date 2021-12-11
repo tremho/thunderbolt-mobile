@@ -33,6 +33,7 @@ export class RepeatForEach extends ComponentBase {
     public createControl() {
         console.log('>> repeat-for-each')
         const vars: any = {}
+        let firstVars:any;
         let subject: any[] = []
         for (let p of Object.getOwnPropertyNames(this)) {
             if (p.charAt(0) === '_' || p === 'slots' || ignoreProps.indexOf(p) !== -1) continue
@@ -50,11 +51,12 @@ export class RepeatForEach extends ComponentBase {
                     console.log(`>> binding to ${pv}`)
                     this.com.model.bind(this, section, prop, (comp: any, prop: string, inValue: any) => {
                         console.log('>>> FIRING ON CHANGE ', comp, prop, inValue)
-                        this.render(subject,vars)
+                        this.render(subject,firstVars)
                     })
                 }
             }
         }
+        firstVars = Object.assign({}, vars) // copy for subsequent renderings
         this.render(subject,vars)
     }
     render(subject:any, vars:any) {
