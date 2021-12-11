@@ -29,6 +29,7 @@ const ignoreProps = [
 
 export class RepeatForEach extends ComponentBase {
     private slots:any[] | null = null
+    private _once:any;
     // Override to create our label
     public createControl() {
         console.log('>> repeat-for-each')
@@ -50,8 +51,12 @@ export class RepeatForEach extends ComponentBase {
                     const prop = sp[1]
                     console.log(`>> binding to ${pv}`)
                     this.com.model.bind(this, section, prop, (comp: any, prop: string, inValue: any) => {
-                        console.log('>>> FIRING ON CHANGE ', comp, prop, inValue)
-                        this.render(subject,firstVars)
+                        // console.log('>>> FIRING ON CHANGE ', comp, prop, inValue)
+                        clearTimeout(this._once)
+                        this._once = setTimeout(() => {
+                            this.render(subject,firstVars)
+                        }, 100)
+
                     })
                 }
             }
@@ -61,12 +66,12 @@ export class RepeatForEach extends ComponentBase {
     }
     render(subject:any, varsIn:any) {
         const vars = Object.assign({}, varsIn) // copy so as not to cross-contaminate
-        console.log('vars (pre-parsed)', vars)
+        // console.log('vars (pre-parsed)', vars)
         for(let vp of Object.getOwnPropertyNames(vars)) {
             let ex = vars[vp]
             vars[vp] = this.com.evaluateBindExpression(vars[vp], true).value
         }
-        console.log('vars (parsed)', vars)
+        // console.log('vars (parsed)', vars)
 
         // clear all children / collect slot children
         let collecting = false
@@ -78,7 +83,7 @@ export class RepeatForEach extends ComponentBase {
 
         while(--n >=0) {
             let ch = this.getChildAt(n)
-            console.log('existing child', ch)
+            // console.log('existing child', ch)
             if(collecting) {
                 let cprops:any = {}
                 for(let p of Object.getOwnPropertyNames(ch)) {
@@ -97,13 +102,13 @@ export class RepeatForEach extends ComponentBase {
             for(let si of this.slots) {
                 let cname = si.view.constructor.name
                 let cprops = Object.assign({},si.props) // copy so we don't corrupt our reference slot
-                console.log(`> data for ${item.name}`)
-                console.log(`> create slot child of ${cname}`)
+                // console.log(`> data for ${item.name}`)
+                // console.log(`> create slot child of ${cname}`)
                 for (let p of Object.getOwnPropertyNames(cprops)) {
                     let v = cprops[p]
                     // preconvert % items
                     v = replaceVarItems(v, item, vars)
-                    console.log(` > inner expression for ${p} (${cprops[p]}) = "${v}"`)
+                    // console.log(` > inner expression for ${p} (${cprops[p]}) = "${v}"`)
                     cprops[p] = v
                 }
                 const sc = createComponent(cname, cprops)
@@ -112,7 +117,7 @@ export class RepeatForEach extends ComponentBase {
         }
 
 
-        console.log("<<<<<")
+        // console.log("<<<<<")
     }
 
 }
