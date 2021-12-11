@@ -56,6 +56,7 @@ export class RepeatForEach extends ComponentBase {
                 }
             }
         }
+        firstVars = Object.assign({}, vars)
         this.render(subject,vars)
     }
     render(subject:any, varsIn:any) {
