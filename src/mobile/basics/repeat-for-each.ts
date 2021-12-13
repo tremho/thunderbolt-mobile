@@ -84,7 +84,6 @@ export class RepeatForEach extends ComponentBase {
             this.removeChild(ch)
         }
         console.log('>> collected slots', this.slots)
-
         // then add the children back per repeat
         for(let item of subject) {
             let test = () => { return true;}
