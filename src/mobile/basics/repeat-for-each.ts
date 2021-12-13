@@ -74,39 +74,26 @@ export class RepeatForEach extends ComponentBase {
         // console.log('vars (parsed)', vars)
 
         // clear all children / collect slot children
-        let collecting = false
         if(!this.slots) {
-            this.slots = []
-            collecting = true
+            this.slots = collectChildSlots(this)
         }
+        // clear all children before re-rendering
         let n = this.getChildrenCount();
-
         while(--n >=0) {
             let ch = this.getChildAt(n)
-            // console.log('existing child', ch)
-            if(collecting) {
-                let cprops:any = {}
-                for(let p of Object.getOwnPropertyNames(ch)) {
-                    if(p.charAt(0) === '_' || ignoreProps.indexOf(p) !== -1) continue
-                    let v = ch.get(p)
-                    if(typeof v === 'string' || typeof v === 'number') {
-                        cprops[p] = ''+v
-                    }
-                }
-                console.log('adding slot', ch, cprops)
-                this.slots.push({view:ch, props:cprops})
-            }
             this.removeChild(ch)
         }
-        console.log('collected slots', this.slots)
+        console.log('>> collected slots', this.slots)
+
         // then add the children back per repeat
         for(let item of subject) {
             let test = () => { return true;}
             for(let si of this.slots) {
                 let cname = si.view.constructor.name
+                let pname = si.parent.constructor.name
                 let cprops = Object.assign({},si.props) // copy so we don't corrupt our reference slot
-                // console.log(`> data for ${item.name}`)
-                // console.log(`> create slot child of ${cname}`)
+                console.log(`> data for ${item.name}`)
+                console.log(`> create slot child of ${cname} for parent ${pname}`)
                 for (let p of Object.getOwnPropertyNames(cprops)) {
                     let v = cprops[p]
                     // preconvert % items
@@ -115,7 +102,7 @@ export class RepeatForEach extends ComponentBase {
                     cprops[p] = v
                 }
                 const sc = createComponent(cname, cprops)
-                this.addChild(sc)
+                si.parent.addChild(sc)
             }
         }
 
@@ -158,5 +145,26 @@ function createComponent(cname:string, cprops:any) {
         comp.set(p, cprops[p])
     }
     return comp
+}
 
+// gather the slot child hierarchy
+function collectChildSlots(pView:any) {
+    const slots = []
+    let n = pView.getChildrenCount()
+    while (--n >=0) {
+        let ch = pView.getChildAt(n)
+        collectChildSlots(ch)
+        let cprops:any = {}
+        for(let p of Object.getOwnPropertyNames(ch)) {
+            if(p.charAt(0) === '_' || ignoreProps.indexOf(p) !== -1) continue
+            let v = ch.get(p)
+            if(typeof v === 'string' || typeof v === 'number') {
+                cprops[p] = ''+v
+            }
+        }
+        // console.log('adding slot', ch, cprops)
+        slots.push({parent: pView, view:ch, props:cprops})
+        pView.removeChild(ch)
+    }
+    return slots
 }
