@@ -99,6 +99,7 @@ export class RepeatForEach extends ComponentBase {
         }
         // then add the children back per repeat
         for(let item of subject) {
+            let test = () => { return true;}
             for(let si of this.slots) {
                 let cname = si.view.constructor.name
                 let cprops = Object.assign({},si.props) // copy so we don't corrupt our reference slot
