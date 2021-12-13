@@ -93,10 +93,12 @@ export class RepeatForEach extends ComponentBase {
                         cprops[p] = ''+v
                     }
                 }
+                console.log('adding slot', ch, cprops)
                 this.slots.push({view:ch, props:cprops})
             }
             this.removeChild(ch)
         }
+        console.log('collected slots', this.slots)
         // then add the children back per repeat
         for(let item of subject) {
             let test = () => { return true;}
