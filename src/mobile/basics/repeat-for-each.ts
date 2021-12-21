@@ -32,7 +32,7 @@ export class RepeatForEach extends ComponentBase {
     private _once:any;
     // Override to create our label
     public createControl() {
-        console.log('>> repeat-for-each')
+        // console.log('>> repeat-for-each')
         const vars: any = {}
         let firstVars:any;
         let subject: any[] = []
@@ -49,7 +49,7 @@ export class RepeatForEach extends ComponentBase {
                 if (sp.length === 2) {
                     const section = sp[0]
                     const prop = sp[1]
-                    console.log(`>> binding to ${pv}`)
+                    // console.log(`>> binding to ${pv}`)
                     this.com.model.bind(this, section, prop, (comp: any, prop: string, inValue: any) => {
                         // console.log('>>> FIRING ON CHANGE ', comp, prop, inValue)
                         clearTimeout(this._once)
@@ -83,7 +83,7 @@ export class RepeatForEach extends ComponentBase {
             let ch = this.getChildAt(n)
             this.removeChild(ch)
         }
-        console.log('>> collected slots', this.slots)
+        // console.log('>> collected slots', this.slots)
         // then add the children back per repeat
         for(let item of subject) {
             let test = () => { return true;}
@@ -91,8 +91,8 @@ export class RepeatForEach extends ComponentBase {
                 let cname = si.view.constructor.name
                 let pname = si.parent.constructor.name
                 let cprops = Object.assign({},si.props) // copy so we don't corrupt our reference slot
-                console.log(`> data for ${item.name}`)
-                console.log(`> create slot child of ${cname} for parent ${pname}`)
+                // console.log(`> data for ${item.name}`)
+                // console.log(`> create slot child of ${cname} for parent ${pname}`)
                 for (let p of Object.getOwnPropertyNames(cprops)) {
                     let v = cprops[p]
                     // preconvert % items
