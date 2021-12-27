@@ -144,8 +144,8 @@ export class TBPage extends GridLayout {
                 const noBack = this.get('noBack') === 'true'
                 const title = this.get('title') || this.get('text') || 'Default title'
                 const menuId = this.get('menu-id')
-                const toolbarId = this.get('toolbar-id')
-                const indicatorsId = this.get('indicators-id')
+                const toolbarId = 'main' //this.get('toolbar-id')
+                const indicatorsId = 'main' //this.get('indicators-id')
                 // console.log('menuId, toolbarId, indicatorsId', menuId, toolbarId, indicatorsId)
                 if(!noBack) {
                     // console.log('--- applying tap handler to back button')
