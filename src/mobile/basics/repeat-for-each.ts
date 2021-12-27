@@ -106,10 +106,8 @@ export class RepeatForEach extends ComponentBase {
                 }
             }
         }
-
         // console.log("<<<<<")
     }
-
 }
 
 function testCondition(expr:string, item:any, vars:any, com:any) {
