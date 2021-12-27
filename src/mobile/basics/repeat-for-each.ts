@@ -149,7 +149,7 @@ function createComponent(cname:string, cprops:any) {
 // gather the slot child hierarchy
 function collectChildSlots(pView:any) {
     const slots = []
-    let n = pView.getChildrenCount()
+    let n = (pView && pView.getChildrenCount && pView.getChildrenCount()) || 0
     while (--n >=0) {
         let ch = pView.getChildAt(n)
         collectChildSlots(ch)
