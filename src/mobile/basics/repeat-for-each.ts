@@ -85,8 +85,8 @@ export class RepeatForEach extends ComponentBase {
         }
         // console.log('>> collected slots', this.slots)
         // then add the children back per repeat
+        const condition = vars.condition || 'true'
         for(let item of subject) {
-            let test = () => { return true;}
             for(let si of this.slots) {
                 let cname = si.view.constructor.name
                 let pname = si.parent.constructor.name
@@ -100,16 +100,33 @@ export class RepeatForEach extends ComponentBase {
                     // console.log(` > inner expression for ${p} (${cprops[p]}) = "${v}"`)
                     cprops[p] = v
                 }
-                const sc = createComponent(cname, cprops)
-                si.parent.addChild(sc)
+                if(testCondition.call(this.com.getApp().currentActivity, condition, item, vars, this.com)) {
+                    const sc = createComponent(cname, cprops)
+                    si.parent.addChild(sc)
+                }
             }
         }
-
 
         // console.log("<<<<<")
     }
 
 }
+
+function testCondition(expr:string, item:any, vars:any, com:any) {
+    let rt = expr
+    try { rt = com.evalInnerExpression(expr, vars) } catch (e) {
+        console.error(e)
+        return true // condition has no effect on error
+    }
+    if(typeof rt === 'string') {
+        try { rt = eval(rt) } catch (e) {
+            console.error(e)
+            return true // condition has no effect on error
+        }
+    }
+    return !!rt // force boolean
+}
+
 
 function replaceVarItems(v:string = '', item:any, vars:any):string {
     const pparts = v.split('$')
