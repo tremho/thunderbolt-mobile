@@ -145,6 +145,7 @@ function replaceVarItems(v:string = '', item:any, vars:any):string {
             pi = pi.substring(0,ri)  + rv
         }
         try {pi = eval(pi)} catch(e) {}
+        if(pi === undefined) pi = ''
         if(ri !== -1) pi += opi.substring(ri+re+1)
         out += pi
     }
