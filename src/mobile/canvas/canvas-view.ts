@@ -24,7 +24,7 @@ export class CanvasView extends ComponentBase {
         }
         this.className = "CanvasView"
         let size = this.getProp('size')
-        const rect = this.getElementBounds(div)
+        const rect = this.getElementBounds(this.component.root)
         if(!size) {
             size = (rect.height || rect.width)
         }
