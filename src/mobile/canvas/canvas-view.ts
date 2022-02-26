@@ -5,7 +5,7 @@ import {Label, Color} from '@nativescript/core'
 
 let Canvas:any
 try {
-    Canvas = require('@nativescript/canvas')
+    Canvas = require('@nativescript/canvas').Canvas
 } catch(e) {
 }
 
