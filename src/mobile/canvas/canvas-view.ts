@@ -15,13 +15,18 @@ export class CanvasView extends ComponentBase {
     private ctx:any = null
     private contextType:string = ''
 
-    // Override to create our control
-    public createControl() {
+    constructor() {
+        super()
         if(Canvas) {
             this.canvas = new Canvas()
         } else {
             throw Error('@nativescript/canvas (plugin) is not installed')
         }
+        this.component.addChild(this.canvas)
+    }
+
+    // Override to create our control
+    public createControl() {
         this.className = "CanvasView"
         let size = this.getProp('size')
         const rect = this.getElementBounds(this.component.root)
@@ -34,7 +39,6 @@ export class CanvasView extends ComponentBase {
             this.ctx.canvas.width = size
             this.ctx.canvas.height = sizeH
         }
-        this.component.addChild(this.canvas)
         if(this.get('action')) this.setActionResponder(this.canvas, 'tap', 'action')
     }
     public getContext(type?:string) {
