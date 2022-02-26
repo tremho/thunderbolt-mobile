@@ -29,7 +29,7 @@ export class CanvasView extends ComponentBase {
     public createControl() {
         this.className = "CanvasView"
         let size = this.getProp('size')
-        const rect = this.getElementBounds(this.component.root)
+        const rect = this.getElementBounds(this.component)
         if(!size) {
             size = (rect.height || rect.width)
         }
