@@ -17,6 +17,7 @@ import {GridSection} from "./layout/grid-section";
 import {TBStackLayout} from "./layout/stack-layout";
 import {TBGridLayout} from "./layout/grid-layout";
 import {CondSect} from "./layout/cond-sect"
+import {CanvasView} from "./canvas/canvas-view"
 
 
 class Div extends StackLayout{
@@ -90,6 +91,8 @@ export {Hr as Hr}
 export {RepeatForEach as RepeatForEach}
 
 export {CondSect as CondSect}
+
+export {CanvasView as CanvasView}
 
 export {makeDiv as makeDiv}
 export {makeSpan as makeSpan}
