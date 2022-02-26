@@ -34,6 +34,7 @@ export class CanvasView extends ComponentBase {
             this.ctx.canvas.width = size
             this.ctx.canvas.height = sizeH
         }
+        this.component.addChild(this.canvas)
         if(this.get('action')) this.setActionResponder(this.canvas, 'tap', 'action')
     }
     public getContext(type?:string) {
