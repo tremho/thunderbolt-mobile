@@ -22,6 +22,7 @@ export class CanvasView extends ComponentBase {
         } else {
             throw Error('@nativescript/canvas (plugin) is not installed')
         }
+        this.className = "CanvasView"
         let size = this.getProp('size')
         const rect = this.getElementBounds(div)
         if(!size) {
