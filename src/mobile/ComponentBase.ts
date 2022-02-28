@@ -44,11 +44,11 @@ export default class ComponentBase extends StackLayout {
         LocalBind = comCommon.LocalBind
     }
 
-    constructor() {
+    constructor(forceComponent?:View) {
         super()
         try {
-            this.component = this
-            this.container = this // TODO: for backward compatibility. deprecated
+            this.component = forceComponent || this
+            this.container = this.component // TODO: for backward compatibility. deprecated
             this.comNormal = new ComNormal(this)
             this.com = new ComCommon(this)
             this.cm = this.com // duplicate, but named like this on desktop side

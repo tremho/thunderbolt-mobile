@@ -12,11 +12,13 @@ try {
 // instead, it is simply a renamed version of the @nativescript/canvas directly (similar to stack-layout).
 // it will call canvasReady (on the page, not the activity, so this is forwarded by the page stubs)
 export class CanvasView extends Canvas {
-    private util:ComponentBase = new ComponentBase()
+    private util:ComponentBase
 
     constructor() {
         super()
-        this.util.listenToAllGestures(this as unknown as View, 'action')
+        let cv = this as unknown as View
+        this.util = new ComponentBase(cv)
+        this.util.listenToAllGestures(cv, 'action')
     }
 }
 

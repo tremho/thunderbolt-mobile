@@ -3,13 +3,15 @@ import {View, StackLayout, PercentLength} from '@nativescript/core'
 import ComponentBase from "../ComponentBase"
 
 export class TBStackLayout extends StackLayout {
-    private util:ComponentBase = new ComponentBase()
+    private util:ComponentBase
     constructor() {
         super()
+        let cv = this as unknown as View
+        this.util = new ComponentBase(cv)
+        this.util.listenToAllGestures(cv, 'action')
         this.set('height', this.get('height') || '100%')
         this.set('width', this.get('width') || '100%')
         this.set('horizontalAlignment', this.get('horizontalAlignment') || 'left')
-        this.util.listenToAllGestures(this as unknown as View, 'action')
     }
 }
 
