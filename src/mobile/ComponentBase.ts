@@ -237,54 +237,54 @@ export default class ComponentBase extends StackLayout {
 
     listenToAllGestures(el:View, action:string = 'action') {
         // @ts-ignore
-        // this.listenToFor(el, 'up', (ev: any) => {
-        //     this.cm.getApp().callEventHandler(action, 'up', ev)
-        // })
-        // // @ts-ignore
-        // this.listenToFor(el, 'down', (ev: any) => {
-        //     this.cm.getApp().callEventHandler(action, 'down', ev)
-        // })
-        // // @ts-ignore
-        // this.listenToFor(el, 'press', (ev: any) => {
-        //     this.cm.getApp().callEventHandler(action, 'press', ev)
-        // })
-        // // @ts-ignore
-        // this.listenToFor(el, 'dblpress', (ev: any) => {
-        //     this.cm.getApp().callEventHandler(action, 'dblpress', ev)
-        // })
-        // // @ts-ignore
-        // this.listenToFor(el, 'swipeup', (ev: any) => {
-        //     this.cm.getApp().callEventHandler(action, 'swipeup', ev, ev.value)
-        // })
-        // // @ts-ignore
-        // this.listenToFor(el, 'swipedown', (ev: any) => {
-        //     this.cm.getApp().callEventHandler(action, 'swipedown', ev, ev.value)
-        // })
-        // // @ts-ignore
-        // this.listenToFor(el, 'swipeleft', (ev: any) => {
-        //     this.cm.getApp().callEventHandler(action, 'swipeleft', ev, ev.value)
-        // })
-        // // @ts-ignore
-        // this.listenToFor(el, 'swiperight', (ev: any) => {
-        //     this.cm.getApp().callEventHandler(action, 'swiperight', ev, ev.value)
-        // })
-        // // @ts-ignore
-        // this.listenToFor(el, 'longpress', (ev: any) => {
-        //     this.cm.getApp().callEventHandler(action, 'longpress', ev, ev.value)
-        // })
+        this.listenToFor(el, 'up', (ev: any) => {
+            this.cm.getApp().callEventHandler(action, 'up', ev)
+        })
+        // @ts-ignore
+        this.listenToFor(el, 'down', (ev: any) => {
+            this.cm.getApp().callEventHandler(action, 'down', ev)
+        })
+        // @ts-ignore
+        this.listenToFor(el, 'press', (ev: any) => {
+            this.cm.getApp().callEventHandler(action, 'press', ev)
+        })
+        // @ts-ignore
+        this.listenToFor(el, 'dblpress', (ev: any) => {
+            this.cm.getApp().callEventHandler(action, 'dblpress', ev)
+        })
+        // @ts-ignore
+        this.listenToFor(el, 'swipeup', (ev: any) => {
+            this.cm.getApp().callEventHandler(action, 'swipeup', ev, ev.value)
+        })
+        // @ts-ignore
+        this.listenToFor(el, 'swipedown', (ev: any) => {
+            this.cm.getApp().callEventHandler(action, 'swipedown', ev, ev.value)
+        })
+        // @ts-ignore
+        this.listenToFor(el, 'swipeleft', (ev: any) => {
+            this.cm.getApp().callEventHandler(action, 'swipeleft', ev, ev.value)
+        })
+        // @ts-ignore
+        this.listenToFor(el, 'swiperight', (ev: any) => {
+            this.cm.getApp().callEventHandler(action, 'swiperight', ev, ev.value)
+        })
+        // @ts-ignore
+        this.listenToFor(el, 'longpress', (ev: any) => {
+            this.cm.getApp().callEventHandler(action, 'longpress', ev, ev.value)
+        })
 
         // @ts-ignore
         this.listenToFor(el, 'pan', (ev:any) => {
             this.cm.getApp().callEventHandler(action, 'pan', ev, ev.value)
         })
-        // // @ts-ignore
-        // this.listenToFor(el, 'rotate', (ev:any) => {
-        //     this.cm.getApp().callEventHandler(action, 'rotate', ev, ev.value)
-        // })
-        // // @ts-ignore
-        // this.listenToFor(el, 'pinch', (ev:any) => {
-        //     this.cm.getApp().callEventHandler(action, 'pinch', ev, ev.value)
-        // })
+        // @ts-ignore
+        this.listenToFor(el, 'rotate', (ev:any) => {
+            this.cm.getApp().callEventHandler(action, 'rotate', ev, ev.value)
+        })
+        // @ts-ignore
+        this.listenToFor(el, 'pinch', (ev:any) => {
+            this.cm.getApp().callEventHandler(action, 'pinch', ev, ev.value)
+        })
     }
 
     // ComNormal implementation
