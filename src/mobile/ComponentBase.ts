@@ -50,12 +50,12 @@ export default class ComponentBase extends StackLayout {
             this.component = this
             this.container = this // TODO: for backward compatibility. deprecated
             this.comNormal = new ComNormal(this)
+            this.com = new ComCommon(this)
+            this.cm = this.com // duplicate, but named like this on desktop side
+            this.b = this.cm.evalBinding // TODO: This may be obsolete now
             this.on('layoutChanged', () => {
                 if(!this._isInit) {
                     this._isInit = true
-                    this.com = new ComCommon(this)
-                    this.cm = this.com // duplicate, but named like this on desktop side
-                    this.b = this.cm.evalBinding // TODO: This may be obsolete now
                     this.com.waitForModel().then(() => {
                         // console.log('>>>>>>>>>> ***** past waitReady')
                         // must occur on a nominal timeout to work across platforms
@@ -235,7 +235,7 @@ export default class ComponentBase extends StackLayout {
         console.warn('ComponentBase:evalExpressionString is deprecated (obsolete)')
     }
 
-    listenToAllGestures(el:HTMLElement, action:string = 'action') {
+    listenToAllGestures(el:View, action:string = 'action') {
         // @ts-ignore
         this.listenToFor(el, 'up', (ev: any) => {
             this.cm.getApp().callEventHandler(action, 'up', ev)

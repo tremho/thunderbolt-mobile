@@ -22,7 +22,8 @@ export class SimpleLabel extends ComponentBase {
         // set the default alignment of component to the left. The {N} default appears to be center.
         this.label.set('horizontalAlignment', 'left')
         this.set('horizontalAlignment', 'left')
-        if(this.get('action')) this.setActionResponder(this.label, 'tap', 'action')
+        if(this.get('action')) this.listenToAllGestures(this.component, 'action')
+
     }
 
     // protected setProperties() {
