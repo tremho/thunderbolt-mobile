@@ -273,10 +273,10 @@ export default class ComponentBase extends StackLayout {
             this.cm.getApp().callEventHandler(action, 'longpress', ev, ev.value)
         })
 
-        // @ts-ignore
-        this.listenToFor(el, 'pan', (ev:any) => {
-            this.cm.getApp().callEventHandler(action, 'pan', ev, ev.value)
-        })
+        // // @ts-ignore
+        // this.listenToFor(el, 'pan', (ev:any) => {
+        //     this.cm.getApp().callEventHandler(action, 'pan', ev, ev.value)
+        // })
         // @ts-ignore
         this.listenToFor(el, 'rotate', (ev:any) => {
             this.cm.getApp().callEventHandler(action, 'rotate', ev, ev.value)
