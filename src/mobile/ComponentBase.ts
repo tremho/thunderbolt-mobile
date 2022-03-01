@@ -59,9 +59,9 @@ export default class ComponentBase extends StackLayout {
                 forceComponent.com = forceComponent.cm = this.com
                 this.component.component = this.component
                 // @ts-ignore
-                this.comNormal.android = Platform.isAndroid()
+                this.comNormal.android = Platform.isAndroid
                 // @ts-ignore
-                this.comNormal.ios = Platform.isIOS()
+                this.comNormal.ios = Platform.isIOS
             }
             this.b = this.cm.evalBinding // TODO: This may be obsolete now
             this.on('layoutChanged', () => {
