@@ -49,6 +49,7 @@ export default class ComponentBase extends StackLayout {
         try {
             this.component = forceComponent || this
             this.container = this.component // TODO: for backward compatibility. deprecated
+            // these inits must occur before layout event is waited on, so we can use this class for util purposes.
             this.comNormal = new ComNormal(this)
             this.com = new ComCommon(this)
             this.cm = this.com // duplicate, but named like this on desktop side
