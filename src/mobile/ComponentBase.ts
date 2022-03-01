@@ -55,13 +55,11 @@ export default class ComponentBase extends StackLayout {
             this.com = new ComCommon(this.component)
             this.cm = this.com // duplicate, but named like this on desktop side
             if(forceComponent) {
+                forceComponent.android = Platform.isAndroid
+                forceComponent.ios = Platform.isIOS
                 // @ts-ignore
                 forceComponent.com = forceComponent.cm = this.com
                 this.component.component = this.component
-                // @ts-ignore
-                this.comNormal.android = Platform.isAndroid
-                // @ts-ignore
-                this.comNormal.ios = Platform.isIOS
             }
             this.b = this.cm.evalBinding // TODO: This may be obsolete now
             this.on('layoutChanged', () => {
