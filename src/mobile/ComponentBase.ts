@@ -49,12 +49,16 @@ export default class ComponentBase extends StackLayout {
         try {
             //@ts-ignore
             this.component = forceComponent || this
-            this.component.component = this.component
             this.container = this.component // TODO: for backward compatibility. deprecated
             // these inits must occur before layout event is waited on, so we can use this class for util purposes.
             this.comNormal = new ComNormal(this.component)
             this.com = new ComCommon(this.component)
             this.cm = this.com // duplicate, but named like this on desktop side
+            if(forceComponent) {
+                // @ts-ignore
+                forceComponent.com = forceComponent.cm = this.com
+                this.component.component = this.component
+            }
             this.b = this.cm.evalBinding // TODO: This may be obsolete now
             this.on('layoutChanged', () => {
                 if(!this._isInit) {
