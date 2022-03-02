@@ -55,8 +55,10 @@ export default class ComponentBase extends StackLayout {
             this.com = new ComCommon(this.component)
             this.cm = this.com // duplicate, but named like this on desktop side
             if(forceComponent) {
-                forceComponent.android = Platform.isAndroid
-                forceComponent.ios = Platform.isIOS
+                (forceComponent as any).util = {
+                    android: Platform.isAndroid,
+                    ios: Platform.isIOS
+                }
                 // @ts-ignore
                 forceComponent.com = forceComponent.cm = this.com
                 this.component.component = this.component
