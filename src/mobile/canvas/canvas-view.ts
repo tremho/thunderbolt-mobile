@@ -11,6 +11,10 @@ try {
 // it will call canvasReady (on the page, not the activity, so this is forwarded by the page stubs)
 // to trap gestures, add a listener to the surrounding stack-layout
 export class CanvasView extends Canvas {
+    constructor() {
+        super()
+        this.isPassThroughParentEnabled = true
+    }
 }
 
 
