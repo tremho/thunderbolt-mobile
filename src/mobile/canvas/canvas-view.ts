@@ -1,4 +1,4 @@
-// To use this component, the @nativescript/canvas plugin must be installed.
+// To use this component, the @nativescript/canvas plugin must be installed
 
 let Canvas:any
 try {

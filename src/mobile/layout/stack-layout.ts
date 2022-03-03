@@ -3,7 +3,7 @@ import {View, StackLayout, PercentLength} from '@nativescript/core'
 import ComponentBase from "../ComponentBase"
 
 export class TBStackLayout extends StackLayout {
-    private util:ComponentBase
+    private util?:ComponentBase
     constructor() {
         super()
 
