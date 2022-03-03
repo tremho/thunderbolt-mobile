@@ -8,10 +8,12 @@ export class TBStackLayout extends StackLayout {
         super()
         let cv = this as unknown as View
         this.util = new ComponentBase(cv)
-        this.util.listenToAllGestures(cv, 'action')
         this.set('height', this.get('height') || '100%')
         this.set('width', this.get('width') || '100%')
         this.set('horizontalAlignment', this.get('horizontalAlignment') || 'left')
+        this.on('layoutChanged', () => {
+            this.util.listenToAllGestures(cv, 'action')
+        })
     }
 }
 
