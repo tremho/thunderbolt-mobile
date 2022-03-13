@@ -1,5 +1,5 @@
 // To use this component, the @nativescript/canvas plugin must be installed
-
+import {Screen} from "@nativescript/core"
 let Canvas:any
 try {
     Canvas = require('@nativescript/canvas').Canvas
@@ -11,6 +11,11 @@ try {
 // it will call canvasReady (on the page, not the activity, so this is forwarded by the page stubs)
 // to trap gestures, add a listener to the surrounding stack-layout
 export class CanvasView extends Canvas {
+    constructor() {
+        super()
+        this.set('width', Screen.mainScreen.widthDIPs)
+        this.set('height', Screen.mainScreen.heightDIPs)
+    }
 }
 
 
