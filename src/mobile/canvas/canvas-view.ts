@@ -13,8 +13,10 @@ try {
 export class CanvasView extends Canvas {
     constructor() {
         super()
-        this.set('width', Screen.mainScreen.widthDIPs)
-        this.set('height', Screen.mainScreen.heightDIPs)
+        let width = this.get('width') || Screen.mainScreen.widthDIPs
+        let height = this.get('height') || Screen.mainScreen.heightDIPs
+        this.set('width', width)
+        this.set('height', height)
     }
 }
 
