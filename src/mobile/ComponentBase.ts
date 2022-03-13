@@ -251,6 +251,7 @@ export default class ComponentBase extends StackLayout {
         this.listenToFor(el, 'touch', (ev: any) => {
             this.cm.getApp().callEventHandler(action, 'touch', ev)
         })
+        
         // @ts-ignore
         this.listenToFor(el, 'press', (ev: any) => {
             this.cm.getApp().callEventHandler(action, 'press', ev)
