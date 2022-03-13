@@ -30,7 +30,10 @@ export class LabeledValue extends ComponentBase {
         this.cLabel.set('horizontalAlignment', 'left')
         this.cValue.set('horizontalAlignment', 'left')
         this.set('horizontalAlignment', 'left')
-        if(this.get('action')) this.listenToAllGestures(this.component, 'action')
+        if(this.get('action')) {
+            this.listenToAllGestures(this.cLabel, 'action')
+            this.listenToAllGestures(this.cValue, 'action')
+        }
     }
 
 }

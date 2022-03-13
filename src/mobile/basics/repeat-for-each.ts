@@ -107,7 +107,7 @@ export class RepeatForEach extends ComponentBase {
             }
         }
         // console.log("<<<<<")
-        if(this.get('action')) this.listenToAllGestures(this.component, 'action')
+        // if(this.get('action')) this.listenToAllGestures(this.component, 'action')
     }
 }
 

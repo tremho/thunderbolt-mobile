@@ -14,7 +14,7 @@ export class TextArea extends ComponentBase {
         this.textComponent = this.textView // so ComCommon will align text
         this.textView.className = 'TextArea'
         this.component.addChild(this.textView)
-        if(this.get('action')) this.listenToAllGestures(this.component, 'action')
+        if(this.get('action')) this.listenToAllGestures(this.textView, 'action')
 
     }
 
