@@ -14,7 +14,7 @@ export class SimpleButton extends ComponentBase {
         }
         this.textComponent = this.button // so ComCommon will align text
         this.component.addChild(this.button)
-        if(this.get('action')) this.listenToAllGestures(this.component, 'action')
+        if(this.get('action')) this.listenToAllGestures(this.button, 'action')
 
     }
 
