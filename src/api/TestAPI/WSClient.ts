@@ -1,7 +1,7 @@
 
 // Note this is my patched version of @master.technology/websockets.  Meant to be temporary pending official fix.
 // @ts-ignore
-import {TEST_ENABLED} from "`~/tbd/settings/enabled"
+import {TEST_ENABLED} from "`/Users/sohmert/tbd/settings/enabled"
 
 let WS:any
 if(TEST_ENABLED) {
