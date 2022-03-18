@@ -1,6 +1,7 @@
 
 // Note this is my patched version of @master.technology/websockets.  Meant to be temporary pending official fix.
-const {TEST_ENABLED} = require( '../../../../settings/enabled')
+// @ts-ignore
+import {TEST_ENABLED} from "../../../settings/enabled"
 
 let WS:any
 if(TEST_ENABLED) {
