@@ -1,6 +1,15 @@
 
 // Note this is my patched version of @master.technology/websockets.  Meant to be temporary pending official fix.
-const WS = require('@tremho/mt-ns-websockets')
+const {TEST_ENABLED} = require('~/tbd/settings/enabled')
+
+let WS:any
+if(TEST_ENABLED) {
+    try {
+        WS = require('@tremho/mt-ns-websockets')
+    }
+    catch(e) {}
+}
+
 
 import {executeDirective, getReport} from "./PoCActions";
 export type ClientEventHandler = (data:any) => void
@@ -10,28 +19,30 @@ export class WSClient {
     eventMap:any = {}
 
     connect(serviceUrl:string) {
-        this.ws = new WS(serviceUrl, {protocols:[], debug:false, timeout:25000})
+        this.ws = WS && new WS(serviceUrl, {protocols:[], debug:false, timeout:25000})
         ////
         return new Promise(resolve => {
-            this.ws.on('error', (w: any, e: Error) => {
-                // console.log('we see an error at ws ', e)
-                this.handleEvent('error', e)
-            })
-            this.ws.on('close', (w: any, code: number, reason: string) => {
-                this.handleEvent('close', {code, reason})
-            })
-            this.ws.on('open', (w: any) => {
-                this.handleEvent('connect', this)
-            })
-            this.ws.on('message', (w: any, message: string) => {
-                this.handleEvent('data', message)
-            })
-            this.ws.open()
+            if(this.ws) {
+                this.ws.on('error', (w: any, e: Error) => {
+                    // console.log('we see an error at ws ', e)
+                    this.handleEvent('error', e)
+                })
+                this.ws.on('close', (w: any, code: number, reason: string) => {
+                    this.handleEvent('close', {code, reason})
+                })
+                this.ws.on('open', (w: any) => {
+                    this.handleEvent('connect', this)
+                })
+                this.ws.on('message', (w: any, message: string) => {
+                    this.handleEvent('data', message)
+                })
+                this.ws.open()
+            }
         })
 
     }
     send(data:any) {
-        this.ws.send(data)
+        this.ws?.send(data)
     }
 
     end(code:number = 1000) {
