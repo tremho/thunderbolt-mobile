@@ -1,7 +1,7 @@
 
 // Note this is my patched version of @master.technology/websockets.  Meant to be temporary pending official fix.
 
-const {TEST_ENABLED} = require("../Settings")
+const TEST_ENABLED = false // TODO: This value should be portable to other modules
 
 let WS:any
 if(TEST_ENABLED) {
