@@ -1,6 +1,6 @@
 
 // Note this is my patched version of @master.technology/websockets.  Meant to be temporary pending official fix.
-const {TEST_ENABLED} = require('~/tbd/settings/enabled')
+const {TEST_ENABLED} = require( '../../../../settings/enabled')
 
 let WS:any
 if(TEST_ENABLED) {
