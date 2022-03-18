@@ -6,7 +6,7 @@ const TEST_ENABLED = false // TODO: This value should be portable to other modul
 let WS:any
 if(TEST_ENABLED) {
     try {
-        WS = require('@tremho/mt-ns-websockets')
+        // WS = require('@tremho/mt-ns-websockets')
     }
     catch(e) {}
 }
