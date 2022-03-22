@@ -12,4 +12,4 @@ _(formerly thunderbolt)_
 
 ---
 - we touch this to force a publish operation (if we modify ComNormal and nothing else here)
-- edited 9/16 4:44PM
+- edited 3/21 5:17pm
