@@ -247,6 +247,8 @@ export default class ComponentBase extends StackLayout {
     }
 
     listenToAllGestures(el:View, action:string = 'action') {
+
+        console.log(">>>>>>> listenToAllGestures called >>>>>>>>>")
         // @ts-ignore
         this.listenToFor(el, 'touch', (ev: any) => {
             this.cm.getApp().callEventHandler(action, 'touch', ev)
