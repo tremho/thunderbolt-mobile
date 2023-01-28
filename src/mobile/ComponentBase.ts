@@ -248,38 +248,47 @@ export default class ComponentBase extends StackLayout {
 
     listenToAllGestures(el:View, action:string = 'action') {
 
-        console.log(">>>>>>> listenToAllGestures called >>>>>>>>>")
+        console.log(">>>>>>> listenToAllGestures!!!! called >>>>>>>>>")
+        console.log({name: el.className, action})
         // @ts-ignore
         this.listenToFor(el, 'touch', (ev: any) => {
+            console.log("see touch")
             this.cm.getApp().callEventHandler(action, 'touch', ev)
         })
 
         // @ts-ignore
         this.listenToFor(el, 'press', (ev: any) => {
+            console.log("see press")
             this.cm.getApp().callEventHandler(action, 'press', ev)
         })
         // @ts-ignore
         this.listenToFor(el, 'dblpress', (ev: any) => {
+            console.log("see dblpress")
             this.cm.getApp().callEventHandler(action, 'dblpress', ev)
         })
         // @ts-ignore
         this.listenToFor(el, 'longpress', (ev: any) => {
+            console.log("see longpress")
             this.cm.getApp().callEventHandler(action, 'longpress', ev, ev.value)
         })
         // @ts-ignore
         this.listenToFor(el, 'swipe', (ev: any) => {
+            console.log("see swipe")
             this.cm.getApp().callEventHandler(action, 'swipe', ev, ev.value)
         })
         // @ts-ignore
         this.listenToFor(el, 'pan', (ev:any) => {
+            console.log("see pan")
             this.cm.getApp().callEventHandler(action, 'pan', ev, ev.value)
         })
         // @ts-ignore
         this.listenToFor(el, 'rotate', (ev:any) => {
+            console.log("see rotate")
             this.cm.getApp().callEventHandler(action, 'rotate', ev, ev.value)
         })
         // @ts-ignore
         this.listenToFor(el, 'pinch', (ev:any) => {
+            console.log("see pinch")
             this.cm.getApp().callEventHandler(action, 'pinch', ev, ev.value)
         })
     }
