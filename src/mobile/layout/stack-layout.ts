@@ -12,10 +12,11 @@ export class TBStackLayout extends StackLayout {
         this.set('horizontalAlignment', this.get('horizontalAlignment') || 'left')
         this.on('layoutChanged', () => {
             let cv = this as unknown as View
-            if(!this.util) { // do only once
+            // if(!this.util) { // do only once
+            console.log(">>>> Stack Layout On LayoutChanged, adding listeners")
                 this.util = new ComponentBase(cv)
                 this.util.listenToAllGestures(cv, 'action')
-            }
+            // }
         })
     }
 }
